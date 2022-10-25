@@ -1,0 +1,187 @@
+---
+permalink: examples/test-demonstrate-S3-encryption.html 
+sidebar: sidebar 
+keywords: cli, aws, S3, encryption, SSE, SSE-C, SSE-S3, api 
+summary: 'StorageGRID et l"API S3 proposent plusieurs façons de chiffrer vos données au repos.' 
+---
+= Tester et démontrer les options de cryptage S3 sur StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID et l'API S3 proposent plusieurs façons de chiffrer vos données au repos. Pour en savoir plus, voir https://docs.netapp.com/us-en/storagegrid-116/admin/reviewing-storagegrid-encryption-methods.html["Étudiez les méthodes de cryptage StorageGRID"^].
+
+Ce guide présente les méthodes de chiffrement de l'API S3.
+
+
+
+== Chiffrement côté serveur (SSE)
+
+SSE permet au client de stocker un objet et de le chiffrer à l'aide d'une clé unique gérée par StorageGRID. Lorsque l'objet est demandé, il est décrypté par la clé stockée dans StorageGRID.
+
+
+
+=== Exemple SSE
+
+* PLACER un objet avec SSE
++
+[source, console]
+----
+aws s3api put-object --bucket <bucket>  --key <file> --body "<file>" --server-side-encryption AES256 --endpoint-url https://s3.example.com
+----
+* DIRIGEZ l'objet pour vérifier le chiffrement
++
+[source, console]
+----
+aws s3api head-object --bucket <bucket>  --key <file>   --endpoint-url https://s3.example.com
+----
++
+[listing]
+----
+{
+    "AcceptRanges": "bytes",
+    "LastModified": "2022-05-02T19:03:03+00:00",
+    "ContentLength": 47,
+    "ETag": "\"82e8bfb872e778a4687a26e6c0b36bc1\"",
+    "ContentType": "text/plain",
+    "ServerSideEncryption": "AES256",
+    "Metadata": {}
+}
+----
+* OBTENIR l'objet
++
+[source, console]
+----
+aws s3api get-object --bucket <bucket>  --key <file> <file> --endpoint-url https://s3.example.com
+----
+
+
+
+
+== Chiffrement côté serveur avec clés fournies par le client (SSE-C)
+
+SSE permet au client de stocker un objet et de le chiffrer à l'aide d'une clé unique fournie par le client avec l'objet. Lorsque l'objet est demandé, la même clé doit être fournie pour décrypter et renvoyer l'objet.
+
+
+
+=== Exemple SSE-C.
+
+* Vous pouvez créer une clé de chiffrement à des fins de test ou de démonstration
++
+** Créez une clé de chiffrement
++
+[source, console]
+----
+openssl enc -aes-128-cbc -pass pass:secret -P`
+----
++
+[listing]
+----
+salt=E9DBB6603C7B3D2A
+key=23832BAC16516152E560F933F261BF03
+iv =71E87C0F6EC3C45921C2754BA131A315
+----
+
+
+* Placer un objet avec la clé générée
++
+[source, console]
+----
+aws s3api put-object --bucket <bucket> --key <file> --body "file" --sse-customer-algorithm AES256 --sse-customer-key 23832BAC16516152E560F933F261BF03 --endpoint-url https://s3.example.com
+----
+* Dirigez l'objet
++
+[source, console]
+----
+aws s3api head-object --bucket <bucket> --key <file> --sse-customer-algorithm AES256 --sse-customer-key 23832BAC16516152E560F933F261BF03 --endpoint-url https://s3.example.com
+----
++
+[listing]
+----
+            {
+                "AcceptRanges": "bytes",
+                "LastModified": "2022-05-02T19:20:02+00:00",
+                "ContentLength": 47,
+                "ETag": "\"f92ef20ab87e0e13951d9bee862e9f9a\"",
+                "ContentType": "binary/octet-stream",
+                "Metadata": {},
+                "SSECustomerAlgorithm": "AES256",
+                "SSECustomerKeyMD5": "rjGuMdjLpPV1eRuotNaPMQ=="
+            }
+----
+
+
+
+NOTE: Si vous ne fournissez pas la clé de cryptage, vous recevrez une erreur « une erreur s'est produite (404) lors de l'appel de l'opération HeadObject : introuvable ».
+
+* Obtenir l'objet
++
+[source, console]
+----
+aws s3api get-object --bucket <bucket> --key <file> <file> --sse-customer-algorithm AES256 --sse-customer-key 23832BAC16516152E560F933F261BF03 --endpoint-url https://s3.example.com
+----
+
+
+
+NOTE: Si vous ne fournissez pas la clé de cryptage, vous recevrez une erreur "une erreur s'est produite (InvalidRequest) lors de l'appel de l'opération GetObject: L'objet a été stocké à l'aide d'une forme de chiffrement côté serveur. Les paramètres corrects doivent être fournis pour récupérer l'objet. »
+
+
+
+== Chiffrement côté serveur godet (SSE-S3)
+
+SSE-S3 permet au client de définir un comportement de cryptage par défaut pour tous les objets stockés dans un compartiment. Les objets sont chiffrés avec une clé unique gérée par StorageGRID. À la demande de l'objet, celui-ci est décrypté par la clé stockée dans StorageGRID.
+
+
+
+=== Exemple de godet SSE-S3
+
+* Créez un compartiment et définissez une règle de chiffrement par défaut
++
+** Créer un nouveau compartiment
++
+[source, console]
+----
+aws s3api create-bucket --bucket <bucket> --region us-east-1 --endpoint-url https://s3.example.com
+----
+** Put bucket Encryption
++
+[source, console]
+----
+aws s3api put-bucket-encryption --bucket <bucket> --server-side-encryption-configuration '{"Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "AES256"}}]}' --endpoint-url https://s3.example.com
+----
+
+
+* Placer un objet dans le godet
++
+[source, console]
+----
+aws s3api put-object --bucket <bucket> --key <file> --body "file" --endpoint-url https://s3.example.com
+----
+* Dirigez l'objet
++
+[source, console]
+----
+aws s3api head-object --bucket <bucket> --key <file> --endpoint-url https://s3.example.com
+----
++
+[listing]
+----
+{
+"AcceptRanges": "bytes",
+"LastModified": "2022-05-02T20:16:23+00:00",
+"ContentLength": 47,
+"ETag": "\"82e8bfb872e778a4687a26e6c0b36bc1\"",
+"ContentType": "binary/octet-stream",
+"ServerSideEncryption": "AES256",
+"Metadata": {}
+}
+----
+* OBTENIR l'objet
++
+[source, console]
+----
+aws s3api get-object --bucket <bucket>  --key <file> <file> --endpoint-url https://s3.example.com
+----
+

@@ -1,0 +1,222 @@
+---
+permalink: examples/test-demonstrate-S3-object-lock.html 
+sidebar: sidebar 
+keywords: cli, aws, S3, object lock, compliance, worm, api 
+summary: 'Le verrouillage d"objet fournit un modèle WORM pour éviter que les objets ne soient supprimés ou remplacés. L"implémentation StorageGRID du verrouillage d"objet est une fonctionnalité qui est évaluée afin de respecter les exigences réglementaires, et qui prend en charge le mode de conservation légale et de conformité pour la conservation des objets et les règles de conservation des compartiments par défaut.' 
+---
+= Testez et faites une démonstration du verrouillage d'objet S3 sur StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le verrouillage d'objet fournit un modèle WORM pour éviter que les objets ne soient supprimés ou remplacés. L'implémentation StorageGRID du verrouillage d'objet est une fonctionnalité qui est évaluée afin de respecter les exigences réglementaires, et qui prend en charge le mode de conservation légale et de conformité pour la conservation des objets et les règles de conservation des compartiments par défaut.
+
+Ce guide présente l'API de verrouillage d'objet S3.
+
+
+
+== Obligation légale
+
+* La mise en attente légale de verrouillage d'objet est un état activé/désactivé simple appliqué à un objet.
++
+[source, console]
+----
+aws s3api put-object-legal-hold --bucket <bucket> --key <file> --legal-hold Status=ON --endpoint-url https://s3.company.com
+----
+* Vérifiez-le avec une opération GET.
++
+[source, console]
+----
+aws s3api get-object-legal-hold --bucket <bucket> --key <file> --endpoint-url https://s3.company.com
+----
++
+[listing]
+----
+{
+    "LegalHold": {
+        "Status": "ON"
+    }
+}
+----
+* Désactiver la mise en attente légale
++
+[source, console]
+----
+aws s3api put-object-legal-hold --bucket <bucket> --key <file> --legal-hold Status=OFF --endpoint-url https://s3.company.com
+----
+* Vérifiez-le avec une opération GET.
++
+[source, console]
+----
+aws s3api get-object-legal-hold --bucket <bucket> --key <file> --endpoint-url https://s3.company.com
+----
++
+[listing]
+----
+{
+    "LegalHold": {
+        "Status": "OFF"
+    }
+}
+----
+
+
+
+
+== Mode de conformité
+
+* La conservation de l'objet s'effectue avec une conservation jusqu'à l'horodatage.
++
+[source, console]
+----
+aws s3api put-object-retention --bucket <bucket> --key <file> --retention '{"Mode":"COMPLIANCE", "RetainUntilDate": "2025-06-10T16:00:00"}' --endpoint-url https://s3.company.com
+----
+* Vérifiez l'état de la rétention
++
+[source, console]
+----
+aws s3api get-object-retention --bucket <bucket> --key <file> --endpoint-url https://s3.company.com
++
+----
++
+[listing]
+----
+{
+    "Retention": {
+        "Mode": "COMPLIANCE",
+        "RetainUntilDate": "2025-06-10T16:00:00+00:00"
+    }
+}
+----
+
+
+
+
+== Conservation par défaut
+
+* Définissez la période de conservation en jours et années par rapport à une date de conservation définie avec l'api par objet.
++
+[source, console]
+----
+aws s3api put-object-lock-configuration --bucket <bucket> --object-lock-configuration '{"ObjectLockEnabled": "Enabled", "Rule": { "DefaultRetention": { "Mode": "COMPLIANCE", "Days": 10 }}}' --endpoint-url https://s3.company.com
+----
+* Vérifiez l'état de la rétention
++
+[source, console]
+----
+aws s3api get-object-lock-configuration --bucket <bucket> --endpoint-url https://s3.company.com
+----
++
+[listing]
+----
+{
+    "ObjectLockConfiguration": {
+        "ObjectLockEnabled": "Enabled",
+        "Rule": {
+            "DefaultRetention": {
+                "Mode": "COMPLIANCE",
+                "Days": 10
+            }
+        }
+    }
+}
+----
+* Placer un objet dans le godet
++
+[source, console]
+----
+aws s3api put-object --bucket <bucket> --key <file> --body "file" --endpoint-url https://s3.example.com
+----
+* La durée de conservation définie dans le compartiment est convertie en horodatage de conservation sur l'objet.
++
+[source, console]
+----
+aws s3api get-object-retention --bucket <bucket> --key <file> --endpoint-url https://s3.company.com
+----
++
+[listing]
+----
+{
+    "Retention": {
+        "Mode": "COMPLIANCE",
+        "RetainUntilDate": "2022-03-02T15:22:47.202000+00:00"
+    }
+}
+----
+
+
+
+
+== Test de la suppression d'un objet avec une rétention définie
+
+Le verrouillage d'objet est basé sur la gestion des versions. La conservation est définie sur une version de l'objet. Si une tentative de suppression d'un objet avec une rétention définie et qu'aucune version n'est spécifiée, un marqueur de suppression est créé comme version actuelle de l'objet.
+
+* Supprimez l'objet dont la conservation est définie
++
+[source, console]
+----
+aws s3api delete-object --bucket <bucket> --key <file> --endpoint-url https://s3.example.com
+----
+* Lister les objets dans le compartiment
++
+[source, console]
+----
+aws s3api list-objects --bucket <bucket> --endpoint-url https://s3.example.com
+----
++
+** Notez que l'objet n'est pas répertorié.
+
+
+* Répertorier les versions pour voir le marqueur de suppression et la version verrouillée d'origine
++
+[source, console]
+----
+aws s3api list-object-versions --bucket <bucket> --prefix <file> --endpoint-url https://s3.example.com
+----
++
+[listing]
+----
+{
+    "Versions": [
+        {
+            "ETag": "\"82e8bfb872e778a4687a26e6c0b36bc1\"",
+            "Size": 47,
+            "StorageClass": "STANDARD",
+            "Key": "file.txt",
+            "VersionId": "RDVDMjYwMTQtQkNDQS0xMUVDLThGOEUtNjQ3NTAwQzAxQTk1",
+            "IsLatest": false,
+            "LastModified": "2022-04-15T14:46:29.734000+00:00",
+            "Owner": {
+                "DisplayName": "Tenant01",
+                "ID": "56622399308951294926"
+            }
+        }
+    ],
+    "DeleteMarkers": [
+        {
+            "Owner": {
+                "DisplayName": "Tenant01",
+                "ID": "56622399308951294926"
+            },
+            "Key": "file01.txt",
+            "VersionId": "QjVDQzgzOTAtQ0FGNi0xMUVDLThFMzgtQ0RGMjAwQjk0MjM1",
+            "IsLatest": true,
+            "LastModified": "2022-05-03T15:35:50.248000+00:00"
+        }
+    ]
+}
+----
+* Supprimer la version verrouillée de l'objet
++
+[source, console]
+----
+aws s3api delete-object  --bucket <bucket> --key <file> --version-id "<VersionId>" --endpoint-url https://s3.example.com
+----
++
+[listing]
+----
+An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
+----
+

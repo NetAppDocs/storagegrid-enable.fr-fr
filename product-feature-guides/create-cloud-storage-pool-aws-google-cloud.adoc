@@ -1,0 +1,51 @@
+---
+permalink: product-feature-guides/create-cloud-storage-pool-aws-google-cloud.html 
+sidebar: sidebar 
+keywords: cloud storage pool, aws, S3, amazon web services, google cloud 
+summary: 'Vous pouvez utiliser un pool de stockage cloud pour déplacer des objets StorageGRID vers un compartiment S3 externe. Le compartiment externe peut appartenir à Amazon S3 (AWS) ou à Google Cloud.' 
+---
+= Création d'un pool de stockage cloud pour AWS ou Google Cloud
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Vous pouvez utiliser un pool de stockage cloud pour déplacer des objets StorageGRID vers un compartiment S3 externe. Le compartiment externe peut appartenir à Amazon S3 (AWS) ou à Google Cloud.
+
+.Ce dont vous avez besoin, 8217;ll
+* StorageGRID 11.6 a été configuré.
+* Vous avez déjà configuré un compartiment S3 externe sur AWS ou Google Cloud.
+
+
+.Étapes
+. Dans Grid Manager, accédez à *ILM* > *Storage pools*.
+. Dans la section Cloud Storage pools de la page, sélectionnez *Create*.
++
+La fenêtre contextuelle Créer un pool de stockage cloud s'affiche.
+
+. Entrez un nom d'affichage.
+. Sélectionnez *Amazon S3* dans la liste déroulante Type de fournisseur.
++
+Ce type de fournisseur fonctionne pour AWS S3 ou Google Cloud.
+
+. Entrez l'URI du compartiment S3 à utiliser pour le pool de stockage cloud.
++
+Deux formats sont autorisés :
+
++
+`https://host:port`
+
++
+`http://host:port`
+
+. Entrez le nom du compartiment S3.
++
+Le nom que vous spécifiez doit correspondre exactement au nom du compartiment S3. Sinon, la création du pool de stockage cloud échoue. Vous ne pouvez pas modifier cette valeur après l'enregistrement du pool de stockage cloud.
+
+. Vous pouvez également saisir l'ID de clé d'accès et la clé d'accès secrète.
+. Sélectionnez *ne pas vérifier le certificat* dans la liste déroulante.
+. Cliquez sur *Enregistrer*.
+
+
+Assurez-vous qu'un pool de stockage cloud a été créé pour Amazon S3 ou Google Cloud.

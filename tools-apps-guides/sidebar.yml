@@ -1,0 +1,15 @@
+---
+section: tools-apps-guides
+title: Guides d'utilisation et d'outils
+entries:
+- title: Utilisez le connecteur Cloudera Hadoop S3A
+  url: "/tools-apps-guides/use-cloudera-hadoop-s3a-connector.html"
+- title: Utilisez S3cmd pour tester et démontrer l'accès S3
+  url: "/tools-apps-guides/use-S3cmd-test-demonstrate-S3-access.html"
+- title: Créez une base de données Vertica Eon mode avec stockage communautaire
+  url: "/tools-apps-guides/vertica-eon-mode-database-using-netapp-storageGRID.html"
+- title: Utilisez Elasticsearch, Logstash et Kibana pour l'analytique des journaux
+  url: "/tools-apps-guides/elk-instructions.html"
+- title: Grâce à Prometheus et Grafana, vous pouvez renforcer la conservation des
+    metrics
+  url: "/tools-apps-guides/federate-prometheus.html"

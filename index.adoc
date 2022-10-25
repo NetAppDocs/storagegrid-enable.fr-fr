@@ -1,0 +1,16 @@
+---
+layout: astra 
+sidebar: sidebar 
+permalink: index.html 
+lead: NetApp StorageGRID is a software-defined object storage suite that supports a wide range of use cases across public, private, and hybrid multi-cloud environments. StorageGRID uses industry leading innovations such as automated lifecycle management to store, secure, protect, and preserve unstructured data for multi-purpose use over long periods of time. 
+summary: 'NetApp StorageGRID est une suite de stockage objet Software-defined qui prend en charge un large éventail d"utilisations dans les environnements multicloud publics, privés et hybrides. StorageGRID a recours à des innovations de pointe, telles que la gestion automatisée du cycle de vie, pour stocker, sécuriser, protéger et conserver les données non structurées pour une utilisation polyvalente sur de longues périodes.' 
+---
+= Activation de StorageGRID dans votre environnement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
