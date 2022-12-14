@@ -13,7 +13,7 @@ summary: Vous pouvez créer une règle ILM pour déplacer des objets dans un poo
 [role="lead"]
 Vous pouvez créer une règle ILM pour déplacer des objets dans Cloud Storage Pool à des fins de sauvegarde.
 
-.Ce dont vous avez besoin, 8217;ll
+.Ce dont vous avez besoin
 * StorageGRID 11.6 a été configuré.
 * Vous avez déjà configuré un conteneur Azure externe.
 
@@ -30,6 +30,7 @@ Vous pouvez créer une règle ILM pour déplacer des objets dans Cloud Storage P
 . Cliquez sur *Enregistrer*.
 
 
+.Résultat attendu
 Vérifiez que le diagramme de conservation affiche les objets stockés localement dans StorageGRID et dans un Cloud Storage Pool pour la sauvegarde.
 
 Confirmez que, lorsque la règle ILM est déclenchée, une copie existe dans le pool de stockage cloud et vous pouvez récupérer l'objet localement sans effectuer de restauration d'objet.

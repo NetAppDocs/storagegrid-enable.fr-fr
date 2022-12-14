@@ -39,6 +39,7 @@ Pour installer S3cmd sur un poste de travail ou un serveur, téléchargez-le à 
 
 
 
+[]
 ====
 
 NOTE: Si vous spécifiez Host_base et Host_bucket à l'étape 4, il n'est pas nécessaire de spécifier un noeud final avec --host dans la CLI. Exemple :

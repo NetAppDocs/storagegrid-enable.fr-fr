@@ -78,7 +78,7 @@ D'autres recommandations concernant la configuration de StorageGRID incluent :
 Les recommandations pour une configuration Vertica sont les suivantes :
 
 * *Les paramètres de dépôt par défaut de la base de données Vertica sont activés (valeur = 1) pour les opérations de lecture et d'écriture*. NetApp recommande fortement de maintenir ces paramètres de dépôt activés pour améliorer les performances.
-* *Désactiver les limitations de diffusion*. Pour plus de détails sur la configuration, reportez-vous à la section ,Désactivation des restrictions de diffusion en continu.
+* *Désactiver les limitations de diffusion*. Pour plus de détails sur la configuration, reportez-vous à la section <<Streamlimitations,Désactivation des restrictions de diffusion en continu>>.
 
 
 
@@ -182,7 +182,7 @@ Pour créer la base de données Eon sur site, procédez comme suit :
 La liste suivante fournit une brève explication des arguments utilisés dans cet exemple. Consultez le document Vertica pour obtenir une explication détaillée de tous les arguments requis et facultatifs.
 
 +
-** -x <chemin/nom de fichier d'autorisation créé dans ,« Création d'un fichier d'autorisation pour accéder au noeud final S3 » >.
+** -x <chemin/nom de fichier d'autorisation créé dans <<createauthorization,« Création d'un fichier d'autorisation pour accéder au noeud final S3 »>> >.
 +
 Les détails d'autorisation sont stockés dans la base de données après la création. Vous pouvez supprimer ce fichier pour éviter d'exposer la clé secrète S3.
 

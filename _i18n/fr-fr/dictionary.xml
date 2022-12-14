@@ -594,7 +594,6 @@
   <block id="aaeeb364be922e789a908072881b88ea" category="summary">Vous pouvez créer une règle ILM pour déplacer des objets dans un pool de stockage cloud à des fins de sauvegarde.</block>
   <block id="85020881afe59b6c9413c4d50d2a26d0" category="doc">Utilisation d'un pool de stockage cloud pour la sauvegarde</block>
   <block id="4b0e54b770307ad63bdf2f9e861d65d8" category="paragraph">Vous pouvez créer une règle ILM pour déplacer des objets dans Cloud Storage Pool à des fins de sauvegarde.</block>
-  <block id="a711863513c11f3a6d86294acc7be0ba" category="list-title">Ce dont vous avez besoin, 8217;ll</block>
   <block id="3ed256c1f351a8fcb6f88836f9344657" category="list-text">StorageGRID 11.6 a été configuré.</block>
   <block id="0106fb5b56f13c91c190596b35b034a4" category="list-text">Vous avez déjà configuré un conteneur Azure externe.</block>
   <block id="f3a29486bed19a90f2da6d007818b427" category="list-title">Étapes</block>
@@ -776,4 +775,6 @@
   <block id="a310588c148d934b9b30c31802d4a30b" category="sidebar">Communauté NetApp</block>
   <block id="024f3a8ba5709643c2f09c8eabccae87" category="sidebar">Solutions tierces validées - Présentation</block>
   <block id="f4bf6c62a8784f065cebbacf57a1c62c" category="sidebar">Testez et faites une démonstration du verrouillage d'objet S3</block>
+  <block id="d59db7846bd10b6d60d21543df9faa9e" category="list-title">Ce dont vous avez besoin</block>
+  <block id="9db3241b54bebb9425e6b4d63d712bb2" category="paragraph-title">Résultat attendu</block>
 </blocks>
