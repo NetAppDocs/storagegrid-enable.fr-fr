@@ -6,3 +6,5 @@ entries:
   url: "/examples/test-demonstrate-S3-encryption.html"
 - title: Testez et faites une démonstration du verrouillage d'objet S3
   url: "/examples/test-demonstrate-S3-object-lock.html"
+- title: Exemples de stratégie de compartiment et de groupe
+  url: "/examples/bucket-policy-examples.html"

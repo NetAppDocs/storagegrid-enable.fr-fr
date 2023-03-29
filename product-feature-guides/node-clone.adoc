@@ -1,0 +1,511 @@
+---
+permalink: product-feature-guides/node-clone.html 
+sidebar: sidebar 
+keywords: node clone, clone, clone performance, performance 
+summary: Performances des clones de nœuds et bonnes pratiques 
+---
+= Clone de nœud
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Considérations et performances sur le clonage des nœuds.
+
+
+
+== Considérations relatives au clonage de nœuds
+
+Le clone de nœud peut être une méthode plus rapide pour remplacer les nœuds d'appliance existants dans le cadre d'une mise à jour technologique, d'une augmentation de la capacité ou d'une augmentation de la performance du système StorageGRID. Le clone de nœud peut également être utile pour la conversion en chiffrement de nœud avec un KMS ou pour le remplacement d'un nœud de stockage DDP8 par DDP16.
+
+* La capacité utilisée du nœud source n'est pas pertinente pour le temps nécessaire à la fin du processus de clonage. Le clone de nœud est une copie complète du nœud, y compris l'espace libre dans le nœud.
+* Les appareils source et cible doivent avoir la même version PGE
+* La capacité du nœud de destination doit toujours être supérieure à la source
++
+** Assurez-vous que la nouvelle appliance de destination possède un lecteur plus grand que la source
+** Si l'appliance de destination possède des lecteurs de même taille et est configurée pour DDP8, vous pouvez configurer la destination pour DDP16. Si la source est déjà configurée pour DDP16, le clone de nœud ne sera pas possible.
+** Lorsque vous utilisez des appliances SG5660 ou SG5760 pour des appliances SG6060, sachez que les SG6060 disposent de 60 disques de capacité lorsque le SG6060 ne présente que 58.
+
+
+* Le processus de clonage de nœud nécessite que le nœud source soit hors ligne de la grille pendant toute la durée du processus de clonage. Si un nœud supplémentaire se déconnecte pendant ce temps, les services client peuvent être affectés.
+* Un nœud de stockage ne peut être hors ligne que pendant 15 jours. Si l'estimation du processus de clonage est proche de 15 jours ou supérieure à 15 jours, utilisez les procédures d'extension et de désaffectation.
+* Pour un SG6060 avec tiroirs d'extension, vous devez ajouter la durée nécessaire à la taille de tiroir correcte au moment de l'appliance de base pour obtenir la durée totale du clone.
+
+
+
+
+== Estimations des performances des clones de nœuds
+
+Les tableaux suivants contiennent des estimations calculées pour la durée du clone de nœud. Les conditions varient donc, les entrées dans *BOLD* peuvent risquer de dépasser la limite de 15 jours pour un nœud en panne.
+
+
+
+=== DDP8
+
+
+
+==== SG5612 -> tous
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+1 jour
+ a| 
+2 jours
+ a| 
+2.5 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+
+
+
+ a| 
+25 GO
+ a| 
+1 jour
+ a| 
+2 jours
+ a| 
+2.5 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+
+|===
+
+
+==== SG5712 -> tout
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+1 jour
+ a| 
+2 jours
+ a| 
+2.5 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+
+
+
+ a| 
+25 GO
+ a| 
+1 jour
+ a| 
+2 jours
+ a| 
+2.5 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+
+|===
+
+
+==== SG5660 -> SG5760
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+3 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+8.5 jours
+ a| 
+11.5 jours
+ a| 
+*13 jours*
+
+
+
+ a| 
+25 GO
+ a| 
+3 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+8.5 jours
+ a| 
+11.5 jours
+ a| 
+*13 jours*
+
+|===
+
+
+==== SG5660 -> SG6060
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+2.5 jours
+ a| 
+4.5 jours
+ a| 
+5.5 jours
+ a| 
+6.5 jours
+ a| 
+9 jours
+ a| 
+10 jours
+
+
+
+ a| 
+25 GO
+ a| 
+2 jours
+ a| 
+4 jours
+ a| 
+5 jours
+ a| 
+6 jours
+ a| 
+8 jours
+ a| 
+9 jours
+
+|===
+
+
+==== SG5760 -> SG5760
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+3 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+8.5 jours
+ a| 
+11.5 jours
+ a| 
+*13 jours*
+
+
+
+ a| 
+25 GO
+ a| 
+3 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+8.5 jours
+ a| 
+11.5 jours
+ a| 
+*13 jours*
+
+|===
+
+
+==== SG5760 -> SG6060
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+2.5 jours
+ a| 
+4.5 jours
+ a| 
+5.5 jours
+ a| 
+6.5 jours
+ a| 
+9 jours
+ a| 
+10 jours
+
+
+
+ a| 
+25 GO
+ a| 
+1.5 jours
+ a| 
+3 jours
+ a| 
+3.5 jours
+ a| 
+4.5 jours
+ a| 
+6 jours
+ a| 
+6.5 jours
+
+|===
+
+
+==== SG6060 -> SG6060
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+2.5 jours
+ a| 
+4.5 jours
+ a| 
+5.5 jours
+ a| 
+6.5 jours
+ a| 
+8.5 jours
+ a| 
+9.5 jours
+
+
+
+ a| 
+25 GO
+ a| 
+1.5 jours
+ a| 
+3 jours
+ a| 
+3.5 jours
+ a| 
+4 jours
+ a| 
+5.5 jours
+ a| 
+6 jours
+
+|===
+
+
+=== DDP16
+
+
+
+==== SG5760 -> SG5760
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+3.5 jours
+ a| 
+6.5 jours
+ a| 
+8 jours
+ a| 
+9.5 jours
+ a| 
+12.5 jours
+ a| 
+*14 jours*
+
+
+
+ a| 
+25 GO
+ a| 
+3.5 jours
+ a| 
+6.5 jours
+ a| 
+8 jours
+ a| 
+9.5 jours
+ a| 
+12.5 jours
+ a| 
+*14 jours*
+
+|===
+
+
+==== SG5760 -> SG6060
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+2.5 jours
+ a| 
+5 jours
+ a| 
+6 jours
+ a| 
+7.5 jours
+ a| 
+10 jours
+ a| 
+11 jours
+
+
+
+ a| 
+25 GO
+ a| 
+2 jours
+ a| 
+3.5 jours
+ a| 
+4 jours
+ a| 
+5 jours
+ a| 
+6.5 jours
+ a| 
+7 jours
+
+|===
+
+
+==== SG6060 -> SG6060
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+3.5 jours
+ a| 
+5 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+9.5 jours
+ a| 
+10.5 jours
+
+
+
+ a| 
+25 GO
+ a| 
+2 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+ a| 
+6 jours
+ a| 
+7 jours
+
+|===
+
+
+==== Tiroir d'extension (à ajouter au-dessus des SG6060 pour chaque tiroir de l'appliance source)
+
+[cols="2a,1a,1a,1a,1a,1a,1a"]
+|===
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+
+
+ a| 
+10 GBIT/S.
+ a| 
+3.5 jours
+ a| 
+5 jours
+ a| 
+6 jours
+ a| 
+7 jours
+ a| 
+9.5 jours
+ a| 
+10.5 jours
+
+
+
+ a| 
+25 GO
+ a| 
+2 jours
+ a| 
+3 jours
+ a| 
+4 jours
+ a| 
+4.5 jours
+ a| 
+6 jours
+ a| 
+7 jours
+
+|===

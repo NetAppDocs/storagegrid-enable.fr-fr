@@ -1,0 +1,384 @@
+---
+permalink: product-feature-guides/port-remap.html 
+sidebar: sidebar 
+keywords: port remap, port redirect, port, remap, redirect 
+summary: Comment utiliser le remap de port. 
+---
+= Comment utiliser le remap de port
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Vous devrez peut-être remmapper un port entrant ou sortant pour plusieurs raisons. Vous pouvez passer du service d'équilibrage de la charge CLB existant au point de terminaison actuel de l'équilibreur de charge des services nginx et maintenir le même port pour réduire l'impact sur les clients, utiliser le port 443 pour le client S3 sur un réseau client de nœud d'administration ou pour les restrictions de pare-feu.
+
+
+
+== Migration des clients S3 de CLB à NGINX avec le remap du port
+
+Dans les versions antérieures à StorageGRID 11.3, le service Load Balancer inclus sur les nœuds de passerelle est le composant Connection Load Balancer (CLB). Dans StorageGRID 11.3, NetApp présente le service NGINX en tant que solution intégrée riche en fonctionnalités pour l'équilibrage de la charge du trafic HTTP(s). Étant donné que le service CLB reste disponible dans la version actuelle de StorageGRID, vous ne pouvez pas réutiliser le port 8082 dans la nouvelle configuration de noeud final d'équilibreur de charge. Pour contourner ce problème, le port entrant 8082 est remappé sur 10443. Toutes les requêtes HTTPS arrivant sur le port 8082 de la passerelle sont alors redirigées vers le port 10443, en contournant le service CLB et en se connectant au service NGINX. Bien que les instructions suivantes soient pour VMware, LA fonctionnalité PORT_REMAP existe pour toutes les méthodes d'installation et vous pouvez utiliser un processus similaire pour les déploiements et les appliances sans système d'exploitation.
+
+
+
+=== Déploiement du nœud de passerelle de machine virtuelle VMware
+
+Les étapes suivantes concernent un déploiement StorageGRID dans lequel le ou les nœuds de passerelle sont déployés dans VMware vSphere 7 en tant que machines virtuelles utilisant le format OVF (Open Virtualization format) de StorageGRID. Le processus implique la suppression destructive de la machine virtuelle et le redéploiement de la machine virtuelle avec le même nom et la même configuration. Avant de mettre la machine virtuelle sous tension, modifiez la propriété vApp pour remmapper le port, puis mettez la machine virtuelle sous tension et suivez le processus de restauration du nœud.
+
+
+
+==== Prérequis
+
+* Vous exécutez StorageGRID 11.3 ou une version ultérieure
+* Vous avez téléchargé les fichiers d'installation VMware de la version StorageGRID installée et y avez accès.
+* Vous disposez d'un compte vCenter avec les autorisations d'allumer/d'éteindre les machines virtuelles, de modifier les paramètres des machines virtuelles et des vApps, de supprimer les machines virtuelles de vCenter et de déployer les machines virtuelles via OVF.
+* Vous avez créé un terminal d'équilibrage de charge
++
+** Le port est configuré sur le port de redirection souhaité
+** Le certificat SSL du noeud final est identique à celui installé pour le service CLB dans le certificat de serveur Configuration/certificats de serveur/noeuds finaux du service API de stockage objet ou le client peut accepter une modification du certificat.
+
+
+
+
+[NOTE]
+====
+ If your existing certificate is self-signed, you cannot reuse it in the new endpoint. You must generate a new self-signed certificate when creating the endpoint and configure the clients to accept the new certificate.
+====
+
+
+==== Détruisez le premier nœud de passerelle
+
+Pour détruire le premier nœud de passerelle, procédez comme suit :
+
+. Choisissez le nœud de passerelle à utiliser si la grille en contient plusieurs.
+. Le cas échéant, supprimez les adresses IP de nœud de toutes les entités DNS Round Robin ou de tous les pools d'équilibrage de charge.
+. Attendez que le délai de mise en service (TTL) et les sessions ouvertes expirent.
+. Mettez le nœud VM hors tension.
+. Retirez le nœud VM du disque.
+
+
+
+
+==== Déployez le nœud de passerelle de remplacement
+
+Pour déployer le nœud de passerelle de remplacement, procédez comme suit :
+
+. Déployer la nouvelle machine virtuelle à partir d'OVF, en sélectionnant les fichiers .ovf, .mf et .vmdk à partir du package d'installation téléchargé à partir du site de support :
++
+** vsphere-gateway.mf
+** vsphere-gateway.ovf
+** NetApp-SG-11.4.0-20200721.1338.d3969b3.vmdk
+
+
+. Une fois la machine virtuelle déployée, sélectionnez-la dans la liste des machines virtuelles, puis cliquez sur l'onglet configurer Options vApp.
++
+image:port-remap/vapp_options.png["Onglet Options vApp"]
+
+. Faites défiler jusqu'à la section Propriétés et sélectionnez LA propriété PORT_REMAP_INBOUND
++
+image:port-remap/remap_inbound.png["réassignation de port entrant"]
+
+. Faites défiler jusqu'en haut de la liste Propriétés et cliquez sur Modifier
++
+image:port-remap/edit_button.png["bouton modifier"]
+
+. Sélectionnez l'onglet Type, vérifiez que la case configurable par l'utilisateur est cochée, puis cliquez sur Enregistrer.
++
+image:port-remap/type_tab.png["onglet type"]
+
+. En haut de la liste Propriétés, la propriété "PORT_REMAP_INBOUND" étant toujours sélectionnée, cliquez sur définir la valeur.
++
+image:port-remap/edit_button.png["bouton définir la valeur"]
+
+. Dans le champ valeur de la propriété, entrez le réseau (grille, admin ou client), TCP, le port d'origine (8082) et le nouveau port (10443) avec “/” entre chaque valeur, comme illustré ci-dessous.
++
+image:port-remap/value.png["valeur de la propriété"]
+
+. Si vous utilisez plusieurs réseaux, utilisez une virgule (,) pour séparer les chaînes réseau, par exemple GRID/tcp/8082/10443,admin/tcp/8082/10443,client/tcp/8082/10443
+
+
+
+
+==== Restaurez le nœud de passerelle
+
+Pour restaurer le nœud de passerelle, procédez comme suit :
+
+. Accédez à la section Maintenance/récupération de l'interface utilisateur de gestion du grid.
++
+image:port-remap/maint_menu.png["menu maintenance"]
+
+. Mettez le nœud de la machine virtuelle sous tension et attendez que le nœud apparaisse dans la section Maintenance/Recovery Pending Nodes de l'interface utilisateur Grid Management.
++
+image:port-remap/recover_pend.png["restauration en attente"]
+
++
+[NOTE]
+====
+ For information and directions for node recovery, see the https://docs.netapp.com/sgws-114/topic/com.netapp.doc.sg-maint/GUID-7E22B1B9-4169-4800-8727-75F25FC0FFB1.html[Recovery and Maintenance guide]
+====
+. Une fois le nœud restauré, l'IP peut être incluse dans toutes les entités DNS round-Robin ou dans les pools d'équilibrage de charge, le cas échéant.
++
+Maintenant, toutes les sessions HTTPS sur le port 8082 sont sur le port 10443
+
+
+
+
+
+== Remadez le port 443 pour l'accès du client S3 sur un nœud d'administration
+
+La configuration par défaut dans le système StorageGRID d'un nœud d'administration ou d'un groupe haute disponibilité contenant un nœud d'administration permet de réserver les ports 443 et 80 pour l'interface du gestionnaire de locataires et de gestion. Elle ne peut pas être utilisée pour les terminaux d'équilibrage de charge. La solution consiste à utiliser la fonction de remap de port et à rediriger le port entrant 443 vers un nouveau port qui sera configuré comme point final d'équilibrage de charge. Une fois cette opération terminée, le trafic client S3 pourra utiliser le port 443, l'interface de gestion Grid sera uniquement accessible via le port 8443 et l'interface de gestion des locataires sera uniquement accessible sur le port 9443. La fonction de remap port ne peut être configurée qu'au moment de l'installation du nœud. Pour mettre en œuvre un remap de port d'un nœud actif dans la grille, celui-ci doit être réinitialisé à l'état préinstallé. Il s'agit d'une procédure destructive qui inclut une restauration de nœud une fois la modification de configuration effectuée.
+
+
+
+=== Sauvegarde des journaux et des bases de données
+
+Les nœuds d'administration contiennent des journaux d'audit, des metrics prometheus, ainsi que des informations historiques sur les attributs, les alarmes et les alertes. La présence de plusieurs nœuds d'administration signifie que vous avez plusieurs copies de ces données. Si vous ne disposez pas de plusieurs nœuds d'administration dans votre grid, veillez à conserver ces données à restaurer une fois le nœud restauré à la fin de ce processus. Si vous disposez d'un autre nœud d'administration dans votre grid, vous pouvez copier les données à partir de ce nœud pendant le processus de restauration. Si vous ne disposez pas d'un autre nœud d'administration dans la grille, vous pouvez suivre ces instructions pour copier les données avant de détruire le nœud.
+
+
+
+==== Copie des journaux d'audit
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_grid_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Créer le répertoire pour copier tous les fichiers journaux d'audit dans un emplacement temporaire sur un nœud de grille distinct, nous allons utiliser _Storage_node_01_:
++
+.. `ssh admin@_storage_node_01_IP_`
+.. `mkdir -p /var/local/tmp/saved-audit-logs`
+
+
+. De retour sur le nœud admin, arrêtez le service AMS pour l'empêcher de créer un nouveau fichier journal : `service ams stop`
+. Renommez le fichier audit.log de sorte qu'il ne remplace pas le fichier existant lorsque vous le copiez sur le nœud d'administration restauré.
++
+.. Renommez audit.log en un nom de fichier numéroté unique tel que aaaa-mm-jj.txt.1. Par exemple, vous pouvez renommer le fichier journal d'audit 2015-10-25.txt.1
++
+[source, console]
+----
+cd /var/local/audit/export
+ls -l
+mv audit.log 2015-10-25.txt.1
+----
+
+
+. Redémarrez le service AMS : `service ams start`
+. Copier tous les fichiers journaux d'audit : `scp * admin@_storage_node_01_IP_:/var/local/tmp/saved-audit-logs`
+
+
+
+
+==== Copiez les données Prometheus
+
+
+NOTE: La copie de la base de données Prometheus peut prendre une heure ou plus. Certaines fonctionnalités de Grid Manager ne seront pas disponibles tant que les services seront arrêtés sur le nœud d'administration.
+
+. Créez le répertoire pour copier les données prometheus vers un emplacement temporaire sur un nœud de grille distinct. Là encore, nous allons utiliser _Storage_node_01_:
++
+.. Connectez-vous au nœud de stockage :
++
+... Saisissez la commande suivante : `ssh admin@_storage_node_01_IP_`
+... Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+... mkdir -p /var/local/tmp/prometheus`
+
+
+
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_admin_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Depuis le nœud d'administration, arrêtez le service Prometheus : `service prometheus stop`
++
+.. Copiez la base de données Prometheus du nœud d'administration source vers le nœud d'emplacement de sauvegarde du nœud de stockage : `/rsync -azh --stats "/var/local/mysql_ibdata/prometheus/data" "_storage_node_01_IP_:/var/local/tmp/prometheus/"`
+
+
+. Redémarrez le service Prometheus sur le nœud d'administration source.`service prometheus start`
+
+
+
+
+==== Sauvegarder les informations historiques
+
+Les informations historiques sont stockées dans une base de données mysql. Pour vider une copie de la base de données, vous aurez besoin de l'utilisateur et du mot de passe de NetApp. Si vous avez un autre nœud d'administration dans la grille, cette étape n'est pas nécessaire et la base de données peut être clonée à partir d'un nœud d'administration restant pendant le processus de restauration.
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_admin_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Arrêtez les services StorageGRID sur le noeud d'administration et démarrez ntp et mysql
++
+.. Arrêter tous les services : `service servermanager stop`
+.. redémarrez le service ntp : `service ntp start`..restart mysql service: `service mysql start`
+
+
+. Vider la base de données mi dans /var/local/tmp
++
+.. entrez la commande suivante : `mysqldump –u _username_ –p _password_ mi > /var/local/tmp/mysql-mi.sql`
+
+
+. Copiez le fichier de vidage mysql sur un autre noeud, nous utiliserons _Storage_node_01:
+`scp /var/local/tmp/mysql-mi.sql _storage_node_01_IP_:/var/local/tmp/mysql-mi.sql`
++
+.. Lorsque vous n'avez plus besoin d'un accès sans mot de passe à d'autres serveurs, supprimez la clé privée de l'agent SSH. Entrez : `ssh-add -D`
+
+
+
+
+
+
+=== Reconstruire le nœud d'administration
+
+Maintenant que vous disposez d'une copie de sauvegarde de toutes les données et journaux souhaités sur un autre nœud d'administration de la grille ou stockées dans un emplacement temporaire, il est temps de réinitialiser l'appliance afin que le remap des ports puisse être configuré.
+
+. La réinitialisation d'une appliance la ramène à l'état pré-installé, où elle conserve uniquement le nom d'hôte, les adresses IP et les configurations réseau. Toutes les données seront perdues, c'est pourquoi nous nous sommes assurés de disposer d'une sauvegarde de toute information importante.
++
+.. entrez la commande suivante : `sgareinstall`
++
+[source, console]
+----
+root@sg100-01:~ # sgareinstall
+WARNING: All StorageGRID Webscale services on this node will be shut down.
+WARNING: Data stored on this node may be lost.
+WARNING: You will have to reinstall StorageGRID Webscale to this node.
+
+After running this command and waiting a few minutes for the node to reboot,
+browse to one of the following URLs to reinstall StorageGRID Webscale on
+this node:
+
+    https://10.193.174.192:8443
+    https://10.193.204.192:8443
+    https://169.254.0.1:8443
+
+Are you sure you want to continue (y/n)? y
+Renaming SG installation flag file.
+Initiating a reboot to trigger the StorageGRID Webscale appliance installation wizard.
+
+----
+
+
+. Après un certain temps, l'appliance redémarre et vous pouvez accéder à l'interface utilisateur PGE du nœud.
+. Accédez à la page configurer la mise en réseau
++
+image:port-remap/remap_link.png["Sélectionnez Remapper les ports"]
+
+. Sélectionnez le réseau, le protocole, la direction et les ports souhaités, puis cliquez sur le bouton Ajouter une règle.
++
+
+NOTE: Le remap du port entrant 443 sur le RÉSEAU DE LA GRILLE interrompt les procédures d'installation et d'extension. Il n'est pas recommandé de remapper le port 443 sur le réseau DE LA GRILLE.
+
++
+image:port-remap/app_remap.png["ajoutez le remap de port aux réseaux"]
+
+. L'un des mappages de port souhaités a été ajouté, vous pouvez revenir à l'onglet Home et cliquer sur le bouton Start installation.
+
+
+Vous pouvez maintenant suivre les procédures de restauration du nœud Admin dans le link:https://docs.netapp.com/us-en/storagegrid-116/maintain/recovering-from-admin-node-failures.html["documentation produit"]
+
+
+
+== Restaurer les bases de données et les journaux
+
+Maintenant que le nœud d'administration a été restauré, vous pouvez restaurer les metrics, les journaux et les informations d'historique. Si vous avez un autre nœud d'administration dans la grille, suivez la procédure link:https://docs.netapp.com/us-en/storagegrid-116/maintain/recovering-from-admin-node-failures.html["documentation produit"] en utilisant les scripts _prometheus-clone-db.sh_ et _mi-clone-db.sh_. S'il s'agit de votre seul nœud d'administration et que vous avez choisi de sauvegarder ces données, vous pouvez suivre les étapes ci-dessous pour restaurer les informations.
+
+
+
+=== Copiez à nouveau les journaux d'audit
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_grid_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Copiez les fichiers journaux d'audit conservés sur le nœud d'administration restauré : `scp admin@_grid_node_IP_:/var/local/tmp/saved-audit-logs/YYYY* .`
+. Pour plus de sécurité, supprimez les journaux d'audit du nœud de grille défaillant après avoir vérifié qu'ils ont bien été copiés sur le nœud d'administration restauré.
+. Mettez à jour les paramètres utilisateur et groupe des fichiers journaux d'audit sur le nœud d'administration restauré : `chown ams-user:bycast *`
+
+
+Vous devez également restaurer tout accès client existant au partage d'audit. Pour plus d'informations, reportez-vous aux instructions d'administration de StorageGRID.
+
+
+
+=== Restaurez des metrics Prometheus
+
+
+NOTE: La copie de la base de données Prometheus peut prendre une heure ou plus. Certaines fonctionnalités de Grid Manager ne seront pas disponibles tant que les services seront arrêtés sur le nœud d'administration.
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_grid_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Depuis le nœud d'administration, arrêtez le service Prometheus : `service prometheus stop`
++
+.. Copiez la base de données Prometheus depuis l'emplacement de sauvegarde temporaire vers le nœud d'administration : `/rsync -azh --stats "_backup_node_:/var/local/tmp/prometheus/" "/var/local/mysql_ibdata/prometheus/"`
+.. vérifiez que les données se trouvent dans le chemin approprié et qu'elles sont complètes `ls /var/local/mysql_ibdata/prometheus/data/`
+
+
+. Redémarrez le service Prometheus sur le nœud d'administration source.`service prometheus start`
+
+
+
+
+=== Restaurer les informations historiques
+
+. Connectez-vous au nœud d'administration :
++
+.. Saisissez la commande suivante : `ssh admin@_grid_node_IP_`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Entrez la commande suivante pour passer à la racine : `su -`
+.. Entrez le mot de passe indiqué dans le `Passwords.txt` fichier.
+.. Ajoutez la clé privée SSH à l'agent SSH. Entrez : `ssh-add`
+.. Entrez le mot de passe d'accès SSH répertorié dans le `Passwords.txt` fichier.
++
+ When you are logged in as root, the prompt changes from `$` to `#`.
+
+
+. Copiez le fichier de vidage mysql à partir du nœud alternatif : `scp grid_node_IP_:/var/local/tmp/mysql-mi.sql /var/local/tmp/mysql-mi.sql`
+. Arrêtez les services StorageGRID sur le noeud d'administration et démarrez ntp et mysql
++
+.. Arrêter tous les services : `service servermanager stop`
+.. redémarrez le service ntp : `service ntp start`..restart mysql service: `service mysql start`
+
+
+. Supprimez la base de données mi et créez une nouvelle base de données vide : `mysql -u _username_ -p _password_ -A mi -e "drop database mi; create database mi;"`
+. restaurez la base de données mysql à partir du vidage de la base de données : `mysql -u _username_ -p _password_ -A mi < /var/local/tmp/mysql-mi.sql`
+. Redémarrez tous les autres services `service servermanager start`
+

@@ -10,3 +10,7 @@ entries:
   url: "/product-feature-guides/use-a-cloud-storage-pool-for-backup.html"
 - title: Configurez le service d'intégration de la recherche
   url: "/product-feature-guides/storagegrid-search-integration-service.html"
+- title: Considérations et performances sur le clonage des nœuds
+  url: "/product-feature-guides/node-clone.html"
+- title: Comment utiliser le remap de port
+  url: "/product-feature-guides/port-remap.html"
