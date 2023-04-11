@@ -1006,4 +1006,5 @@
   <block id="a6bea44dd82287d3b479cc898439fad9" category="sidebar">Considérations et performances sur le clonage des nœuds</block>
   <block id="e5b8a0443d27d612e7426f6f3f8681c2" category="sidebar">Configurez Datalog pour collecter les mesures snmp et les traps StorageGRID</block>
   <block id="45c8288f990abd9a185e596536152688" category="sidebar">Exemples de stratégie de compartiment et de groupe</block>
+  <block id="38d38399d4a7514463d665125ae50a4a" category="list-text">CDM Rubrik</block>
 </blocks>

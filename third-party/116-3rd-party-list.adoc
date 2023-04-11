@@ -52,7 +52,7 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * Primestream
 * StorNext de Quantum 5.4.0.1
 * Reveille v10 construire 220706 ou plus
-* Rubrik CDM 5.0.1 p1-1342
+* CDM Rubrik
 * Signiant
 * Flocon de neige
 * SmartStore Splunk
