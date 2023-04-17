@@ -8,6 +8,8 @@ summary: Ce rapport technique fournit des instructions détaillées sur la confi
 :allow-uri-read: 
 
 
+_Aron Klein_
+
 [role="lead"]
 Ce rapport technique fournit des instructions détaillées sur la configuration de NetApp StorageGRID 11.6 avec des services Prometheus et Grafana externes.
 

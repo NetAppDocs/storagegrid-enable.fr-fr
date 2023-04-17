@@ -8,6 +8,8 @@ summary: Configurez Datalog HQ pour collecter les mesures snmp et les interrupti
 :allow-uri-read: 
 
 
+_Aron Klein_
+
 [role="lead"]
 Configurez Datalog pour collecter les mesures snmp et les traps StorageGRID.
 

@@ -6,9 +6,9 @@ summary: Comment utiliser le remap de port.
 ---
 = Comment utiliser le remap de port
 :allow-uri-read: 
-:icons: font
-:imagesdir: ../media/
 
+
+_Aron Klein_
 
 [role="lead"]
 Vous devrez peut-être remmapper un port entrant ou sortant pour plusieurs raisons. Vous pouvez passer du service d'équilibrage de la charge CLB existant au point de terminaison actuel de l'équilibreur de charge des services nginx et maintenir le même port pour réduire l'impact sur les clients, utiliser le port 443 pour le client S3 sur un réseau client de nœud d'administration ou pour les restrictions de pare-feu.

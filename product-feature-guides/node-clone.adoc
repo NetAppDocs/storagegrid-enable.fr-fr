@@ -6,9 +6,9 @@ summary: Performances des clones de nœuds et bonnes pratiques
 ---
 = Clone de nœud
 :allow-uri-read: 
-:icons: font
-:imagesdir: ../media/
 
+
+_Aron Klein_
 
 [role="lead"]
 Considérations et performances sur le clonage des nœuds.

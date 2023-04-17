@@ -6,9 +6,9 @@ summary: 'Ce guide fournit des instructions détaillées sur la configuration du
 ---
 = Configurez le service d'intégration de recherche StorageGRID
 :allow-uri-read: 
-:icons: font
-:imagesdir: ../media/
 
+
+_Angela Cheng_
 
 [role="lead"]
 Ce guide fournit des instructions détaillées sur la configuration du service d'intégration de recherche NetApp StorageGRID 11.6 avec Amazon OpenSearch Service ou avec Elasticsearch sur site.

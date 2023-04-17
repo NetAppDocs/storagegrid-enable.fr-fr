@@ -6,9 +6,9 @@ summary: 'Vous pouvez utiliser un pool de stockage cloud pour déplacer des obje
 ---
 = Création d'un pool de stockage cloud pour AWS ou Google Cloud
 :allow-uri-read: 
-:icons: font
-:imagesdir: ../media/
 
+
+_Jonathan Wong_
 
 [role="lead"]
 Vous pouvez utiliser un pool de stockage cloud pour déplacer des objets StorageGRID vers un compartiment S3 externe. Le compartiment externe peut appartenir à Amazon S3 (AWS) ou à Google Cloud.

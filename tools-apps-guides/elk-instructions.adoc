@@ -8,6 +8,8 @@ summary: 'Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez c
 :allow-uri-read: 
 
 
+_Angela Cheng_
+
 [role="lead"]
 Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez configurer un serveur syslog externe afin de collecter et d'analyser les messages journaux StorageGRID. ELK (Elasticsearch, Logstash, Kibana) est devenu l'une des solutions d'analytique des journaux les plus populaires. Regardez la https://www.netapp.tv/details/29396["Analyse du journal StorageGRID à l'aide de la vidéo ELK"] Pour afficher un exemple de configuration ELK et comment elle peut être utilisée pour identifier et dépanner les demandes S3 en échec. Cet article fournit des exemples de fichiers de configuration Logstash, de requêtes Kibana, de graphiques et de tableau de bord, pour vous offrir un démarrage rapide de la gestion des journaux et de l'analytique StorageGRID.
 
