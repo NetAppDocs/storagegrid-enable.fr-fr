@@ -12,20 +12,16 @@ sidebar:
   entries:
   - title: Comment activer StorageGRID
     url: "/index.html"
-  - title: Quoi de neuf
-    url: "/whats-new.html"
   - section: third-party
   - section: product-feature-guides
   - section: tools-apps-guides
   - section: examples
+  - title: Articles de blog
+    url: "/blogs.html"
   - title: Documentation StorageGRID
     url: "/storagegrid-documentation.html"
 homepage:
   tiles:
-  - title: Commencez
-    links:
-    - title: Quoi de neuf
-      url: "/whats-new.html"
   - title: Des solutions tierces validées
     links:
     - title: Présentation
@@ -79,6 +75,10 @@ homepage:
       url: "/examples/test-demonstrate-S3-object-lock.html"
     - title: Exemples de stratégie de compartiment et de groupe
       url: "/examples/bucket-policy-examples.html"
+  - title: Articles de blog
+    links:
+    - title: Blogs StorageGRID
+      url: "/blogs.html"
   - title: Didacticiels de démonstration
     links:
     - title: Vidéothèque StorageGRID
