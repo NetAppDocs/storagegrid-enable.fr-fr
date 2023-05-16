@@ -11,7 +11,7 @@ summary: 'StorageGRID et l"API S3 proposent plusieurs façons de chiffrer vos do
 _Aron Klein_
 
 [role="lead"]
-StorageGRID et l'API S3 proposent plusieurs façons de chiffrer vos données au repos. Pour en savoir plus, voir https://docs.netapp.com/us-en/storagegrid-116/admin/reviewing-storagegrid-encryption-methods.html["Étudiez les méthodes de cryptage StorageGRID"^].
+StorageGRID et l'API S3 proposent plusieurs façons de chiffrer vos données au repos. Pour en savoir plus, voir https://["Étudiez les méthodes de cryptage StorageGRID"^].
 
 Ce guide présente les méthodes de chiffrement de l'API S3.
 

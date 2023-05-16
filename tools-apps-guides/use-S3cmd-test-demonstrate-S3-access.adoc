@@ -17,7 +17,7 @@ S3cmd est un outil de ligne de commande gratuit et un client pour les opération
 
 == Installez et configurez S3cmd
 
-Pour installer S3cmd sur un poste de travail ou un serveur, téléchargez-le à partir de https://s3tools.org/s3cmd["Client S3 en ligne de commande"^]. S3cmd est préinstallé sur chaque nœud StorageGRID comme outil pour faciliter le dépannage.
+Pour installer S3cmd sur un poste de travail ou un serveur, téléchargez-le à partir de https://["Client S3 en ligne de commande"^]. S3cmd est préinstallé sur chaque nœud StorageGRID comme outil pour faciliter le dépannage.
 
 
 

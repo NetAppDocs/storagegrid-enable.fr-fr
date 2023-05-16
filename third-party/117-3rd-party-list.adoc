@@ -1,0 +1,82 @@
+---
+permalink: third-party/117-3rd-party-list.html 
+sidebar: sidebar 
+keywords: 11.7, third-party applications, storagegrid, ISV 
+summary: Solutions tierces validées pour StorageGRID 11.7 
+---
+= Solutions tierces validées par StorageGRID 11.7
+:allow-uri-read: 
+
+
+[role="lead"]
+Les solutions tierces suivantes ont été validées pour une utilisation avec StorageGRID 11.6. + si la solution que vous recherchez n'est pas répertoriée, contactez votre ingénieur commercial NetApp.
+
+
+
+== Solutions tierces validées sur StorageGRID
+
+Ces solutions ont été testées en collaboration avec les partenaires respectifs.
+
+* Actifio
+* Apache Kafka
+* Cantemo
+* Collaboration de contenu Citrix
+* CommVault 11
+* Portail CTERA 6
+* Dalet
+* Le stockage dynamique des données
+* DétendX
+* Disquette de données
+* Dremio
+* Emam
+* Archive d'objets Fujifilm
+* GitHub Enterprise Server
+* IBM FileNet
+* IBM Spectrum Protect plus
+* Interica
+* Komprise
+* Clusters de Big Data Microsoft SQL Server
+* Modèle 9
+* Modzy
+* La promenade au clair de lune Universal
+* BIEN
+* Nasuni
+* OpenText Documentum 16.4
+* OpenText Documentum 21.4
+* OpenText InfoArchive 16 EP7
+* OpenText Media Management 16.5 avec CyanGate Cloud
+* Panzura
+* PixitMedia ngenea
+* Passerelle d'archivage de points 2.0
+* Point Storage Manager 6.4
+* Primestream
+* StorNext de Quantum 5.4.0.1
+* Reveille v10 construire 220706 ou plus
+* CDM Rubrik
+* Signiant
+* Flocon de neige
+* SmartStore Splunk
+* Pour un stockage simplifié
+* Vernis Enterprise 6.0.4
+* Veeam 11
+* Veritas Enterprise Vault 14
+* Veritas NetBackup 8.0
+* Vertica 10.x
+* Vidispine
+* Virtalica StorageFabric
+* Weka v3.10 ou ultérieure
+
+
+
+
+== Solutions tierces validées sur StorageGRID avec verrouillage objet
+
+Ces solutions ont été testées en collaboration avec les partenaires respectifs.
+
+* Fonctionnalité CommVault 11 version 26
+* IBM FileNet
+* OpenText Documentum 21.4
+* Veeam 11
+* Veritas Enterprise Vault 14.2.2
+* Veritas NetBackup 10.1.1 et versions ultérieures
+

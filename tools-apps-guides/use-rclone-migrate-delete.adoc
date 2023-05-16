@@ -17,7 +17,7 @@ Rclone est un outil de ligne de commande et un client gratuits pour les opérati
 
 == Installer et configurer rclone
 
-Pour installer rclone sur un poste de travail ou un serveur, téléchargez-le depuis https://rclone.org/downloads/["rclone.org"^].
+Pour installer rclone sur un poste de travail ou un serveur, téléchargez-le depuis https://["rclone.org"^].
 
 
 
