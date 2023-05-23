@@ -24,9 +24,9 @@ StorageGRID prend en charge trois types de services de plateforme.
 * *Service d'intégration de recherche*. Envoyez les métadonnées d'objet S3 (simple Storage Service) à un index Elasticsearch spécifique où vous pouvez rechercher ou analyser les métadonnées à l'aide du service externe.
 
 
-Les services de plateforme sont configurés par le locataire S3 via l'interface du gestionnaire des locataires. Pour plus d'informations, voir https://["Considérations relatives à l'utilisation des services de plate-forme"^].
+Les services de plateforme sont configurés par le locataire S3 via l'interface du gestionnaire des locataires. Pour plus d'informations, voir https://docs.netapp.com/us-en/storagegrid-116/tenant/considerations-for-using-platform-services.html["Considérations relatives à l'utilisation des services de plate-forme"^].
 
-Ce document est un supplément au https://["Guide des locataires StorageGRID 11.6"^] et fournit des instructions détaillées et des exemples de configuration du terminal et des compartiments pour les services d'intégration de la recherche. Les instructions d'installation d'Amazon Web Services (AWS) ou de Elasticsearch sur site indiquées ici sont fournies à des fins de test ou de démonstration uniquement.
+Ce document est un supplément au https://docs.netapp.com/us-en/storagegrid-116/tenant/index.html["Guide des locataires StorageGRID 11.6"^] et fournit des instructions détaillées et des exemples de configuration du terminal et des compartiments pour les services d'intégration de la recherche. Les instructions d'installation d'Amazon Web Services (AWS) ou de Elasticsearch sur site indiquées ici sont fournies à des fins de test ou de démonstration uniquement.
 
 Les participants doivent maîtriser Grid Manager et le Gestionnaire de locataires, et avoir accès au navigateur S3 pour effectuer des opérations de chargement (PUT) et de téléchargement (GET) de base pour les tests d'intégration de la recherche StorageGRID.
 
@@ -68,7 +68,7 @@ NOTE: Vous devez disposer d'un identifiant de console AWS valide, d'une clé d'a
 +
 *** Remplacez le texte surligné par votre propre ID et nom d'utilisateur AWS Identity and Access Management (IAM).
 *** Remplacez le texte en surbrillance (adresse IP) par l'adresse IP publique de votre ordinateur local utilisé pour accéder à la console AWS.
-*** Ouvrez un onglet de navigateur pour https://["https://checkip.amazonaws.com"^] Pour trouver votre IP publique.
+*** Ouvrez un onglet de navigateur pour https://checkip.amazonaws.com/["https://checkip.amazonaws.com"^] Pour trouver votre IP publique.
 +
 [source, json]
 ----
@@ -321,6 +321,6 @@ image::../media/storagegrid-search-integration-service/sg-sis-query-two-sample.p
 
 Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
 
-* https://["Qu'est-ce que les services de plateforme"^]
-* https://["Documentation StorageGRID 11.6"^]
+* https://docs.netapp.com/us-en/storagegrid-116/tenant/what-platform-services-are.html["Qu'est-ce que les services de plateforme"^]
+* https://docs.netapp.com/us-en/storagegrid-116/index.html["Documentation StorageGRID 11.6"^]
 

@@ -25,7 +25,7 @@ Datalog est une solution de surveillance qui fournit des mesures, des visualisat
 
 Datadog fournit une méthode de conversion des fichiers MIB de produit en fichiers de référence Datadog requis pour mapper les messages SNMP.
 
-Ce fichier yaml StorageGRID pour le mappage de résolution des interruptions Datadog généré suivant l'instruction trouvée https://["ici"^]. + placez ce fichier dans /etc/datadog-agent/conf.d/snmp.d/traps_db/ +
+Ce fichier yaml StorageGRID pour le mappage de résolution des interruptions Datadog généré suivant l'instruction trouvée https://docs.datadoghq.com/network_monitoring/devices/snmp_traps/?tab=yaml["ici"^]. + placez ce fichier dans /etc/datadog-agent/conf.d/snmp.d/traps_db/ +
 
 * link:../media/datadog/NETAPP-STORAGEGRID-MIB.yml["Téléchargez le fichier yaml d'interruption"] +
 +
@@ -35,7 +35,7 @@ Ce fichier yaml StorageGRID pour le mappage de résolution des interruptions Dat
 
 
 
-Ce fichier yaml de profil StorageGRID pour le mappage de metrics Datadog généré suivant l'instruction trouvée https://["ici"^]. + placez ce fichier dans /etc/datadog-agent/conf.d/snmp.d/profiles/ +
+Ce fichier yaml de profil StorageGRID pour le mappage de metrics Datadog généré suivant l'instruction trouvée https://datadoghq.dev/integrations-core/tutorials/snmp/introduction/["ici"^]. + placez ce fichier dans /etc/datadog-agent/conf.d/snmp.d/profiles/ +
 
 * link:../media/datadog/netapp-storagegrid.yaml["Téléchargez le fichier yaml de profil"] +
 +
