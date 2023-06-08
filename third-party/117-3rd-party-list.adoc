@@ -25,6 +25,7 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * CommVault 11
 * Portail CTERA 6
 * Dalet
+* Datobi
 * Le stockage dynamique des données
 * DétendX
 * Disquette de données
