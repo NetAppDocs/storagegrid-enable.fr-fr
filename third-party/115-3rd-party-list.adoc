@@ -18,6 +18,7 @@ Les solutions tierces suivantes ont été validées pour une utilisation avec St
 Ces solutions ont été testées en collaboration avec les partenaires respectifs.
 
 * Actifio
+* Bridgesdor
 * Cantemo
 * Collaboration de contenu Citrix
 * CommVault 11
@@ -60,4 +61,29 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 
 * OpenText Documentum 21.4
 * Veeam 11
+
+
+
+
+== Solutions tierces prises en charge sur StorageGRID
+
+Ces solutions ont été testées.
+
+* Logiciel d'archivage
+* Communications d'axe
+* Congruity360
+* DataFrameworks
+* Plate-forme DIVA EcoDigital
+* Encoding.com
+* Archive d'objets Fujifilm
+* Archive GE Centricity Enterprise
+* Acuo Hyland
+* IBM Aspera
+* Systèmes Milestone
+* RSSI
+* Moteur REACH
+* SilverTrak
+* SoftNAS
+* QSTAR
+* Velasea
 
