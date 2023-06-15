@@ -19,7 +19,7 @@ Voici des exemples de politiques de compartiment et de règles de groupe (règle
 
 === Accès au compartiment de style Home Directory
 
-Cette règle ne permet aux utilisateurs d'accéder qu'aux objets du compartiment nommé nom d'utilisateur utilisateurs.
+Cette stratégie de groupe autorise uniquement les utilisateurs à accéder aux objets du compartiment nommé nom d'utilisateur utilisateurs.
 
 [source, json]
 ----
@@ -49,7 +49,7 @@ Cette règle ne permet aux utilisateurs d'accéder qu'aux objets du compartiment
 
 === Refuser la création de compartiments de verrouillage d'objet
 
-Cette règle empêche les utilisateurs de créer un compartiment avec le verrouillage des objets activé sur le compartiment.
+Cette stratégie de groupe empêche les utilisateurs de créer un compartiment avec le verrouillage d'objet activé sur le compartiment.
 
 [NOTE]
 ====
@@ -74,6 +74,91 @@ Cette règle n'est pas appliquée dans l'interface utilisateur de StorageGRID et
             "Resource": "arn:aws:s3:::*"
         }
     ]
+}
+----
+
+
+=== Limite de conservation du verrouillage des objets
+
+Cette stratégie de compartiment limite la durée de conservation du verrouillage de l'objet à 10 jours ou moins
+
+[source, json]
+----
+{
+ "Version":"2012-10-17",
+ "Id":"CustSetRetentionLimits",
+ "Statement": [
+   {
+    "Sid":"CustSetRetentionPeriod",
+    "Effect":"Deny",
+    "Principal":"*",
+    "Action": [
+      "s3:PutObjectRetention"
+    ],
+    "Resource":"arn:aws:s3:::testlock-01/*",
+    "Condition": {
+      "NumericGreaterThan": {
+        "s3:object-lock-remaining-retention-days":"10"
+      }
+    }
+   }
+  ]
+}
+----
+
+
+=== Empêcher les utilisateurs de supprimer des objets par ID de version
+
+Cette stratégie de groupe empêche les utilisateurs de supprimer des objets multiversion par ID de version
+
+[source, json]
+----
+{
+    "Statement": [
+        {
+            "Action": [
+                "s3:DeleteObjectVersion"
+            ],
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::*"
+        },
+        {
+            "Action": "s3:*",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::*"
+        }
+    ]
+}
+----
+Cette stratégie de compartiment empêche un utilisateur (identifié par l'ID utilisateur « 56622399308951294926 ») de supprimer des objets multiversion par l'ID de version
+
+[source, json]
+----
+{
+  "Statement": [
+    {
+      "Action": [
+        "s3:DeleteObjectVersion"
+      ],
+      "Effect": "Deny",
+      "Resource": "arn:aws:s3:::verdeny/*",
+      "Principal": {
+        "AWS": [
+          "56622399308951294926"
+        ]
+      }
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::verdeny/*",
+      "Principal": {
+        "AWS": [
+          "56622399308951294926"
+        ]
+      }
+    }
+  ]
 }
 ----
 

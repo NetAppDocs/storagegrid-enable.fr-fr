@@ -995,9 +995,7 @@
   <block id="3f2327c90ede247dca9387ef500bf746" category="doc">Exemples de règles de compartiment et de groupe (IAM</block>
   <block id="640ca9533a2fd150e7d3ed390e2aae66" category="section-title">Stratégies de groupe (IAM)</block>
   <block id="06c73db3763c74cabb8ece8e96fe7c5d" category="section-title">Accès au compartiment de style Home Directory</block>
-  <block id="0a86daa722ca043525363e55dce2f201" category="paragraph">Cette règle ne permet aux utilisateurs d'accéder qu'aux objets du compartiment nommé nom d'utilisateur utilisateurs.</block>
   <block id="8569c05df75ec9b148a67ed5998ad8b0" category="section-title">Refuser la création de compartiments de verrouillage d'objet</block>
-  <block id="9cea9229d238df9d490e17e9c09f43d4" category="paragraph">Cette règle empêche les utilisateurs de créer un compartiment avec le verrouillage des objets activé sur le compartiment.</block>
   <block id="01a232853896677ed5b2f61bbd35128f" category="paragraph">Cette règle n'est pas appliquée dans l'interface utilisateur de StorageGRID et elle n'est appliquée que par l'API S3.</block>
   <block id="6d16e4029056ceaf0b44cac8903e3f2e" category="section-title">Restriction du compartiment à un seul utilisateur avec un accès en lecture seule</block>
   <block id="c49b1c74a2176733b070d19773700eb6" category="paragraph">Cette stratégie permet à un seul utilisateur de disposer d'un accès en lecture seule à un compartiment et d'accéder explicitement à tous les autres utilisateurs. Le regroupement des déclarations de refus en haut de la politique est une bonne pratique pour une évaluation plus rapide.</block>
@@ -1134,4 +1132,11 @@
   <block id="29007b92e2b6688072358d8f25529d24" category="paragraph"><block ref="29007b92e2b6688072358d8f25529d24" category="inline-link-rx"></block></block>
   <block id="d31ba7e4c6f469a6c88f05aac3e0e91c" category="list-text">Datobi</block>
   <block id="8727881150b0ace8b598a648cdfcd4e1" category="sidebar">NetApp StorageGRID est une suite de stockage objet Software-defined qui prend en charge un large éventail d'utilisations dans les environnements multiclouds publics, privés et hybrides. StorageGRID offre une prise en charge native de l'API Amazon S3 et propose des innovations de pointe, telles que la gestion automatisée du cycle de vie, pour stocker, sécuriser, protéger et conserver les données non structurées de manière économique sur de longues périodes.</block>
+  <block id="a88f9b6efeacfebaca582083cb9bd819" category="paragraph">Cette stratégie de groupe autorise uniquement les utilisateurs à accéder aux objets du compartiment nommé nom d'utilisateur utilisateurs.</block>
+  <block id="a16b735f7d349dcc23b45a7a101460f3" category="paragraph">Cette stratégie de groupe empêche les utilisateurs de créer un compartiment avec le verrouillage d'objet activé sur le compartiment.</block>
+  <block id="5ccd1d9b602b536952729ea6084688f1" category="section-title">Limite de conservation du verrouillage des objets</block>
+  <block id="e2fc2c3ef79779a5164b3961924241c1" category="paragraph">Cette stratégie de compartiment limite la durée de conservation du verrouillage de l'objet à 10 jours ou moins</block>
+  <block id="578c6a63b7f6efe56f08f3f9c3c5a690" category="section-title">Empêcher les utilisateurs de supprimer des objets par ID de version</block>
+  <block id="151d6c6a5174c6a3f739cdb8ec8d1ce5" category="paragraph">Cette stratégie de groupe empêche les utilisateurs de supprimer des objets multiversion par ID de version</block>
+  <block id="d5c59b735ec0b06ade2e2d7c842dfe9e" category="paragraph">Cette stratégie de compartiment empêche un utilisateur (identifié par l'ID utilisateur « 56622399308951294926 ») de supprimer des objets multiversion par l'ID de version</block>
 </blocks>
