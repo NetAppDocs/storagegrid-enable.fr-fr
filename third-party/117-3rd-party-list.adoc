@@ -18,6 +18,7 @@ L'utilisation des solutions tierces suivantes a été validée avec StorageGRID 
 Ces solutions ont été testées en collaboration avec les partenaires respectifs.
 
 * Actifio
+* Almuxio
 * Apache Kafka
 * Bridgesdor
 * Cantemo
@@ -55,10 +56,12 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * StorNext de Quantum 5.4.0.1
 * Reveille v10 construire 220706 ou plus
 * CDM Rubrik
+* s3a
 * Signiant
 * Flocon de neige
 * SmartStore Splunk
 * Pour un stockage simplifié
+* Trino
 * Vernis Enterprise 6.0.4
 * Veeam 12
 * Veritas Enterprise Vault 14

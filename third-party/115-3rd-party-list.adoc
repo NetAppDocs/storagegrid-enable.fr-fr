@@ -18,6 +18,7 @@ Les solutions tierces suivantes ont été validées pour une utilisation avec St
 Ces solutions ont été testées en collaboration avec les partenaires respectifs.
 
 * Actifio
+* Almuxio
 * Bridgesdor
 * Cantemo
 * Collaboration de contenu Citrix
@@ -42,8 +43,10 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * Primestream
 * StorNext de Quantum 5.4.0.1
 * CDM Rubrik
+* s3a
 * Signiant
 * SmartStore Splunk
+* Trino
 * Vernis Enterprise 6.0.4
 * Veeam 11
 * Veritas Enterprise Vault 11
