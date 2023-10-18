@@ -59,6 +59,7 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * s3a
 * Signiant
 * Flocon de neige
+* Spectra Logic On-sur-site Glacier
 * SmartStore Splunk
 * Pour un stockage simplifié
 * Trino
