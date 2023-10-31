@@ -692,7 +692,7 @@ Procédez comme suit pour charger les données d'échantillon :
 
 Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
 
-* link:https://docs.netapp.com/sgws-114/index.jsp["Documentation sur le produit NetApp StorageGRID 11.4"^]
+* link:https://docs.netapp.com/us-en/storagegrid-117/["Documentation du produit NetApp StorageGRID 11.7"^]
 * link:https://www.netapp.com/pdf.html?item=/media/7931-ds-3613.pdf["Fiche technique StorageGRID"^]
 * link:https://www.vertica.com/documentation/vertica/10-1-x-documentation/["Documentation produit de Vertica 10.1"^]
 

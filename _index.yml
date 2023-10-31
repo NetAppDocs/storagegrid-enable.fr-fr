@@ -54,6 +54,8 @@ indexpage:
       url: "/tools-apps-guides/use-datadog-snmp.html"
     - title: Utilisez rclone pour migrer, DÉPLACER et SUPPRIMER des objets sur StorageGRID
       url: "/tools-apps-guides/use-rclone-migrate-delete.html"
+    - title: Utilisez Veeam Backup and Replication avec StorageGRID
+      url: "/tools-apps-guides/veeam-br.html"
   - title: Procédures et exemples d'API
     links:
     - title: Tester et démontrer le chiffrement S3
