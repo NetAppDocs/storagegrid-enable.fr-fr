@@ -81,6 +81,7 @@ Ces solutions ont été testées.
 * Encoding.com
 * Archive d'objets Fujifilm
 * Archive GE Centricity Enterprise
+* Gitlab
 * Acuo Hyland
 * IBM Aspera
 * Systèmes Milestone
