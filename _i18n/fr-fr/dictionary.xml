@@ -1278,4 +1278,6 @@ Si vous utilisez un certificat CA auto-signé pour ce noeud final s3, suivez l'i
   <block id="cda1cacdbb2c1506d847fed8599faa68" category="list-text">Novembre 7 :<block ref="4558e5f7bc147029e407b74c0a6768e6" category="inline-link-rx"></block></block>
   <block id="d8d45aa5142f174e3e83b7f1de8895a1" category="sidebar">Configurer Dremio avec StorageGRID</block>
   <block id="9792e23419583666b178605decaec552" category="list-text">Gitlab</block>
+  <block id="d2f2caed07026483a659ddedff29363a" category="section-title">Limiter un groupe à un sous-répertoire unique (préfixe) avec accès en lecture seule</block>
+  <block id="12e569a2475c87038546154b45eafa4f" category="paragraph">Cette règle permet aux membres du groupe d'accéder en lecture seule à un sous-répertoire (préfixe) au sein d'un compartiment. Le nom du compartiment est « Study » et le sous-répertoire est « study01 ».</block>
 </blocks>
