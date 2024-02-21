@@ -5,10 +5,11 @@ keywords: ELK, log analytics, log analysis, StorageGRID troubleshooting
 summary: 'Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez configurer un serveur syslog externe afin de collecter et d"analyser les messages journaux StorageGRID. ELK (Elasticsearch, Logstash, Kibana) est devenu l"une des solutions d"analytique des journaux les plus populaires. Cet article inclut un exemple de configuration Logstash pour filtrer et définir des modèles de messages des journaux, une requête Kibana, des graphiques et un exemple de tableau de bord, afin de vous offrir un démarrage rapide pour la gestion et l"analytique des journaux StorageGRID.' 
 ---
 = Analyse des journaux StorageGRID à l'aide de la pile ELK
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/elk-config/
 
-
-_Angela Cheng_
 
 [role="lead"]
 Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez configurer un serveur syslog externe afin de collecter et d'analyser les messages journaux StorageGRID. ELK (Elasticsearch, Logstash, Kibana) est devenu l'une des solutions d'analytique des journaux les plus populaires. Regardez la https://www.netapp.tv/details/29396["Analyse du journal StorageGRID à l'aide de la vidéo ELK"] Pour afficher un exemple de configuration ELK et comment elle peut être utilisée pour identifier et dépanner les demandes S3 en échec. Cet article fournit des exemples de fichiers de configuration Logstash, de requêtes Kibana, de graphiques et de tableau de bord, pour vous offrir un démarrage rapide de la gestion des journaux et de l'analytique StorageGRID.
@@ -47,11 +48,11 @@ match => {"message" => '<%{POSINT:syslog_pri}>%{SYSLOGBASE} %{GREEDYDATA:msg-det
 ----
 *Logstash 7.17 échantillon*
 
-image::../media/elk-config/logstash-7.17.fields-sample.png[Échantillon Logash 7.17]
+image::logstash-7.17.fields-sample.png[Échantillon Logash 7.17]
 
 *Logstash 8.23 échantillon*
 
-image::../media/elk-config/logstash-8.x.fields-sample.png[Échantillon Logash 8.23]
+image::logstash-8.x.fields-sample.png[Échantillon Logash 8.23]
 
 *Étapes*
 
@@ -98,13 +99,13 @@ GET /_cat/indices/*?v=true&s=index
 . A partir de l'interface graphique Kibana, créez un motif d'index (ELK 7.x) ou une vue de données (ELK 8.x).
 . Dans l'interface utilisateur graphique de Kibana, entrez « objets lavés » dans la zone de recherche située en haut au centre. + sur la page objets enregistrés, sélectionnez Importer. Sous Options d'importation, sélectionnez « demander une action en cas de conflit »
 +
-image::../media/elk-config/kibana-import-options.png[Options d'importation Kibana]
+image::kibana-import-options.png[Options d'importation Kibana]
 
 +
 Importez elk<version>-query-chart-sample.ndjson. + lorsque vous êtes invité à résoudre le conflit, sélectionnez le modèle d'index ou la vue de données que vous avez créé à l'étape 8.
 
 +
-image::../media/elk-config/kibana-import-conflict.png[Conflit Kibana]
+image::kibana-import-conflict.png[Conflit Kibana]
 
 +
 Les objets Kibana suivants sont importés : + *Query* + * audit-msg-s3rq-orlm + * journal de distribution messages liés s3 + * avertissement de niveau de journalisation ou supérieur + * échec de sécurité + *Chart* + * nombre de requêtes s3 basé sur bycast.log + * code d'état HTTP + * décomposition du msg d'audit par type + * réponse moyenne s3 Temps + *Tableau de bord* + * Tableau de bord de demande S3 à l'aide des tableaux ci-dessus.
@@ -125,3 +126,5 @@ Vous êtes maintenant prêt à effectuer une analyse des journaux StorageGRID à
 * https://www.elastic.co/guide/en/kibana/master/document-explorer.html["Guide Kibana - Explorez le document"]
 * https://docs.netapp.com/us-en/storagegrid-116/audit/index.html["Référence des messages du journal d'audit StorageGRID"]
 
+
+_Par Angela Cheng_

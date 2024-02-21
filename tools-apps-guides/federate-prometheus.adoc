@@ -5,10 +5,11 @@ keywords: prometheus, on-premises, grafana, metrics
 summary: Ce rapport technique fournit des instructions détaillées sur la configuration de NetApp StorageGRID 11.6 avec des services Prometheus et Grafana externes. 
 ---
 = Grâce à Prometheus et Grafana, vous pouvez renforcer la conservation des metrics
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/prometheus/
 
-
-_Aron Klein_
 
 [role="lead"]
 Ce rapport technique fournit des instructions détaillées sur la configuration de NetApp StorageGRID 11.6 avec des services Prometheus et Grafana externes.
@@ -39,11 +40,11 @@ Afin d'accéder aux identifiants de paramètres de la mémoire de la solution, v
 . Sur la page certificats, sélectionnez l'onglet « client » et cliquez sur le bouton « Ajouter ».
 . Indiquez un nom pour le client auquel l'accès sera accordé et utilisez ce certificat. Cliquez sur la case sous "permissions", devant "Autoriser Prometheus" et cliquez sur le bouton Continuer.
 +
-image::../media/prometheus/cert_name.png[nom du certificat]
+image::cert_name.png[nom du certificat]
 
 . Si vous disposez d'un certificat signé par l'autorité de certification, vous pouvez sélectionner le bouton radio « Télécharger le certificat », mais dans notre cas, nous allons permettre à StorageGRID de générer le certificat client en sélectionnant le bouton radio « générer le certificat ». Les champs obligatoires s'affichent pour être renseignés. Saisissez le FQDN du serveur client, l'adresse IP du serveur, l'objet et les jours valides. Cliquez ensuite sur le bouton « générer ».
 +
-image::../media/prometheus/cert_detail.png[détails du certificat]
+image::cert_detail.png[détails du certificat]
 
 
 
@@ -53,7 +54,7 @@ image::../media/prometheus/cert_detail.png[détails du certificat]
 ====
 . Téléchargez le fichier pem de certificat et le fichier pem de clé privée.
 +
-image::../media/prometheus/cert_download.png[téléchargement du certificat]
+image::cert_download.png[téléchargement du certificat]
 
 
 
@@ -253,18 +254,18 @@ Aug 22 15:14:24 aj-deb-prom01 prometheus[6498]: ts=2022-08-22T19:14:24.832Z call
 ----
 . Vous devez maintenant pouvoir naviguer vers l'interface du serveur prometheus http://Prometheus-server:9090[] Et voir l'interface utilisateur
 +
-image::../media/prometheus/prometheus_ui.png[Page interface utilisateur de prometheus]
+image::prometheus_ui.png[Page interface utilisateur de prometheus]
 
 . Sous cibles « Status », vous pouvez consulter le statut du noeud final StorageGRID configuré dans prometheus.yml
 +
-image::../media/prometheus/prometheus_targets.png[menu d'état prometheus]
+image::prometheus_targets.png[menu d'état prometheus]
 
 +
-image::../media/prometheus/prometheus_target_status.png[page cibles de prometheus]
+image::prometheus_target_status.png[page cibles de prometheus]
 
 . Sur la page graphique, vous pouvez exécuter une requête de test et vérifier que les données sont scrapées avec succès. Par exemple, entrez « storagegrid_node_cpu_usage_percent » dans la barre de requêtes et cliquez sur le bouton Exécuter.
 +
-image::../media/prometheus/prometheus_execute.png[exécution des requêtes prometheus]
+image::prometheus_execute.png[exécution des requêtes prometheus]
 
 
 
@@ -321,14 +322,14 @@ Lorsque vous installez et exécutez Grafana et Prometheus, vous pouvez désormai
 . Prometheus est une des principales sources de données. Si ce n'est pas le cas, utilisez la barre de recherche pour trouver Prometheus
 . Configurez la source Prometheus en entrant l'URL de l'instance prometheus et l'intervalle de récupération en fonction de l'intervalle Prometheus. J'ai également désactivé la section d'alertes car je n'ai pas configuré le gestionnaire d'alertes sur prometheus.
 +
-image::../media/prometheus/grafana_prometheus_conf.png[configuration grfana de prometheus]
+image::grafana_prometheus_conf.png[configuration grfana de prometheus]
 
 . Une fois les paramètres souhaités saisis, faites défiler l'écran vers le bas et cliquez sur « Enregistrer et tester ».
 . Une fois le test de configuration réussi, cliquez sur le bouton Explorer.
 +
 .. Dans la fenêtre d'exploration, vous pouvez utiliser la même mesure que Prometheus testée avec « storagegrid_node_cpu_use_percent », puis cliquez sur le bouton Run Query
 +
-image::../media/prometheus/grafana_source_explore.png[découvrez les metrics de prometheus à partir de grafana]
+image::grafana_source_explore.png[découvrez les metrics de prometheus à partir de grafana]
 
 
 
@@ -338,7 +339,7 @@ image::../media/prometheus/grafana_source_explore.png[découvrez les metrics de 
 .. Sélectionnez « Ajouter un nouveau panneau »
 .. Configurez le nouveau panneau en sélectionnant une mesure, puis j'utiliserai à nouveau « storagegrid_node_cpu_use_percentage », saisissez un titre pour le panneau, développez « Options » en bas et pour changer de légende en personnalisé et entrez «{{instance} » pour définir les noms de nœud, et à droite sous « Options standard » définissez « unité » sur « 100 % ». Cliquez ensuite sur « appliquer » pour enregistrer le panneau dans le tableau de bord.
 +
-image::../media/prometheus/grafana_panel_conf.png[configurer le panneau grafana]
+image::grafana_panel_conf.png[configurer le panneau grafana]
 
 
 
@@ -347,31 +348,31 @@ image::../media/prometheus/grafana_panel_conf.png[configurer le panneau grafana]
 .. Dans le volet gauche de l'interface de gestion StorageGRID, sélectionnez « support », et en bas de la colonne « Outils », cliquez sur métriques.
 .. Dans les mesures, je vais sélectionner le lien « grille » en haut de la colonne centrale.
 +
-image::../media/prometheus/storagegrid_metrics.png[Metrics StorageGRID]
+image::storagegrid_metrics.png[Metrics StorageGRID]
 
 .. Dans le tableau de bord Grid, sélectionnez le panneau « stockage utilisé - métadonnées de l'objet ». Cliquez sur la petite flèche vers le bas et sur la fin du titre du panneau pour faire descendre un menu. Dans ce menu, sélectionnez « inspection » et « panneau JSON ».
 +
-image::../media/prometheus/storagegrid_dashboard_insp.png[Tableau de bord StorageGRID]
+image::storagegrid_dashboard_insp.png[Tableau de bord StorageGRID]
 
 .. Copiez le code JSON et fermez la fenêtre.
 +
-image::../media/prometheus/storagegrid_panel_inspect.png[StorageGRID JSON]
+image::storagegrid_panel_inspect.png[StorageGRID JSON]
 
 .. Dans notre nouveau tableau de bord, cliquez sur l'icône pour ajouter un nouveau panneau.
 +
-image::../media/prometheus/grafana_add_panel.png[ajout de grafana]
+image::grafana_add_panel.png[ajout de grafana]
 
 .. Appliquez le nouveau panneau sans apporter de modifications
 .. Inspecter le fichier JSON, et tout comme dans le panneau StorageGRID. Supprimez tout code JSON et remplacez-le par le code copié du panneau StorageGRID.
 +
-image::../media/prometheus/grafana_panel_inspect.png[panneau d'inspection grafana]
+image::grafana_panel_inspect.png[panneau d'inspection grafana]
 
 .. Modifiez le nouveau panneau et, à droite, un message migration s'affiche avec un bouton « migrer ». Cliquez sur le bouton, puis sur le bouton « appliquer ».
 +
-image::../media/prometheus/grafana_panel_edit_menu.png[menu du panneau d'édition grafana]
+image::grafana_panel_edit_menu.png[menu du panneau d'édition grafana]
 
 +
-image::../media/prometheus/grafana_panel_edit.png[panneau d'édition grafana]
+image::grafana_panel_edit.png[panneau d'édition grafana]
 
 
 
@@ -383,3 +384,5 @@ image::../media/prometheus/grafana_panel_edit.png[panneau d'édition grafana]
 === Conclusion
 
 Nous disposons désormais d'un serveur Prometheus avec une capacité de stockage et de conservation des données personnalisables. Grâce à cela, nous pouvons continuer à élaborer nos propres tableaux de bord avec les mesures les plus pertinentes pour nos opérations. Vous pouvez obtenir plus d'informations sur les metrics Prometheus collectés dans la https://docs.netapp.com/us-en/storagegrid-116/monitor/commonly-used-prometheus-metrics.html["Documentation StorageGRID"^].
+
+_Par Aron Klein_

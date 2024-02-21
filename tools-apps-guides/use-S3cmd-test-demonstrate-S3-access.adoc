@@ -5,10 +5,11 @@ keywords: cli, aws, S3, s3cmd, api
 summary: 'S3cmd est un outil de ligne de commande gratuit et un client pour les opérations S3. Vous pouvez utiliser S3cmd pour tester et démontrer l"accès s3 sur StorageGRID.' 
 ---
 = Utilisez S3cmd pour tester et démontrer l'accès S3 sur StorageGRID
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
 
-
-_Aron Klein_
 
 [role="lead"]
 S3cmd est un outil de ligne de commande gratuit et un client pour les opérations S3. Vous pouvez utiliser s3cmd pour tester et démontrer l'accès s3 avec StorageGRID.
@@ -87,3 +88,5 @@ NOTE: Si vous spécifiez Host_base et Host_bucket à l'étape 4, il n'est pas n�
 `s3cmd del s3://<bucket>/<object> --host=<endpoint>:<port> --no-check-certificate`
 
 
+
+_Par Aron Klein_

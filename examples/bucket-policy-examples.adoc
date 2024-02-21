@@ -5,7 +5,10 @@ keywords: iam, bucket policy, group policy, policy
 summary: 'Voici des exemples de politiques de compartiment et de règles de groupe (règles IAM).' 
 ---
 = Exemples de règles de compartiment et de groupe (IAM
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
 
 
 [role="lead"]

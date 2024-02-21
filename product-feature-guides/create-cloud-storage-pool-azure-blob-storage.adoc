@@ -5,10 +5,11 @@ keywords: cloud storage pool, azure, microsoft azure, azure blob storage
 summary: Vous pouvez utiliser un pool de stockage cloud pour déplacer des objets StorageGRID vers un conteneur Azure externe. 
 ---
 = Création d'un pool de stockage cloud pour le stockage Azure Blob
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
 
-
-_Jonathan Wong_
 
 [role="lead"]
 Vous pouvez utiliser un pool de stockage cloud pour déplacer des objets StorageGRID vers un conteneur Azure externe.
@@ -47,3 +48,5 @@ Le nom que vous spécifiez doit correspondre exactement au nom du conteneur Azur
 
 .Résultat attendu
 Confirmation de la création d'un pool de stockage cloud pour Azure Blob Storage
+
+_Par Jonathan Wong_

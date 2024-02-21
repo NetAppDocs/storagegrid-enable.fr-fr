@@ -5,10 +5,11 @@ keywords: hadoop, cloudera, s3a
 summary: 'Hadoop permet le traitement distribué d"importants jeux de données sur l"ensemble des clusters d"ordinateurs à l"aide d"infrastructures de programmation simples. Hadoop était conçu pour évoluer verticalement de serveurs uniques à des milliers de machines où chaque machine offrait des ressources de calcul et de stockage locales.' 
 ---
 = Utilisez le connecteur Cloudera Hadoop S3A avec StorageGRID
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/hadoop-s3a/
 
-
-_Angela Cheng_
 
 [role="lead"]
 Hadoop est devenu la favori des data Scientists depuis quelque temps. Hadoop permet le traitement distribué d'importants jeux de données sur des clusters d'ordinateurs à l'aide d'infrastructures de programmation simples. Hadoop a été conçu pour évoluer verticalement de serveurs uniques à des milliers de machines, chaque machine étant en possession de ressources de calcul et de stockage locales.
@@ -140,11 +141,11 @@ fs.s3a.path.style.access
 *Exemple de capture d'écran*
 
 +
-image::../media/hadoop-s3a/hadoop-s3a-configuration.png[Configuration S3A]
+image::hadoop-s3a-configuration.png[Configuration S3A]
 
 . Cliquez sur le bouton Enregistrer les modifications. Sélectionnez l'icône Configuration obsolète dans la barre de menus HDFS, sélectionnez redémarrer les services obsolètes sur la page suivante, puis sélectionnez redémarrer maintenant.
 +
-image::../media/hadoop-s3a/hadoop-restart-stale-service-icon.png[Redémarrez l'icône de service obsolète pour Hadoop]
+image::hadoop-restart-stale-service-icon.png[Redémarrez l'icône de service obsolète pour Hadoop]
 
 
 
@@ -255,3 +256,5 @@ keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepa
 `hadoop fs -ls s3a://_<bucket-name>_/ &>error.log`
 
 
+
+_Par Angela Cheng_
