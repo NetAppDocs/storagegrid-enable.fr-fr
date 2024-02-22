@@ -1,5 +1,5 @@
 ---
-permalink: tools-apps-guides/configure-Dremio-StorageGRID.html 
+permalink: tools-apps-guides/configure-dremio-storagegrid.html 
 sidebar: sidebar 
 keywords: Dremio, StorageGRID, lakehouse, object storage, s3 
 summary: Configurez la source de données Dremio avec StorageGRID 
@@ -8,7 +8,7 @@ summary: Configurez la source de données Dremio avec StorageGRID
 :hardbreaks:
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/dremio/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -43,7 +43,7 @@ https://docs.dremio.com/current/sonar/data-sources/object/s3/["Connexion à Amaz
 Si vous utilisez un certificat CA auto-signé pour ce noeud final s3, suivez l'instructions du guide Dremio pour ajouter ce certificat CA dans <JAVA_HOME>/jre/lib/Security + du serveur Dremio
 *Exemple de capture d'écran*
 +
-image::dremio-add-source-general.png[Nouvelle source - général]
+image::dremio/dremio-add-source-general.png[Nouvelle source - général]
 
 . Cliquez sur « Options avancées », cochez « Activer le mode de compatibilité ».
 . Sous Propriétés de connexion, cliquez sur + Ajouter des propriétés et ajoutez ces propriétés s3a.
@@ -78,14 +78,14 @@ _<une valeur supérieure à 100>_
 *Exemple de capture d'écran*
 
 +
-image::dremio-add-source-advanced.png[Nouvelle source - Options avancées]
+image::dremio/dremio-add-source-advanced.png[Nouvelle source - Options avancées]
 
 . Configurez les autres options de Dremio en fonction des besoins de votre organisation ou de vos applications.
 . Cliquez sur le bouton Enregistrer pour créer cette nouvelle source de données.
 . Une fois la source de données StorageGRID ajoutée, une liste de rubriques s'affiche dans le panneau de gauche. +
 *Exemple de capture d'écran*
 +
-image::dremio-source-added.png[Nouvelle source de données ajoutée]
+image::dremio/dremio-source-added.png[Nouvelle source de données ajoutée]
 
 
 

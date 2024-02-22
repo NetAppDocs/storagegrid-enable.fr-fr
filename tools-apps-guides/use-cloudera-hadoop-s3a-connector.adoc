@@ -8,7 +8,7 @@ summary: 'Hadoop permet le traitement distribué d"importants jeux de données s
 :hardbreaks:
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/hadoop-s3a/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -141,11 +141,11 @@ fs.s3a.path.style.access
 *Exemple de capture d'écran*
 
 +
-image::hadoop-s3a-configuration.png[Configuration S3A]
+image::hadoop-s3a/hadoop-s3a-configuration.png[Configuration S3A]
 
 . Cliquez sur le bouton Enregistrer les modifications. Sélectionnez l'icône Configuration obsolète dans la barre de menus HDFS, sélectionnez redémarrer les services obsolètes sur la page suivante, puis sélectionnez redémarrer maintenant.
 +
-image::hadoop-restart-stale-service-icon.png[Redémarrez l'icône de service obsolète pour Hadoop]
+image::hadoop-s3a/hadoop-restart-stale-service-icon.png[Redémarrez l'icône de service obsolète pour Hadoop]
 
 
 
