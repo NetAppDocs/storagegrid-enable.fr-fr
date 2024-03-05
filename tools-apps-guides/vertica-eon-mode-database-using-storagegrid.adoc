@@ -34,7 +34,7 @@ Le mode EON sépare les ressources de calcul de la couche de stockage communauta
 
 EON mode stocke les données dans un magasin d'objets partagés appelé stockage communal : un compartiment S3, hébergé sur site ou sur Amazon S3.
 
-image::vertica-eon/sg-vertica-eon-mode-cluster-with-communal-storage.png[Cluster en mode Vertica Eon avec stockage communautaire]
+image:vertica-eon/sg-vertica-eon-mode-cluster-with-communal-storage.png["Cluster en mode Vertica Eon avec stockage communautaire"]
 
 
 

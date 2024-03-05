@@ -121,6 +121,6 @@ network_devices:
 
 L'agent SNMP de votre système StorageGRID se trouve sous l'onglet de configuration, colonne surveillance. Activez SNMP et entrez les informations souhaitées. Si vous souhaitez configurer des interruptions, sélectionnez « destinations des interruptions » et créez une destination pour l'hôte de l'agent Datadog contenant la configuration des interruptions.
 
-image::datadog/sg_snmp_conf.png[Configuration SNMP StorageGRID]
+image:datadog/sg_snmp_conf.png["Configuration SNMP StorageGRID"]
 
 _Par Aron Klein_

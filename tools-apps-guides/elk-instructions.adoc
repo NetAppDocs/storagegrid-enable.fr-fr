@@ -48,11 +48,11 @@ match => {"message" => '<%{POSINT:syslog_pri}>%{SYSLOGBASE} %{GREEDYDATA:msg-det
 ----
 *Logstash 7.17 échantillon*
 
-image::elk-config/logstash-7.17.fields-sample.png[Échantillon Logash 7.17]
+image:elk-config/logstash-7.17.fields-sample.png["Échantillon Logash 7.17"]
 
 *Logstash 8.23 échantillon*
 
-image::elk-config/logstash-8.x.fields-sample.png[Échantillon Logash 8.23]
+image:elk-config/logstash-8.x.fields-sample.png["Échantillon Logash 8.23"]
 
 *Étapes*
 
@@ -99,13 +99,13 @@ GET /_cat/indices/*?v=true&s=index
 . A partir de l'interface graphique Kibana, créez un motif d'index (ELK 7.x) ou une vue de données (ELK 8.x).
 . Dans l'interface utilisateur graphique de Kibana, entrez « objets lavés » dans la zone de recherche située en haut au centre. + sur la page objets enregistrés, sélectionnez Importer. Sous Options d'importation, sélectionnez « demander une action en cas de conflit »
 +
-image::elk-config/kibana-import-options.png[Options d'importation Kibana]
+image:elk-config/kibana-import-options.png["Options d'importation Kibana"]
 
 +
 Importez elk<version>-query-chart-sample.ndjson. + lorsque vous êtes invité à résoudre le conflit, sélectionnez le modèle d'index ou la vue de données que vous avez créé à l'étape 8.
 
 +
-image::elk-config/kibana-import-conflict.png[Conflit Kibana]
+image:elk-config/kibana-import-conflict.png["Conflit Kibana"]
 
 +
 Les objets Kibana suivants sont importés : + *Query* + * audit-msg-s3rq-orlm + * journal de distribution messages liés s3 + * avertissement de niveau de journalisation ou supérieur + * échec de sécurité + *Chart* + * nombre de requêtes s3 basé sur bycast.log + * code d'état HTTP + * décomposition du msg d'audit par type + * réponse moyenne s3 Temps + *Tableau de bord* + * Tableau de bord de demande S3 à l'aide des tableaux ci-dessus.

@@ -43,4 +43,8 @@ Vous trouverez d'excellents blogs NetApp StorageGRID ici :
 * 1er septembre : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Leveraging-Cloud-Insights-to-Monitor-and-Collect-Logs-Using-Fluent-Bit/ba-p/447301["Utilisation de Cloud Insights pour surveiller et collecter les journaux à l'aide du bit Fluent"^]
 * 17 octobre : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Moving-on-from-Hadoop-Modernizing-Data-Analytics-with-Dremio-and-StorageGRID/ba-p/448335["Hadoop, modernisation de l'analytique avec Dremio et StorageGRID"^]
 * Novembre 7 : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Spectra-Logic-On-Prem-Glacier-with-StorageGRID/ba-p/448686["Spectra Logic On-sur-site Glacier avec StorageGRID"^]
+* Décembre 12 : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Big-data-analytics-on-StorageGRID-Dremio-performs-23-times-faster-than-Apache/ba-p/449695["Analytique Big Data sur StorageGRID : Dremio est 23 fois plus rapide qu'Apache Hive"^]
+* 2 févr. :  https://community.netapp.com/t5/Tech-ONTAP-Blogs/Announcing-the-StorageGRID-lakeFS-Solution-Brief/ba-p/450611["Annonce de la description de la solution StorageGRID + lakeFS"^]
+* 16 février : https://www.netapp.com/blog/storagegrid-11-8-enhanced-security-and-simplicity/["Présentation de StorageGRID 11.8 : sécurité améliorée, simplicité et expérience utilisateur"^]
+* 16 février : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Introducing-StorageGRID-11-8/ba-p/450762["Présentation de StorageGRID 11.8"^]
 

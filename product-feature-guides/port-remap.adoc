@@ -73,27 +73,27 @@ Pour déployer le nœud de passerelle de remplacement, procédez comme suit :
 
 . Une fois la machine virtuelle déployée, sélectionnez-la dans la liste des machines virtuelles, puis cliquez sur l'onglet configurer Options vApp.
 +
-image::port-remap/vapp_options.png[Onglet Options vApp]
+image:port-remap/vapp_options.png["Onglet Options vApp"]
 
 . Faites défiler jusqu'à la section Propriétés et sélectionnez LA propriété PORT_REMAP_INBOUND
 +
-image::port-remap/remap_inbound.png[réassignation de port entrant]
+image:port-remap/remap_inbound.png["réassignation de port entrant"]
 
 . Faites défiler jusqu'en haut de la liste Propriétés et cliquez sur Modifier
 +
-image::port-remap/edit_button.png[bouton modifier]
+image:port-remap/edit_button.png["bouton modifier"]
 
 . Sélectionnez l'onglet Type, vérifiez que la case configurable par l'utilisateur est cochée, puis cliquez sur Enregistrer.
 +
-image::port-remap/type_tab.png[onglet type]
+image:port-remap/type_tab.png["onglet type"]
 
 . En haut de la liste Propriétés, la propriété "PORT_REMAP_INBOUND" étant toujours sélectionnée, cliquez sur définir la valeur.
 +
-image::port-remap/edit_button.png[bouton définir la valeur]
+image:port-remap/edit_button.png["bouton définir la valeur"]
 
 . Dans le champ valeur de la propriété, entrez le réseau (grille, admin ou client), TCP, le port d'origine (8082) et le nouveau port (10443) avec “/” entre chaque valeur, comme illustré ci-dessous.
 +
-image::port-remap/value.png[valeur de la propriété]
+image:port-remap/value.png["valeur de la propriété"]
 
 . Si vous utilisez plusieurs réseaux, utilisez une virgule (,) pour séparer les chaînes réseau, par exemple GRID/tcp/8082/10443,admin/tcp/8082/10443,client/tcp/8082/10443
 
@@ -106,11 +106,11 @@ Pour restaurer le nœud de passerelle, procédez comme suit :
 
 . Accédez à la section Maintenance/récupération de l'interface utilisateur de gestion du grid.
 +
-image::port-remap/maint_menu.png[menu maintenance]
+image:port-remap/maint_menu.png["menu maintenance"]
 
 . Mettez le nœud de la machine virtuelle sous tension et attendez que le nœud apparaisse dans la section Maintenance/Recovery Pending Nodes de l'interface utilisateur Grid Management.
 +
-image::port-remap/recover_pend.png[restauration en attente]
+image:port-remap/recover_pend.png["restauration en attente"]
 
 +
 [NOTE]
@@ -284,7 +284,7 @@ Initiating a reboot to trigger the StorageGRID Webscale appliance installation w
 . Après un certain temps, l'appliance redémarre et vous pouvez accéder à l'interface utilisateur PGE du nœud.
 . Accédez à la page configurer la mise en réseau
 +
-image::port-remap/remap_link.png[Sélectionnez Remapper les ports]
+image:port-remap/remap_link.png["Sélectionnez Remapper les ports"]
 
 . Sélectionnez le réseau, le protocole, la direction et les ports souhaités, puis cliquez sur le bouton Ajouter une règle.
 +
@@ -292,7 +292,7 @@ image::port-remap/remap_link.png[Sélectionnez Remapper les ports]
 NOTE: Le remap du port entrant 443 sur le RÉSEAU DE LA GRILLE interrompt les procédures d'installation et d'extension. Il n'est pas recommandé de remapper le port 443 sur le réseau DE LA GRILLE.
 
 +
-image::port-remap/app_remap.png[ajoutez le remap de port aux réseaux]
+image:port-remap/app_remap.png["ajoutez le remap de port aux réseaux"]
 
 . L'un des mappages de port souhaités a été ajouté, vous pouvez revenir à l'onglet Home et cliquer sur le bouton Start installation.
 
