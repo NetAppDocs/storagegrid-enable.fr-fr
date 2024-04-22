@@ -32,6 +32,7 @@ Le clone de nœud peut être une méthode plus rapide pour remplacer les nœuds 
 * Le processus de clonage de nœud nécessite que le nœud source soit hors ligne de la grille pendant toute la durée du processus de clonage. Si un nœud supplémentaire se déconnecte pendant ce temps, les services client peuvent être affectés.
 * Un nœud de stockage ne peut être hors ligne que pendant 15 jours. Si l'estimation du processus de clonage est proche de 15 jours ou supérieure à 15 jours, utilisez les procédures d'extension et de désaffectation.
 * Pour un SG6060 avec tiroirs d'extension, vous devez ajouter la durée nécessaire à la taille de tiroir correcte au moment de l'appliance de base pour obtenir la durée totale du clone.
+* Le nombre de volumes d'une appliance de stockage cible doit être supérieur ou égal au nombre de volumes du nœud source. Vous ne pouvez pas cloner un nœud source avec 16 volumes de magasin d'objets (rangedb) vers une appliance de stockage cible avec 12 volumes de magasin d'objets, même si l'appliance cible a une capacité supérieure au nœud source. La plupart des appliances de stockage disposent de 16 volumes de stockage objet, à l'exception de l'appliance SGF6112 qui ne dispose que de 12 volumes de stockage objet. Par exemple, vous ne pouvez pas cloner à partir d'un SG5760 vers un SGF6112.
 
 
 

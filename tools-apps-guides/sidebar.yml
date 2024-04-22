@@ -21,3 +21,5 @@ entries:
   url: "/tools-apps-guides/veeam-br.html"
 - title: Configurer Dremio avec StorageGRID
   url: "/tools-apps-guides/configure-dremio-storagegrid.html"
+- title: Configurer GitLab avec StorageGRID
+  url: "/tools-apps-guides/integrate-gitlab.html"
