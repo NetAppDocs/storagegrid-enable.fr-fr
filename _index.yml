@@ -46,6 +46,8 @@ indexpage:
       url: "/product-feature-guides/node-clone.html"
     - title: Comment utiliser le remap de port
       url: "/product-feature-guides/port-remap.html"
+    - title: Comment déplacer un site et modifier le réseau
+      url: "/product-feature-guides/site-relocation-and-network-change.html"
   - title: Guides d'utilisation et d'outils
     links:
     - title: Utilisez le connecteur Cloudera Hadoop S3A
