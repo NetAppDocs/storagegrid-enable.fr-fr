@@ -6,3 +6,5 @@ entries:
   url: "/technical-reports/datalake-analytics.html"
 - title: Réglage Hadoop S3A
   url: "/technical-reports/s3a-tuning.html"
+- title: Tr-4871 - CommVault Complete Backup and Recovery and NetApp StorageGRID
+  url: "/technical-reports/tr-4871-commvault.html"

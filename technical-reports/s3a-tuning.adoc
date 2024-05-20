@@ -5,9 +5,13 @@ keywords: data lake, on-premises, analytics, storagegrid, object, hadoop
 summary: Ce rapport traite du réglage S3A pour StorageGRID. 
 ---
 = Réglage Hadoop S3A
+:hardbreaks:
 :allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
 
 
+[role="lead"]
 Le connecteur Hadoop S3A facilite l'interaction transparente entre les applications Hadoop et le stockage objet S3. Le réglage du connecteur Hadoop S3A est essentiel pour optimiser les performances lorsque vous travaillez avec le stockage objet S3. Avant d'entrer dans les détails d'ajustement, analysons très bien Hadoop et ses composants.
 
 
@@ -73,7 +77,7 @@ Testez les deux pour déterminer celle qui convient le mieux à votre workload e
 
 En résumé, les committers S3A constituent une solution au défi fondamental de l'engagement de sortie cohérent, haute performance et fiable pour S3. Leur conception interne garantit un transfert de données efficace tout en préservant l'intégrité des données.
 
-image:../media/s3a-tuning/image1.png["Tableau des options S3A"]
+image:s3a-tuning/image1.png["Tableau des options S3A"]
 
 *3. Threads, tailles de pool de connexions et taille de bloc*
 
@@ -83,7 +87,7 @@ image:../media/s3a-tuning/image1.png["Tableau des options S3A"]
 * Des blocs plus volumineux peuvent améliorer les performances lors du chargement de données volumineuses en réduisant la surcharge liée à la gestion des pièces à part multiple lors du téléchargement. La valeur recommandée est de 256 Mo ou plus pour les jeux de données volumineux.
 
 
-image:../media/s3a-tuning/image2.png["Tableau des options S3A"]
+image:s3a-tuning/image2.png["Tableau des options S3A"]
 
 *4. Téléchargement partitionné*
 
@@ -122,12 +126,12 @@ Un téléchargement partitionné est un https://docs.aws.amazon.com/AmazonS3/lat
 
 Si la demande complète de téléchargement partitionné n'est pas envoyée correctement, les pièces restent dans StorageGRID et ne créeront aucun objet. Cela se produit lorsque les travaux sont interrompus, en échec ou abandonnés. Les pièces restent dans la grille jusqu'à ce que le téléchargement partitionné soit terminé ou abandonné ou que StorageGRID purge ces pièces si 15 jours se sont écoulés depuis le lancement du téléchargement. S'il y a beaucoup (quelques centaines de milliers à plusieurs millions) de téléchargements partitionnés en cours dans un compartiment, lorsque Hadoop envoie des « téléchargements partiaux-listes » (cette requête ne filtre pas par identifiant de téléchargement), la demande peut prendre un certain temps ou finir par se terminer. Vous pouvez envisager de définir fs.s3a.mutipart.purge sur TRUE avec une valeur fs.s3a.multipart.purge.age appropriée (par exemple, 5 à 7 jours, n'utilisez pas la valeur par défaut de 86400, c'est-à-dire 1 jour). Ou faites appel au support NetApp pour étudier la situation.
 
-image:../media/s3a-tuning/image3.png["Tableau des options S3A"]
+image:s3a-tuning/image3.png["Tableau des options S3A"]
 
 *5. Mémoire tampon pour écrire les données en mémoire*
 
 Pour améliorer les performances, vous pouvez mettre en mémoire tampon l'écriture des données en mémoire avant de les télécharger dans S3. Cela permet de réduire le nombre d'écritures de petite taille et d'améliorer l'efficacité.
 
-image:../media/s3a-tuning/image4.png["Tableau des options S3A"]
+image:s3a-tuning/image4.png["Tableau des options S3A"]
 
 N'oubliez pas que S3 et HDFS fonctionnent différemment. Des ajustements/tests/expériences minutieux sont nécessaires pour utiliser de manière optimale les ressources S3.

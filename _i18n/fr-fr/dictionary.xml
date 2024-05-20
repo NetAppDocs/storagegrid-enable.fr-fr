@@ -1355,14 +1355,12 @@ Si la solution que vous recherchez n'est pas répertoriée, contactez votre repr
   <block id="bcdd4afe5d0cbdf8cc04de0c92ddc7df" category="paragraph">Testez les deux pour déterminer celle qui convient le mieux à votre workload et à vos besoins.</block>
   <block id="b2272f16c45a7fc4af509338bc22504e" category="paragraph">En résumé, les committers S3A constituent une solution au défi fondamental de l'engagement de sortie cohérent, haute performance et fiable pour S3. Leur conception interne garantit un transfert de données efficace tout en préservant l'intégrité des données.</block>
   <block id="81501235b286178b5df292f16c6e8b47" category="inline-image-macro">Tableau des options S3A</block>
-  <block id="749d1c1d8a18506e442bfbbaec54f349" category="paragraph"><block ref="749d1c1d8a18506e442bfbbaec54f349" category="inline-image-macro-rx" type="image"></block></block>
   <block id="dc1717f3744878e6dbb68b8a22974e06" category="paragraph">*3. Threads, tailles de pool de connexions et taille de bloc*</block>
   <block id="b35c467aea8fb0e4ad9d636d48d0b8db" category="list-text">Chaque client *S3A* interagissant avec un seul compartiment dispose de son propre pool dédié de connexions HTTP 1.1 ouvertes et de threads pour les opérations de téléchargement et de copie.</block>
   <block id="4b7fc1639229d7f089f2e8c85436106e" category="inline-link">Vous pouvez régler la taille de ces pools de manière à trouver un équilibre entre les performances et l'utilisation de la mémoire/des threads</block>
   <block id="901a6addd359ee8998a8f1e41f45789f" category="list-text"><block ref="801a4dc74c7b120220c9c416fd446c6b" category="inline-link-rx"></block>.</block>
   <block id="10fbe332f21fbd575e849cde38283e2e" category="list-text">Lors du téléchargement de données vers S3, elles sont divisées en blocs. La taille de bloc par défaut est de 32 Mo. Vous pouvez personnaliser cette valeur en définissant la propriété fs.s3a.block.size.</block>
   <block id="ffa0e6a713cabf752ba8055eaaede5fc" category="list-text">Des blocs plus volumineux peuvent améliorer les performances lors du chargement de données volumineuses en réduisant la surcharge liée à la gestion des pièces à part multiple lors du téléchargement. La valeur recommandée est de 256 Mo ou plus pour les jeux de données volumineux.</block>
-  <block id="06227b83b2c17941a4d807e7d9b74710" category="paragraph"><block ref="06227b83b2c17941a4d807e7d9b74710" category="inline-image-macro-rx" type="image"></block></block>
   <block id="f40f5a29dd719649854707ad2ed54faa" category="paragraph">*4. Téléchargement partitionné*</block>
   <block id="289795451e85a0a16d75e7868c7480d0" category="paragraph">s3a committers *toujours* utiliser MPU (téléchargement partitionné) pour charger des données dans le compartiment s3. Ceci est nécessaire pour permettre : l'échec de tâche, l'exécution spéculative des tâches et les abandons de travail avant la validation. Voici quelques spécifications clés relatives aux téléchargements partitionnés :</block>
   <block id="a9da1ffc95aa8035dfd68dae308c2231" category="list-text">Taille maximale des objets : 5 Tio (téraoctets).</block>
@@ -1384,10 +1382,8 @@ Si la solution que vous recherchez n'est pas répertoriée, contactez votre repr
   <block id="465c4cf2408ae7723d681a9c8607de37" category="list-text">Les parties d'objet sont chargées à l'aide de l'ID de téléchargement</block>
   <block id="265f70ced2325f215340985c129b8fff" category="list-text">Une fois toutes les parties d'objet chargées, envoie une demande de téléchargement partitionné complète avec upload-ID StorageGRID construit l'objet à partir des pièces téléchargées, et le client peut accéder à l'objet.</block>
   <block id="65638a5ddb2ddbd00963cc5b84f206d1" category="paragraph">Si la demande complète de téléchargement partitionné n'est pas envoyée correctement, les pièces restent dans StorageGRID et ne créeront aucun objet. Cela se produit lorsque les travaux sont interrompus, en échec ou abandonnés. Les pièces restent dans la grille jusqu'à ce que le téléchargement partitionné soit terminé ou abandonné ou que StorageGRID purge ces pièces si 15 jours se sont écoulés depuis le lancement du téléchargement. S'il y a beaucoup (quelques centaines de milliers à plusieurs millions) de téléchargements partitionnés en cours dans un compartiment, lorsque Hadoop envoie des « téléchargements partiaux-listes » (cette requête ne filtre pas par identifiant de téléchargement), la demande peut prendre un certain temps ou finir par se terminer. Vous pouvez envisager de définir fs.s3a.mutipart.purge sur TRUE avec une valeur fs.s3a.multipart.purge.age appropriée (par exemple, 5 à 7 jours, n'utilisez pas la valeur par défaut de 86400, c'est-à-dire 1 jour). Ou faites appel au support NetApp pour étudier la situation.</block>
-  <block id="caf1551badab24f35930164061cff3dd" category="paragraph"><block ref="caf1551badab24f35930164061cff3dd" category="inline-image-macro-rx" type="image"></block></block>
   <block id="d9703f8bc6fb70abb3d253a5ded96197" category="paragraph">*5. Mémoire tampon pour écrire les données en mémoire*</block>
   <block id="36a89ed4836d3b5b5f59193e28776e5c" category="paragraph">Pour améliorer les performances, vous pouvez mettre en mémoire tampon l'écriture des données en mémoire avant de les télécharger dans S3. Cela permet de réduire le nombre d'écritures de petite taille et d'améliorer l'efficacité.</block>
-  <block id="f26f197ffec0d3e726569f182287a9a8" category="paragraph"><block ref="f26f197ffec0d3e726569f182287a9a8" category="inline-image-macro-rx" type="image"></block></block>
   <block id="63d5657772886960693d8740023cf233" category="paragraph">N'oubliez pas que S3 et HDFS fonctionnent différemment. Des ajustements/tests/expériences minutieux sont nécessaires pour utiliser de manière optimale les ressources S3.</block>
   <block id="38a5cc39717b20b4cde7ce17adfaf8c7" category="summary">Ce rapport aborde l'analytique Big Data sur StorageGRID.</block>
   <block id="5d272a32f1e2287537ac7e73dbde5d69" category="doc">NetApp StorageGRID et l'analytique Big Data</block>
@@ -1402,7 +1398,6 @@ Si la solution que vous recherchez n'est pas répertoriée, contactez votre repr
   <block id="454845c7ca306686c28f96a59487d70c" category="paragraph">*Archives de données :* StorageGRID offre différents types de stockage et prend en charge la hiérarchisation vers des options de stockage public à faible coût à long terme, en faisant une solution idéale pour l'archivage et la conservation à long terme des données qui doivent être conservées à des fins de conformité ou d'historique.</block>
   <block id="a324e6c3bb7d6684738c923e7b52ea98" category="paragraph">*Cas d'utilisation du stockage objet*</block>
   <block id="9f79f86c9a539a911125a876ef6a3c2e" category="inline-image-macro">Diagramme de cas d'utilisation StorageGRID,largeur=396,hauteur=394</block>
-  <block id="2ae53f7687415e47352b3c8fdf11602c" category="paragraph"><block ref="2ae53f7687415e47352b3c8fdf11602c" category="inline-image-macro-rx" type="image"></block></block>
   <block id="c9e24c78b995a9f99006f7b470383259" category="paragraph">Parmi ces cas d'usage, l'analytique Big Data est l'un des plus utilisés, et son utilisation est en hausse.</block>
   <block id="d9adadb4a0063dcb9fae0a43c0073259" category="section-title">Pourquoi choisir StorageGRID pour les data Lakes ?</block>
   <block id="20ee9cfabde8b905c9a64689a84b0921" category="list-text">Collaboration renforcée : colocation multisite partagée massive avec accès API standard</block>
@@ -1412,7 +1407,6 @@ Si la solution que vous recherchez n'est pas répertoriée, contactez votre repr
   <block id="6d5424acc89d68777ded882e67fba989" category="list-text">Sécurité : StorageGRID offre plusieurs fonctionnalités de sécurité, notamment le chiffrement, les règles de contrôle d'accès, la gestion du cycle de vie des données, le verrouillage d'objets et la gestion des versions pour protéger les données stockées dans des compartiments S3</block>
   <block id="9ed95e053e569a8027874c20fc968fa0" category="paragraph">*StorageGRID S3 Data Lakes*</block>
   <block id="16440189dc2ac5b52ea041615f4e3502" category="inline-image-macro">Exemple de datalake StorageGRID,width=614,height=345</block>
-  <block id="8c6ce2dc10841da36e2b55063b73a29e" category="paragraph"><block ref="8c6ce2dc10841da36e2b55063b73a29e" category="inline-image-macro-rx" type="image"></block></block>
   <block id="bcf6df0d4fc301b73dfb0f84c2b25fca" category="section-title">Quel data warehouse ou data Lake fonctionne le mieux avec le stockage objet S3</block>
   <block id="f5fb5a608581154f9f31a7efeaf26b22" category="inline-link">Apache Iceberg : guide de référence</block>
   <block id="961898fd5ba4fc2d612d1c831953550a" category="paragraph">NetApp a évalué StorageGRID avec trois écosystèmes d'entrepôts de données et de maisons de lac - Hive, Delta Lake et Dremio.<block ref="ea7970154750f3c7264130a8bd2b3dc5" category="inline-link-rx"></block> inclut une brève introduction du data warehouse et du data lake house, ainsi que les avantages/inconvénients de ces deux architectures.</block>
@@ -1578,4 +1572,248 @@ Tous les ACCÈS à la gamme</block>
   <block id="80482345acd37742916c858b1bac3347" category="list-text">Mai 26 2022 :<block ref="919c9f44a16e685bcbda321efc4479b1" category="inline-link-rx"></block></block>
   <block id="11bd19e0a7faa7e5cb29e2de6e742e74" category="list-text">Mai 24 2022 :<block ref="efe27e9a7520722932d06c2a314e517b" category="inline-link-rx"></block></block>
   <block id="d915b8cda332d7bea31598a0cc058498" category="list-text">Mai 10 2022 :<block ref="debc4c6191d7e706232e96c2789d3930" category="inline-link-rx"></block></block>
+  <block id="b595975ee2f837da3fb64fe3e27a04a5" category="paragraph"><block ref="b595975ee2f837da3fb64fe3e27a04a5" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="620a43fd755527066fd648aba6f7db92" category="paragraph"><block ref="620a43fd755527066fd648aba6f7db92" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="ba62ab536da4018921d932eab137754d" category="paragraph"><block ref="ba62ab536da4018921d932eab137754d" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="8ba2b9229934ee6fc64c293ea55c00cf" category="paragraph"><block ref="8ba2b9229934ee6fc64c293ea55c00cf" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="51416623000162278c6405b1b5cd833d" category="paragraph"><block ref="51416623000162278c6405b1b5cd833d" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="2a60f08787dc9ecba98a9ffc064b7ed8" category="paragraph"><block ref="2a60f08787dc9ecba98a9ffc064b7ed8" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="5a184c0363bb58450e6d7433581fd471" category="summary">Ce rapport présente la solution de protection des données fournie conjointement par CommVault et NetApp.</block>
+  <block id="354a23ac01ef93911cb9256f86e06159" category="doc">Tr-4871 - CommVault Complete Backup and Recovery and NetApp StorageGRID</block>
+  <block id="cb2418c01859c7704da751aa5a7d2421" category="section-title">Présentation de la solution</block>
+  <block id="80a3f83141a9faa5b2c7cd8fe9d282e0" category="paragraph">CommVault et NetApp se sont associés pour créer une solution commune de protection des données qui combine le logiciel CommVault Complete Backup and Recovery pour NetApp et le logiciel NetApp StorageGRID pour le stockage cloud. De nombreuses entreprises souhaitent migrer leur stockage dans le cloud, faire évoluer leurs systèmes et automatiser leurs règles de conservation des données à long terme. CommVault Complete Backup and Recovery et NetApp StorageGRID proposent des solutions uniques et faciles à utiliser qui s'associent pour répondre aux exigences de croissance rapide des données et à celles de réglementations toujours plus strictes à travers le monde. Réputé pour sa résilience, son évolutivité, ses avantages opérationnels et ses économies, le stockage objet basé dans le cloud en fait un choix naturel comme cible pour votre sauvegarde. CommVault et NetApp ont certifié conjointement leur solution combinée en 2014. Depuis, ils ont développé une intégration plus étroite entre leurs deux solutions. Des clients de tous types dans le monde ont adopté la solution combinée CommVault Complete Backup and Recovery and StorageGRID.</block>
+  <block id="03b34745d3c972ba9412e4898f60977d" category="paragraph">Lorsque vous implémentez le logiciel CommVault Complete Backup and Recovery avec le stockage cloud, vous disposez de deux options de sauvegarde :</block>
+  <block id="9eb0111fcb9b869313a8890a31fbe9aa" category="list-text">Sauvegarde sur une cible de disque primaire et sauvegarde également une copie auxiliaire sur un stockage cloud.</block>
+  <block id="f2236ba3bffef9cf2f2a7237c4487c29" category="list-text">Sauvegarde dans le cloud en tant que cible principale.</block>
+  <block id="80457ca0c9c707a381ea0dbbf13a97f8" category="paragraph">Auparavant, le stockage cloud ou objet était considéré comme trop faible pour être utilisé pour la sauvegarde principale. L'utilisation d'une cible de disque primaire a permis aux clients d'accélérer les processus de sauvegarde et de restauration, et de conserver une copie auxiliaire dans le cloud en tant que sauvegarde à froid. StorageGRID est la nouvelle génération de stockage objet. StorageGRID offre des performances élevées et un débit massif, ainsi que des performances et une flexibilité bien supérieures à celles des autres fournisseurs de stockage objet.</block>
+  <block id="3764fc2dfa1c37293e979fb84f4d57e2" category="paragraph">Le Tableau 1 répertorie les avantages de chaque option de sauvegarde avec StorageGRID.</block>
+  <block id="b8487d84bdeead48dbf45470a4e20888" category="section-title">Tableau 1) sauvegarde primaire sur disque plus copie auxiliaire, par rapport à la sauvegarde primaire sur StorageGRID.</block>
+  <block id="0677b3ba1c3af4912992b290e34bede8" category="cell">Sauvegarde principale sur disque et copie auxiliaire sur StorageGRID</block>
+  <block id="f0545f8a5027b3947229082e2363e36e" category="cell">Sauvegarde principale vers StorageGRID</block>
+  <block id="9446a98ad14416153cc4d45ab8b531bf" category="paragraph">Performance</block>
+  <block id="bf1e57e2734e41f446afd52e7a01511f" category="paragraph">Délai de restauration le plus rapide, via un montage en direct ou une restauration en direct : idéal pour les workloads de niveau 0/niveau 1.</block>
+  <block id="fc436ebe83f8a987f689862b5d1e9416" category="paragraph">Ne peut pas être utilisé pour les opérations de montage en direct ou de restauration en direct. Idéal pour les opérations de restauration en streaming et pour la conservation à long terme.</block>
+  <block id="46d93ce059017fe679dc02b4bfab8803" category="paragraph">Architecture de déploiement</block>
+  <block id="3efb73a8f0efa8cd24dac18e9fdcb90d" category="paragraph">Utilisation de la technologie 100 % Flash ou d'un disque mécanique comme premier palier d'atterrissage de sauvegarde. StorageGRID est utilisé comme Tier secondaire.</block>
+  <block id="6a8ffa7403e393a890a078b05f73a63b" category="paragraph">Simplifie le déploiement en utilisant StorageGRID comme cible de sauvegarde complète.</block>
+  <block id="95493dca7eed37cfb9bfd6cc90ef1959" category="paragraph">Fonctionnalités avancées (restauration en direct)</block>
+  <block id="eaa4dc5078017a5c5bebf383ab6f5124" category="paragraph">Pris en charge</block>
+  <block id="aa7f77e663b832d5b0e544c5511e680c" category="paragraph">Non pris en charge</block>
+  <block id="bf8dd94f74c5878ba969abeeef0286d1" category="section-title">Public visé</block>
+  <block id="749f48d6360a1ae4fb9b6967d682f7ab" category="paragraph">Ce document s'adresse aux architectes et aux administrateurs de données qui utilisent les solutions de sauvegarde et de restauration de CommVault et StorageGRID.</block>
+  <block id="8f4c7939e8a42e023939df947aba54f6" category="section-title">Technologie de la solution</block>
+  <block id="4e50e1ccf2606dc28761309b196f635e" category="paragraph">La solution testée combine les solutions CommVault et NetApp pour offrir une solution commune puissante.</block>
+  <block id="8de8885619770caac462899bd9ad1a3c" category="paragraph">Le logiciel CommVault Complete Backup and Recovery est une solution haute performance de gestion des données et des informations intégrée, conçue dès le départ sur une plateforme unique et dotée d'une base de code unifiée. Toutes ses fonctions partagent des technologies back-end, offrant ainsi les avantages et avantages inégalés d'une approche entièrement intégrée de protection, de gestion et d'accès à vos données. Le logiciel contient des modules pour protéger, archiver, analyser, répliquer et rechercher vos données. Les modules partagent un ensemble commun de services back-end et de fonctionnalités avancées qui interagissent en toute transparence les uns avec les autres. Cette solution aborde tous les aspects de la gestion des données dans votre entreprise, tout en offrant une évolutivité illimitée et un contrôle sans précédent des données et des informations.</block>
+  <block id="d578ff088a7606a2f2f8b20f068b5b62" category="paragraph">Principales fonctionnalités de la plateforme logicielle CommVault :</block>
+  <block id="a9f9086df1d2d57873ce7ad72a8f3503" category="list-text">Une solution complète de protection des données prenant en charge tous les principaux systèmes d'exploitation, applications et bases de données sur des serveurs virtuels et physiques, des systèmes NAS, des infrastructures cloud et des appareils mobiles.</block>
+  <block id="c5eaed381b053e4b3d85d9ab1fb6fa5b" category="list-text">Gestion simplifiée via une console unique : vous pouvez afficher, gérer et accéder à toutes les fonctions, à toutes les données et à toutes les informations de l'entreprise.</block>
+  <block id="434ac5052bf47ffbe2a46a08caeefbe0" category="list-text">Plusieurs méthodes de protection, notamment la sauvegarde et l'archivage des données, la gestion de snapshots, la réplication des données et l'indexation du contenu à des fins d'e-Discovery.</block>
+  <block id="7317d6c898578da433c127897e9abeac" category="list-text">Gestion du stockage efficace grâce à la déduplication pour le stockage sur disque et cloud.</block>
+  <block id="40b8f42feb3b273a69061871959c334b" category="list-text">Intégration aux baies de stockage NetApp telles que AFF, FAS, NetApp HCI et E-Series et aux systèmes de stockage scale-out NetApp SolidFire^®^. Intégration également au logiciel NetApp Cloud Volumes ONTAP pour automatiser la création de copies NetApp Snapshot™ indexées sur les applications, sur l'ensemble du portefeuille de stockage NetApp.</block>
+  <block id="bac96a2448236465a33577db5bbbfafb" category="list-text">Une gestion complète de l'infrastructure virtuelle qui prend en charge les principaux hyperviseurs virtuels sur site et plateformes d'hyperscaler de cloud public.</block>
+  <block id="79b01f0de034ee56053c5a83bbbbc371" category="list-text">Des fonctionnalités de sécurité avancées pour limiter l'accès aux données stratégiques, fournir des fonctionnalités de gestion granulaire et fournir aux utilisateurs Active Directory un accès Single Sign-on.</block>
+  <block id="7631df1a16e7c86a241133ce56a5626e" category="list-text">Une gestion des données basée sur des règles qui vous permet de gérer vos données en fonction de vos besoins et non de votre emplacement physique.</block>
+  <block id="dbd89d5407a94aa887d7f9793148af24" category="list-text">Une expérience utilisateur de pointe qui permet à vos utilisateurs de protéger, de rechercher et de restaurer leurs propres données.</block>
+  <block id="c71c3c5075c3ae71dfa4cd9ad0c8f690" category="list-text">L'automatisation par API vous permet d'utiliser des outils tiers tels que vRealize Automation ou Service Now pour gérer vos opérations de protection et de récupération des données.</block>
+  <block id="56cc4502e343e76ad448ffe3a05fc18c" category="paragraph">Pour en savoir plus sur les charges de travail prises en charge, rendez-vous sur<block ref="6c465f42cde4c9569daed31dc24f517e" category="inline-link-rx"></block>.</block>
+  <block id="585473463b3cb51e50ec6023b5b51685" category="paragraph">NetApp StorageGRID, en tant que Tier cloud CommVault, est une solution de stockage objet de cloud hybride d'entreprise. Vous pouvez le déployer sur de nombreux sites, que ce soit sur une appliance dédiée ou en tant que déploiement Software-defined. StorageGRID vous permet d'établir des règles de gestion des données qui déterminent le mode de stockage et de protection des données. StorageGRID collecte les informations dont vous avez besoin pour développer et appliquer des règles. Il examine un large éventail de caractéristiques et de besoins, y compris les performances, la durabilité, la disponibilité, l'emplacement géographique, longévité et coût. Elles sont intégralement conservées et protégées lors de leur déplacement entre différents sites et au fur et à mesure du vieillissement.</block>
+  <block id="f99347a4e5e36d0e5ba4bffb0d1598ab" category="paragraph">Le moteur de règles intelligent StorageGRID vous aide à choisir l'une des options suivantes :</block>
+  <block id="ed1c9e59475f7c0dfda1df3a7da27812" category="list-text">Utiliser le code d'effacement pour sauvegarder les données sur plusieurs sites à des fins de résilience.</block>
+  <block id="d470af9a0291f968f65b28b830fc86cd" category="list-text">Pour copier des objets vers des sites distants afin de minimiser la latence et le coût du WAN.</block>
+  <block id="7bd9a8aa8ea326b44f2bcde2f3609ff5" category="paragraph">Lorsque StorageGRID stocke un objet, vous y accédez en tant qu'objet unique, quel que soit son emplacement et le nombre de copies existantes. Ce comportement est crucial pour la reprise d'activité, car grâce à lui, même si une copie de sauvegarde de vos données est corrompue, StorageGRID peut restaurer vos données.</block>
+  <block id="118e6fb1b88f8c0f0cfd7dee3bf51a37" category="paragraph">La conservation des données de sauvegarde dans votre stockage primaire peut s'avérer coûteuse. Avec NetApp StorageGRID, vous libérez de l'espace sur votre stockage primaire en migrant les données de sauvegarde inactives vers StorageGRID, tout en bénéficiant des nombreuses fonctionnalités de StorageGRID. La valeur des données de sauvegarde évolue au fil du temps, tout comme le coût de leur stockage. StorageGRID réduit le coût du stockage primaire tout en augmentant la durabilité des données.</block>
+  <block id="b82ecf69498cda86864f62d82c7ccb6b" category="section-title">Configuration de la solution</block>
+  <block id="a3ad938334ebe31fa6bd5526fdde0c2d" category="paragraph">Dans la configuration de laboratoire, l'environnement StorageGRID se composait de quatre appliances NetApp StorageGRID SG5712, d'un nœud d'administration principal virtuel et d'un nœud de passerelle virtuelle. L'appliance SG5712 est l'option d'entrée de gamme, une configuration de base. Le choix d'appliances plus performantes, telles que NetApp StorageGRID SG5760 ou SG6060, peut considérablement améliorer les performances. Consultez votre architecte de solutions NetApp StorageGRID pour obtenir de l'aide sur le dimensionnement.</block>
+  <block id="2502d49022714233caf9bb360eed1259" category="paragraph">Pour sa règle de protection des données, StorageGRID utilise une règle de gestion du cycle de vie intégrée afin de gérer et de protéger les données. Les règles ILM sont évaluées dans une règle de haut en bas. Nous avons implémenté la politique ILM présentée dans le Tableau 2.</block>
+  <block id="03b71896a803d1674387b9ace5509c97" category="section-title">Tableau 2) règle ILM de StorageGRID.</block>
+  <block id="9bae64ff51701a09557836797ee3739f" category="cell">Règle ILM</block>
+  <block id="619dd4db8171a8f1bf978f44c9cf10c4" category="cell">Qualificatifs</block>
+  <block id="80cb0c66c0080d1e4c291f66705ba62d" category="cell">Comportement d'ingestion</block>
+  <block id="8143290d673d927f4a362b2726e52d06" category="paragraph">Code d'effacement 2+1</block>
+  <block id="61fed6f594f54558c7a9bc0ac4abb7e5" category="paragraph">Objets de plus de 200 Ko</block>
+  <block id="c6589f5236c0c434d0c63dc5f9a856f2" category="paragraph">Équilibré</block>
+  <block id="a98f005d5c19a50a6134d6a62274c1f8" category="paragraph">2 copies</block>
+  <block id="3e6defd685231cdd12065add41996c89" category="paragraph">Tous les objets</block>
+  <block id="dcd8a20c909a5d0bbf6f852d688309cb" category="paragraph">Double allocation</block>
+  <block id="f2382f08b2b3ae5b16fd3e6a7f6fe40c" category="paragraph">La règle ILM 2 Copy est la règle par défaut. La règle Erasure Coding 2+1 a été appliquée pour ce test à tout objet de 200 Ko ou plus. La règle par défaut a été appliquée aux objets inférieurs à 200 Ko. L'application des règles de cette manière est une bonne pratique StorageGRID.</block>
+  <block id="9fd2a44a56a109ab7ff40317cdd4cc9b" category="inline-link">Protection des données scale-out NetApp avec CommVault</block>
+  <block id="f7d7cdf329bd5cf1893317ad3732d1f7" category="paragraph">Pour obtenir des informations techniques sur cet environnement de test, consultez la section conception de la solution et meilleures pratiques du<block ref="03ce17f8b5e1206a493f3bd56ef5953d" category="inline-link-rx"></block> rapport technique.</block>
+  <block id="92672a7a2b909945fbfa9f44f057c7a1" category="section-title">Dimensionnement</block>
+  <block id="de6340e74a7b4b37632d447d082a219e" category="paragraph">Pour en savoir plus sur le dimensionnement de votre environnement, consultez vos spécialistes de la protection des données NetApp. Les spécialistes de la protection des données NetApp peuvent utiliser le calculateur de stockage de sauvegarde total CommVault pour estimer les exigences de l'infrastructure de sauvegarde. Cet outil requiert un accès au CommVault Partner Portal. Inscrivez-vous pour y accéder, si nécessaire.</block>
+  <block id="850723af1b528eaff214961e1477f7f2" category="section-title">Entrées de dimensionnement CommVault</block>
+  <block id="e3b0761b4b3dd1b0a93403608c54ca50" category="paragraph">Les tâches suivantes peuvent être utilisées pour effectuer la découverte du dimensionnement de la solution de protection des données :</block>
+  <block id="3cf303266a00ea5459dd889344aed185" category="list-text">Identifiez les charges de travail du système ou des applications/bases de données et la capacité frontale correspondante (en téraoctets [To]) à protéger.</block>
+  <block id="a6fc6119f758a2807e997797f666329c" category="list-text">Identifiez le workload de machines virtuelles/fichiers et une capacité front-end similaire (To) à protéger.</block>
+  <block id="45b2ce852d6ed5f33b77406aac08556c" category="list-text">Identifier les exigences de conservation à court et à long terme.</block>
+  <block id="62f64531410b8711dc0f7e3749b00000" category="list-text">Identifier le taux de modification quotidien en % pour les datasets/workloads identifiés</block>
+  <block id="e20a5b161f3a78a8aa8b41995cb1056f" category="list-text">Identification de la croissance des données prévue au cours des 12, 24 et 36 prochains mois</block>
+  <block id="546f4bb0db4eb4c0474451ef4087425b" category="list-text">Définissez les objectifs RTO et RPO pour la protection et la restauration des données en fonction des besoins de l'entreprise.</block>
+  <block id="b9b087f8be7670b2ba95f7b2ee0e66c0" category="paragraph">Lorsque ces informations sont disponibles, le dimensionnement de l'infrastructure de sauvegarde peut être effectué, ce qui entraîne la répartition des capacités de stockage requises.</block>
+  <block id="2d782d1c787a750e5ae7cdfbf33e0b65" category="section-title">Conseils de dimensionnement StorageGRID</block>
+  <block id="293d59d0c1b3635b7390405d92fee965" category="paragraph">Avant d'effectuer le dimensionnement NetApp StorageGRID, tenez compte des aspects suivants de votre charge de travail :</block>
+  <block id="b3e1f4c67ee07a73dcdaff1cf34f2640" category="list-text">Capacité exploitable</block>
+  <block id="dcd71c3bab40cab965c2424166b5b11d" category="list-text">Mode WORM</block>
+  <block id="af11a561a773e12e2fa9ba93ce506330" category="list-text">Taille moyenne des objets</block>
+  <block id="fdfceedcfadaa8fc4e641a9271ff7595" category="list-text">Exigences en matière de performances</block>
+  <block id="e1044b693615d4848c50aa5f02be9315" category="list-text">Règle ILM appliquée</block>
+  <block id="c6e6b34f0e5e37e48be00e166f7bd2cb" category="paragraph">La capacité utilisable doit tenir compte de la taille de la charge de travail de sauvegarde que vous avez basculée vers StorageGRID et du calendrier de conservation.</block>
+  <block id="3e5b0f346efbe49d36a724d923e318ba" category="paragraph">Le mode WORM sera-t-il activé ou non ? Une fois WORM activé dans CommVault, le verrouillage d'objet est configuré sur StorageGRID. Cela augmente la capacité de stockage objet requise. La capacité requise varie en fonction de la durée de conservation et du nombre de modifications d'objet apportées à chaque sauvegarde.</block>
+  <block id="74c32df19b25aa02e414011c18db023d" category="paragraph">La taille moyenne d'objet est un paramètre d'entrée qui facilite le dimensionnement des performances dans un environnement StorageGRID. La taille moyenne des objets utilisés pour une charge de travail CommVault dépend du type de sauvegarde.</block>
+  <block id="a0e738d4eef6a816ac737bf34e54a942" category="paragraph">Le tableau 3 répertorie la taille moyenne des objets par type de sauvegarde et décrit ce que le processus de restauration lit à partir du magasin d'objets.</block>
+  <block id="2333f85cd072d4d90857e142fd494184" category="section-title">Tableau 3) taille de l'objet de workload CommVault et comportement de restauration</block>
+  <block id="a09aa546b6aa449c6baf91e8d0ebb636" category="cell">Type de sauvegarde</block>
+  <block id="f95891c0ab9af9cf4d2eb297027c954d" category="cell">Taille moyenne de l'objet</block>
+  <block id="6dfea787ea9494eca4a1491e9a9cd7e7" category="cell">Restaurer le comportement</block>
+  <block id="4a5284900affdafea6abfa93ccd8875e" category="paragraph">Effectuer une copie auxiliaire dans StorageGRID</block>
+  <block id="56aefd6942690fe653a60ce8762c3fae" category="paragraph">32 MO</block>
+  <block id="69a2ecbb677a732e4f381bca77d41617" category="paragraph">Lecture complète de l'objet 32 Mo</block>
+  <block id="754b17607005a22396d824adf9193697" category="paragraph">Orienter la sauvegarde vers StorageGRID (déduplication activée)</block>
+  <block id="b097e0a29568c51c88fec3b457c732b6" category="paragraph">8 MO</block>
+  <block id="8ef6bf4afbc7dfa36d2999b2dde70607" category="paragraph">Lecture aléatoire 1 Mo</block>
+  <block id="243bf10c4e6c1609f52782d457f76156" category="paragraph">Dirigez la sauvegarde vers StorageGRID (déduplication désactivée)</block>
+  <block id="abfb05e87809fdb217c3f9c8b7970ce2" category="paragraph">En outre, la compréhension de vos besoins en performances pour les sauvegardes complètes et les sauvegardes incrémentielles vous aide à déterminer le dimensionnement des nœuds de stockage StorageGRID. Les méthodes de protection des données de la règle de gestion du cycle de vie des informations (ILM) de StorageGRID déterminent la capacité requise pour stocker les sauvegardes CommVault et affectent le dimensionnement de la grille.</block>
+  <block id="464eb8c3015571353037cdb21da0f4d1" category="paragraph">La réplication ILM de StorageGRID est l'un des deux mécanismes utilisés par StorageGRID pour stocker les données en mode objet. Lorsque StorageGRID attribue des objets à une règle ILM de réplication des données, le système crée des copies exactes des données des objets et les stocke sur des nœuds de stockage.</block>
+  <block id="b6a556e693b6d0301d99a27a637d5a0e" category="paragraph">Le codage d'effacement est la deuxième méthode utilisée par StorageGRID pour stocker les données d'objet. Lorsque StorageGRID attribue des objets à une règle ILM configurée pour créer des copies avec code d'effacement, elle coupe les données en mode objet en fragments de données. Il calcule ensuite des fragments de parité supplémentaires et stocke chaque fragment sur un nœud de stockage différent. Lorsqu'un objet est accédé, il est réassemblé à l'aide des fragments stockés. En cas de corruption ou de perte d'un fragment de données ou de parité, l'algorithme de code d'effacement peut recréer ce fragment à l'aide d'un sous-ensemble des fragments de données et de parité restants.</block>
+  <block id="2cbd7f18ab3e999a21c4dba60191a95b" category="paragraph">Les deux mécanismes nécessitent différentes quantités de stockage, comme le démontrent ces exemples :</block>
+  <block id="b162424b4a40f919bc77c8a4ada556a5" category="list-text">Si vous stockez deux copies répliquées, la surcharge de stockage double.</block>
+  <block id="4dcb2b649002340390e73a82e0f53e74" category="list-text">Si vous stockez une copie avec code d'effacement 2+1, votre surconsommation de stockage est multipliée par 1.5.</block>
+  <block id="b3ccf50d91fb7c1b2a91a90b2fdcbc11" category="paragraph">Pour la solution testée, un déploiement StorageGRID d'entrée de gamme sur un seul site a été utilisé :</block>
+  <block id="edb52e1c5e94ec07b0da6c55e66a6dc5" category="list-text">Nœud d'administration : machine virtuelle VMware (VM)</block>
+  <block id="512766f8f9ea73555dd725677342729b" category="list-text">Équilibreur de charge : VMware VM</block>
+  <block id="075742127b6818880333cba369626334" category="list-text">Nœuds de stockage : 4 x SG5712 avec disques de 4 To</block>
+  <block id="48ce2b888edeb7c90c49b7acb217a0da" category="list-text">Nœud d'administration principal et nœud de passerelle : machines virtuelles VMware avec des exigences minimales en termes de charge de travail de production</block>
+  <block id="01b3d30d9a73f3002456c96c117546a7" category="paragraph">StorageGRID prend également en charge les équilibreurs de charge tiers.</block>
+  <block id="254b8ac10c6e4affc88ed5a3300b91ab" category="paragraph">StorageGRID est généralement déployé sur deux sites ou plus, avec des règles de protection des données qui répliquent les données afin d'éviter les défaillances au niveau des nœuds et des sites. En sauvegardant vos données sur StorageGRID, elles sont protégées par plusieurs copies ou par un code d'effacement qui sépare et réassemble les données de manière fiable à l'aide d'un algorithme.</block>
+  <block id="adc69293e8fd256b2609664f1e11cb53" category="inline-link">Fusion</block>
+  <block id="f0d97e78bf1c5ff4659d7f868170f3a4" category="paragraph">Vous pouvez utiliser l'outil de dimensionnement<block ref="8ea841f9b1986a19de18878436c983c7" category="inline-link-rx"></block> pour dimensionner votre grille.</block>
+  <block id="bc967dc2d57e6eff184a821bf7577a80" category="section-title">Évolutivité</block>
+  <block id="900c557ee6849406e1e6f451f65bdde1" category="paragraph">Pour étendre un système NetApp StorageGRID, il est possible d'ajouter du stockage aux nœuds de stockage, d'ajouter de nouveaux nœuds grid à un site déjà en place ou d'ajouter un nouveau site de data Center. Les expansions ne nécessitent aucune interruption du fonctionnement du système.
+StorageGRID fait évoluer les performances en utilisant soit des nœuds de performance plus élevée pour les nœuds de stockage, soit l'appliance physique qui exécute l'équilibreur de charge et les nœuds d'administration, soit en ajoutant simplement des nœuds supplémentaires.</block>
+  <block id="87c6a063dd59ec7afe1b7de60674167f" category="inline-link">Guide d'extension StorageGRID 11.8</block>
+  <block id="178a2b6eb168714f3392d86f31b81107" category="paragraph">Pour plus d'informations sur l'extension du système StorageGRID, reportez-vous à la section<block ref="ad2f8b162bf757bc05f37ca0091f2d6d" category="inline-link-rx"></block>.</block>
+  <block id="39e0647405a456dbe0f327581e422077" category="section-title">Spécifications matérielles de la StorageGRID</block>
+  <block id="7ac8ba0d8d9d0dbf967afc44eebecee4" category="paragraph">Le Tableau 4 décrit le matériel NetApp StorageGRID utilisé dans ce test. L'appliance StorageGRID SG5712 avec mise en réseau 10 Gbits/s est l'option d'entrée de gamme et représente une configuration de base. Éventuellement, le SG5712 peut être configuré pour une mise en réseau de 25 Gbit/s.</block>
+  <block id="380be67f84564c575abe95593c0c96c3" category="paragraph">Le choix d'options d'appliance hautes performances, telles que les appliances NetApp StorageGRID SG5760, SG6060 et 100 % Flash SGF6112 peut apporter des avantages significatifs en matière de performance. Consultez votre architecte de solutions NetApp StorageGRID pour obtenir de l'aide sur le dimensionnement.</block>
+  <block id="1c0a4a363a35650f52d2788c8c1e3340" category="section-title">Tableau 4) spécifications matérielles SG5712</block>
+  <block id="3c02a379965ab0dfcd77b1c484450433" category="cell">Sous-jacent</block>
+  <block id="694e8d1f2ee056f98ee488bdc4982d73" category="cell">Quantité</block>
+  <block id="380dbc8d9d2c8a17f6ebb0b2c62d3e85" category="cell">Disque</block>
+  <block id="1d9a663a8048fa4c70d3b7da3290365f" category="cell">Capacité exploitable</block>
+  <block id="eec89088ee408b80387155272b113256" category="cell">Le réseau</block>
+  <block id="d2d801f305ba0e6fa6a9b891a48ab761" category="paragraph">Appliances StorageGRID SG5712</block>
+  <block id="a87ff679a2f3e71d9181a67b7542122c" category="paragraph">4</block>
+  <block id="a5983f5b9038e27d7801178f702c8ca0" category="paragraph">48 x 4 To (disque dur SAS secondaire)</block>
+  <block id="7f070e79f8fb5c07df2dcdedad1d7981" category="paragraph">136 TO</block>
+  <block id="11e8c7c9ca2479f825be4a5b2207c2e4" category="paragraph">10 Gbit/s</block>
+  <block id="cbf13ee4de3e188484a6f9e54ec774d4" category="section-title">Configuration logicielle requise pour CommVault et StorageGRID</block>
+  <block id="9f06e1bbda93a5691f767c9a6bd5d5cc" category="paragraph">Les tableaux 5 et 6 répertorient les logiciels requis pour les logiciels CommVault et NetApp StorageGRID installés sur le logiciel VMware à des fins de test. Quatre gestionnaires de transmission de données MediaAgent et un serveur CommServe ont été installés. Lors du test, une mise en réseau de 10 Gbits/s a été mise en œuvre pour l'infrastructure VMware.</block>
+  <block id="24ab73c686b5112b49ce6f98750612b7" category="section-title">Tableau 5) Configuration système totale requise pour le logiciel CommVault.</block>
+  <block id="2cb05e4bb7830be982f0922fed86b4cd" category="cell">Composant</block>
+  <block id="8a5227cc82d14862956938caffc1acf2" category="cell">Datastore</block>
+  <block id="6f6cb72d544962fa333e2e34ce64f719" category="cell">Taille</block>
+  <block id="96b0141273eabab320119c467cdcaf17" category="cell">Total</block>
+  <block id="c7f6eda2b5882630770159be5e3c5a0d" category="cell">Nombre total d'IOPS requises</block>
+  <block id="63a1a7c310d221d52fa70fd4b2069f4f" category="paragraph">Serveur CommServe</block>
+  <block id="c4ca4238a0b923820dcc509a6f75849b" category="paragraph">1</block>
+  <block id="17bc10091293fdc562a6db69940ee924" category="paragraph">OS</block>
+  <block id="e38c9d3443457efbb3f9e8d08a8b5c5b" category="paragraph">500 GO</block>
+  <block id="274b68192b056e268f128ff63bfcd4a4" category="paragraph">s/o</block>
+  <block id="9778840a0100cb30c982876741b0b5a2" category="paragraph">SQL</block>
+  <block id="c5ae3175ae0f68be6c3428dbe833be99" category="paragraph">MediaAgent</block>
+  <block id="c56996cb460ab9ee13fbfb489522cad5" category="paragraph">Processeur virtuel (vCPU)</block>
+  <block id="c74d97b01eae257e44aa9d5bade97baf" category="paragraph">16</block>
+  <block id="ea5d2f1c4608232e07d3aa3d998e5135" category="paragraph">64</block>
+  <block id="e53619c1fe611a51eeeb8d148ba6e532" category="paragraph">RAM</block>
+  <block id="902b52e9ee55baad95374c0815e0d188" category="paragraph">128 GO</block>
+  <block id="10a7cdd970fe135cf4f7bb55c0e3b59f" category="paragraph">512</block>
+  <block id="2dc6494faaf47acd40a479d5e8f22eeb" category="paragraph">2 TO</block>
+  <block id="84e2027c504e2b4b983e4b5734ad7d5c" category="paragraph">Cache d'index</block>
+  <block id="42cc03da5dd9834d6beb08900e77d96e" category="paragraph">8 TO</block>
+  <block id="4c5da6b5ca9d093be38b4da1035de5ca" category="paragraph">200+</block>
+  <block id="d02340dc3ba5e6755a60283779457ac6" category="paragraph">DDB</block>
+  <block id="4b68c01a22855e38e3082b749de02ba5" category="paragraph">200 000 000 K</block>
+  <block id="fd5ab623109855762f689a3b63d50d9d" category="paragraph">Dans l'environnement de test, un nœud d'administration principal virtuel et un nœud de passerelle virtuelle ont été déployés sur VMware sur une baie de stockage NetApp E-Series E2812. Chaque nœud se trouvait sur un serveur distinct avec les exigences minimales de l'environnement de production décrites dans le Tableau 6 :</block>
+  <block id="edfcb8c8756d94a5053287cc7c5bb985" category="section-title">Tableau 6) exigences relatives aux nœuds d'administration virtuelle et aux nœuds de passerelle StorageGRID.</block>
+  <block id="95363aa90e372ebfaf3970380516572f" category="cell">Type de nœud</block>
+  <block id="5d56dbd20d9ee1ab8a722ff12e331953" category="cell">VCPU</block>
+  <block id="8c4aa541ee911e8d80451ef8cc304806" category="cell">Stockage</block>
+  <block id="f7aa6dfb52b6b0d539a8be4872a287f8" category="paragraph">Nœud de passerelle</block>
+  <block id="c9f0f895fb98ab9159f51fd0297e236d" category="paragraph">8</block>
+  <block id="bc7bf06ca2631ef1531ed5dc65a24f74" category="paragraph">24 GO</block>
+  <block id="2be1f61edb7b7e4217e348e8d68c3bdb" category="paragraph">LUN de 100 Gb pour le système d'exploitation</block>
+  <block id="4c80ce09ddde27d3fd5c0bb436bc85b9" category="paragraph">Nœud d'administration</block>
+  <block id="c6ab7905f828c85832f97995c1de53c9" category="paragraph">LUN de 200 Go pour les tables de nœuds d'administration</block>
+  <block id="69108e14aa48ab2bba84a59654aed432" category="paragraph">LUN de 200 Go pour le journal d'audit du nœud d'administration</block>
+  <block id="55d6f03ef9d28326ab829ca5d2678109" category="section-title">Exécution d'une tâche de protection des données avec CommVault Complete Backup and Recovery et NetApp StorageGRID</block>
+  <block id="624726d5ed2d940147c46600099b1b20" category="paragraph">Pour configurer NetApp StorageGRID avec CommVault Complete Backup and Recovery pour NetApp, les étapes suivantes ont été effectuées pour ajouter StorageGRID en tant que bibliothèque cloud dans le logiciel CommVault.</block>
+  <block id="98e8e1a08dff2be7e31ea4273d1252cf" category="section-title">Configurer CommVault avec NetApp StorageGRID</block>
+  <block id="3f139c400a23226143fbb4c472b54b04" category="list-text">Connectez-vous au Centre de commande CommVault. Dans le panneau de gauche, cliquez sur stockage &gt; Cloud &gt; Ajouter pour afficher la boîte de dialogue Ajouter un nuage et y répondre :</block>
+  <block id="b9693cedb91ba2290fa1e958a43307a7" category="inline-image-macro">Ajouter un nuage</block>
+  <block id="d7b2bbcbec44a75a29e4d684f80fbed1" category="paragraph"><block ref="d7b2bbcbec44a75a29e4d684f80fbed1" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="e7716d81d180918f49287e4cffec864b" category="list-text">Sous Type, sélectionnez NetApp StorageGRID.</block>
+  <block id="f2328e03c7cb647329406eeecccf4cee" category="list-text">Pour MediaAgent, sélectionnez tous les éléments associés à la bibliothèque cloud.</block>
+  <block id="8880a4bf1f03731649f1c0440d513f95" category="list-text">Pour hôte serveur, entrez l'adresse IP ou le nom d'hôte du noeud final StorageGRID et le numéro de port.</block>
+  <block id="6a0eaeb7d5862ce617029226cd1ddb73" category="inline-link">comment configurer un terminal d'équilibrage de charge (port)</block>
+  <block id="a3636f86ff974c19fd6fff205c8e5614" category="paragraph">Suivez les étapes de la documentation StorageGRID sur<block ref="1100cc5690fec9e9d1b69376de24b8a1" category="inline-link-rx"></block>. Assurez-vous que vous disposez d'un port HTTPS avec un certificat auto-signé et que vous disposez de l'adresse IP ou du nom de domaine du noeud final StorageGRID.</block>
+  <block id="03797fee0986db2f87c5cac8fcdb1dde" category="list-text">Si vous souhaitez utiliser la déduplication, activez cette option et indiquez le chemin d'accès à l'emplacement de la base de données de déduplication.</block>
+  <block id="7557bd62e953fb4d48f07977151ea94f" category="list-text">Cliquez sur Enregistrer.</block>
+  <block id="43f16fcba150904a7bc15439308479cb" category="section-title">Créez un plan de sauvegarde avec NetApp StorageGRID comme cible principale</block>
+  <block id="ce43cd7410027d345f9c6f5c79d39d2d" category="list-text">Dans le panneau de gauche, sélectionnez gérer &gt; plans pour afficher la boîte de dialogue Créer un plan de sauvegarde du serveur et y répondre.</block>
+  <block id="8280fcbd09b67e4a2a2180030f18ee89" category="inline-image-macro">Créer un plan de sauvegarde du serveur</block>
+  <block id="e6e155a2825afd1e66e915eba6056af0" category="paragraph"><block ref="e6e155a2825afd1e66e915eba6056af0" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="35cef3079f40303a520fe4fb98509a28" category="list-text">Entrez un nom de plan.</block>
+  <block id="ed9638b797083e4574c1bda37d24d0fc" category="list-text">Sélectionnez la destination de sauvegarde du stockage StorageGRID simple Storage Service (S3) que vous avez créée précédemment.</block>
+  <block id="cc10fccab84b1a6fe5a3b014f2ac16fe" category="list-text">Saisissez la période de conservation des sauvegardes et l'objectif de point de récupération (RPO) souhaités.</block>
+  <block id="317c3634f6ad30cd0bc9e98a4725d400" category="section-title">Démarrez une tâche de sauvegarde pour protéger vos charges de travail à l'aide du logiciel CommVault et de StorageGRID</block>
+  <block id="ba57deab107afb6c3808fe3a667bb7b5" category="paragraph">Pour démarrer une tâche de sauvegarde depuis CommVault Complete Backup and Recovery vers StorageGRID, effectuez la procédure suivante :</block>
+  <block id="1e6c34e7c31e91ec0533fdb6b4825478" category="list-text">Dans CommVault Command Center, accédez à protection &gt; virtualisation.</block>
+  <block id="33a281881beebd42edbba1170de6ebdb" category="list-text">Ajoutez un hyperviseur VMware vCenter Server.</block>
+  <block id="0582da82b14c1d127296cc0e0c1e593f" category="list-text">Cliquez sur l'hyperviseur que vous venez d'ajouter.</block>
+  <block id="12d1eaf919942bd27fafed65a4eaa44b" category="list-text">Cliquez sur Ajouter un groupe de machines virtuelles pour répondre à la boîte de dialogue Ajouter un groupe de machines virtuelles afin de voir l'environnement vCenter que vous prévoyez de protéger.</block>
+  <block id="4316988282aed94dacaa8b4b66bec00b" category="inline-image-macro">Ajouter un groupe de machines virtuelles</block>
+  <block id="5db14a33d51cc3d07064c129a11e4dfb" category="paragraph"><block ref="5db14a33d51cc3d07064c129a11e4dfb" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="61febfa4c91db0399b8837e0c209881e" category="list-text">Sélectionnez un datastore, une machine virtuelle ou un ensemble de machines virtuelles, puis entrez son nom.</block>
+  <block id="b55f90f1dad898510ca7b78db85ef1b4" category="list-text">Sélectionnez le plan de sauvegarde que vous avez créé dans la tâche précédente.</block>
+  <block id="58785b3df6de95af5db042098848d79c" category="list-text">Cliquez sur Enregistrer pour afficher le groupe de machines virtuelles que vous avez créé.</block>
+  <block id="2ea49c4e99265736f831cc64151e93cb" category="list-text">Dans le coin supérieur droit de la fenêtre VM group, sélectionnez Backup :</block>
+  <block id="1c964f034a0012b392a4cf6b87ac0fba" category="inline-image-macro">Groupe VM</block>
+  <block id="b8409b035475aa7ff8ff45771ca8c6f1" category="paragraph"><block ref="b8409b035475aa7ff8ff45771ca8c6f1" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="f5e3c2bce0112505e3bfead83355284d" category="list-text">Sélectionnez Full comme niveau de sauvegarde, (facultatif) demandez un e-mail lorsque la sauvegarde est terminée, puis cliquez sur OK pour lancer votre tâche de sauvegarde :</block>
+  <block id="eee4c34c5b08e040c0e736a8e298f721" category="inline-image-macro">Niveau de sauvegarde</block>
+  <block id="6cc8cde2c84a6c1a21e31318d689c48b" category="paragraph"><block ref="6cc8cde2c84a6c1a21e31318d689c48b" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="f180b371d83592db209e4e7f07bd7f96" category="list-text">Accédez à la page de résumé du travail pour afficher les mesures du travail :</block>
+  <block id="bc2966582cc91a73dfce86d847e8e569" category="inline-image-macro">Résumé du travail</block>
+  <block id="ce8f9b25ff69c679a10481c883fed679" category="paragraph"><block ref="ce8f9b25ff69c679a10481c883fed679" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="23571a6157715a68dbc83017094ddb4f" category="section-title">Tests de performances de base</block>
+  <block id="6e861ca3d49a3946d380c959a4a035f6" category="paragraph">Le Tableau 7 présente les résultats de nos tests de performances de base. Lors de l'opération copie auxiliaire, quatre MediaAgents CommVault ont sauvegardé des données sur un système NetApp AFF A300 et une copie auxiliaire a été créée sur NetApp StorageGRID. Pour plus d'informations sur l'environnement de configuration de test, consultez la section conception de la solution et meilleures pratiques du<block ref="03ce17f8b5e1206a493f3bd56ef5953d" category="inline-link-rx"></block> rapport technique.</block>
+  <block id="225de55f95e8814ef869602a34589cd7" category="paragraph">Les tests ont été réalisés avec 100 machines virtuelles et 1000 machines virtuelles, les deux tests portant sur 50/50 combinaisons de machines virtuelles Windows et CentOS.</block>
+  <block id="229f4b7ae2ae04662d95b14f93a7ebe0" category="section-title">Tableau 7) tests de performances de base.</block>
+  <block id="2a78ed76450c3cb42320882b3e055b31" category="cell">Fonctionnement</block>
+  <block id="7e1474aa3c4832c1061cf4839e5d5d40" category="cell">Vitesse de secours</block>
+  <block id="d9cb8f643ee1e5634cee0a2f4dc3dcde" category="cell">Vitesse de restauration</block>
+  <block id="770d588cad23e4bf00734e4271f614fd" category="paragraph">Copie aux</block>
+  <block id="1bd5cb95562494b849b4e43073e86dd0" category="paragraph">2 To/heure</block>
+  <block id="6e18c63ab6e3f65e0cacdc25607a044b" category="paragraph">1.27 To/heure</block>
+  <block id="cd8362e2e8655ccb1cee59cfbe698457" category="paragraph">Direct vers et depuis l'objet (déduplication activée)</block>
+  <block id="e8d76835d2ff06b926aad0a1a3abc063" category="paragraph">2.2 To/heure</block>
+  <block id="4cd450a475fe3ee9b59eb120652eeaa9" category="paragraph">1.22 To/heure</block>
+  <block id="6c24655e80561dbbf463d7c411594029" category="paragraph">Pour tester les performances de suppression des données, 2.5 millions d'objets ont été supprimés. Comme le montrent les Figures 2 et 3, l'exécution de la suppression s'est terminée en moins de 3 heures et a libéré plus de 80 To d'espace. La séquence de suppression a démarré à 10:30 AM.</block>
+  <block id="4c1a9a798859a7662d448a099c8f19c2" category="section-title">Figure 1) Suppression de 2.5 millions (80 To) d'objets en moins de 3 heures.</block>
+  <block id="05e3d90010c26e3ef8176b0d49eabdb3" category="inline-image-macro">Objets au fil du temps</block>
+  <block id="c09d8cd9b39a4736f34838dd7cf3f7a5" category="paragraph"><block ref="c09d8cd9b39a4736f34838dd7cf3f7a5" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="18967e6af4f60b163c3348f6c5e180f0" category="section-title">Figure 2) libération de 80 To de stockage en moins de 3 heures.</block>
+  <block id="6d2b9f3277e042907d537d8a6101be35" category="inline-image-macro">Au fil du temps</block>
+  <block id="4fc5dae0e8a159f3d86289050bbd7311" category="paragraph"><block ref="4fc5dae0e8a159f3d86289050bbd7311" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="a0b40e1fd7ca1cc5d222d54ea1d246cc" category="section-title">Recommandation de niveau de cohérence des compartiments</block>
+  <block id="8230e2a5dfbb7d3dc9d7837f464a94f4" category="paragraph">NetApp StorageGRID permet à l'utilisateur final de sélectionner le niveau de cohérence des opérations effectuées sur les objets dans des compartiments simple Storage Service (S3).</block>
+  <block id="eb668bdb2b4d4ac34c6ad7523c133230" category="paragraph">CommVault MediaAgents sont les Data Movers d'un environnement CommVault. Dans la plupart des cas, les MediaAgents sont configurés pour écrire localement sur un site StorageGRID principal. Pour cette raison, un niveau de cohérence élevé est recommandé au sein d'un site primaire local. Lorsque vous définissez un niveau de cohérence sur les compartiments CommVault créés dans StorageGRID, veillez à respecter les consignes suivantes.</block>
+  <block id="3ceaa99fe3628c0d4ddb470789b9212d" category="list-text">Versions CommVault antérieures à 11.0.0 - Service Pack 16.* dans les versions antérieures à 11.0.0 - Service Pack 16, CommVault effectue des opérations S3 HEAD et GET sur des objets inexistants dans le cadre du processus de restauration et de nettoyage. Définissez le niveau de cohérence du compartiment sur site forte pour atteindre un niveau de cohérence optimal pour les sauvegardes CommVault vers StorageGRID.</block>
+  <block id="9a76294cf4d43d5686590bb6c98a280b" category="list-text">CommVault versions 11.0.0 - Service Pack 16 et ultérieures.* dans les versions 11.0.0 - Service Pack 16 et ultérieures, le nombre d'opérations S3 HEAD et GET effectuées sur des objets inexistants est réduit. Définissez le niveau de cohérence du compartiment par défaut sur lecture après nouvelle écriture afin d'assurer une cohérence élevée dans l'environnement CommVault et StorageGRID.</block>
+  <block id="3887d417240a72ab69f6d0301efd3b2b" category="section-title">Sources d'informations complémentaires</block>
+  <block id="b69ce771bb450c54c2a29e08595a1621" category="list-text">Centre de documentation StorageGRID 11.8 +
+<block ref="47ea1c2d0f136bec8b3e66c2121bf70f" category="inline-link-rx"></block></block>
+  <block id="a1b241b7e61d12e641e864fa7e3c7a8e" category="list-text">Documentation produit NetApp +
+<block ref="fa4af55c3fdbce23e96d2cf73261fa5b" category="inline-link-rx"></block></block>
+  <block id="748e9574a05efa0e0738de58c2ff670b" category="list-text">Documentation CommVault +
+<block ref="27eb3a3d6ca60f8dbf05e2df1f7e4644" category="inline-link-rx"></block></block>
 </blocks>
