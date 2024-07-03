@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal/validate-storagegrid-config-files.html 
+keywords: config files, storagegrid 
+summary: Découvrez comment valider le contenu des fichiers de configuration pour StorageGRID. 
+---
+= Validez les fichiers de configuration StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Découvrez comment valider le contenu des fichiers de configuration pour StorageGRID.
+
+Après avoir créé les fichiers de configuration dans `/etc/storagegrid/nodes` pour chacun de vos nœuds StorageGRID, vous devez valider le contenu de ces fichiers.
+
+Pour valider le contenu des fichiers de configuration, exécutez la commande suivante sur chaque hôte :
+
+[listing]
+----
+sudo storagegrid node validate all
+----
+Si les fichiers sont corrects, le résultat indique RÉUSSI pour chaque fichier de configuration :
+
+image:bare-metal-output-shows-passed.png["sortie-métal-base-montre-passé"]
+
+Si les fichiers de configuration sont incorrects, les problèmes sont affichés comme AVERTISSEMENT et ERREUR. Si des erreurs de configuration sont détectées, vous devez les corriger avant de poursuivre l'installation.
+
+image:bare-metal-output-shows-warning-error.png["sortie-métal-base-affiche-avertissement-erreur"]

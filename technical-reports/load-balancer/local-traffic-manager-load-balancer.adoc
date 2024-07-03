@@ -1,0 +1,167 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/load-balancer/local-traffic-manager-load-balancer.html 
+keywords: local traffic manager, load balancer 
+summary: Explorez les conseils pour les équilibreurs de charge du gestionnaire de trafic local et déterminez la configuration optimale. 
+---
+= En savoir plus sur les équilibreurs de charge du gestionnaire de trafic local
+:hardbreaks:
+:allow-uri-read: 
+:experimental: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Explorez les conseils pour les équilibreurs de charge du gestionnaire de trafic local et déterminez la configuration optimale.
+
+Vous trouverez ci-dessous des conseils généraux pour la configuration d'équilibreurs de charge tiers. Déterminez avec votre administrateur d'équilibreur de charge la configuration optimale pour votre environnement.
+
+
+
+== Créez un groupe de ressources de nœuds de stockage
+
+Regroupez les nœuds de stockage StorageGRID dans un pool de ressources ou un groupe de services (la terminologie peut varier en fonction des équilibreurs de charge). Les nœuds de stockage StorageGRID présentent l'API S3 sur les ports suivants :
+
+* HTTPS S3 : 18082
+* S3 HTTP : 18084
+
+
+La plupart des clients choisissent de présenter les API sur le serveur virtuel via les ports HTTPS et HTTP standard (443 et 80).
+
+
+NOTE: Chaque site StorageGRID requiert une valeur par défaut de trois nœuds de stockage, deux d'entre eux devant être sains.
+
+
+
+== Vérification de l'état
+
+Les équilibreurs de charge tiers ont besoin d'une méthode pour déterminer l'état de santé de chaque nœud et son éligibilité à la réception du trafic. NetApp recommande la méthode HTTP `OPTIONS` pour effectuer la vérification de l'état. L'équilibreur de charge envoie des requêtes HTTP `OPTIONS` à chaque nœud de stockage et attend une `200` réponse d'état.
+
+Si aucun nœud de stockage ne fournit `200` de réponse, ce nœud ne peut pas traiter les demandes de stockage. Les exigences de vos applications et de votre entreprise doivent déterminer le délai d'attente de ces vérifications et les actions que votre équilibreur de charge prend.
+
+Par exemple, si trois des quatre nœuds de stockage du data Center 1 sont en panne, vous pouvez diriger l'ensemble du trafic vers le data Center 2.
+
+L'intervalle d'interrogation recommandé est d'une fois par seconde, marquant le nœud hors ligne après trois échecs de vérification.
+
+
+
+=== Exemple de vérification de l'état S3
+
+Dans l'exemple suivant, nous envoyons `OPTIONS` et vérifions pour `200 OK`. Nous l'utilisons `OPTIONS` car Amazon S3) ne prend pas en charge les requêtes non autorisées.
+
+[listing, subs="verbatim,quotes"]
+----
+##curl -X OPTIONS https://10.63.174.75:18082 --verbose --insecure##
+* Rebuilt URL to: https://10.63.174.75:18082/
+*   Trying 10.63.174.75...
+* TCP_NODELAY set
+* Connected to 10.63.174.75 (10.63.174.75) port 18082 (#0)
+* TLS 1.2 connection using TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+* Server certificate: webscale.stl.netapp.com
+* Server certificate: NetApp Corp Issuing CA 1
+* Server certificate: NetApp Corp Root CA
+> OPTIONS / HTTP/1.1
+> Host: 10.63.174.75:18082
+> User-Agent: curl/7.51.0
+> Accept: */*
+>
+< HTTP/1.1 ##200 OK##
+< Date: Mon, 22 May 2017 15:17:30 GMT
+< Connection: KEEP-ALIVE
+< Server: StorageGRID/10.4.0
+< x-amz-request-id: 3023514741
+----
+
+
+=== Vérifications de l'état des fichiers ou des contenus
+
+En général, NetApp ne recommande pas de vérifications de l'état des systèmes basées sur des fichiers. En général, un petit fichier —`healthcheck.htm`, par exemple, est créé dans un compartiment avec une règle en lecture seule. Ce fichier est ensuite récupéré et évalué par l'équilibreur de charge. Cette approche présente plusieurs inconvénients :
+
+* *Dépendant d'un seul compte.* Si le compte propriétaire du fichier est désactivé, le bilan de santé échoue et aucune demande de stockage n'est traitée.
+* *Règles de protection des données.* Par défaut, le schéma de protection des données est une approche à deux copies. Dans ce scénario, si les deux nœuds de stockage hébergeant le fichier de vérification de l'état sont indisponibles, la vérification de l'état échoue et les demandes de stockage ne sont pas envoyées aux nœuds de stockage sains, ce qui rend la grille hors ligne.
+* *Bloat du journal d'audit.* L'équilibreur de charge extrait le fichier de chaque nœud de stockage toutes les X minutes, créant ainsi de nombreuses entrées de journal d'audit.
+* *Ressource intensive.* L'extraction du fichier de vérification de l'état de santé de chaque nœud toutes les quelques secondes consomme des ressources de réseau et de grille.
+
+
+Si un contrôle de l'état basé sur le contenu est nécessaire, utilisez un locataire dédié avec un compartiment S3 dédié.
+
+
+
+=== Persistance de la session
+
+La persistance de session, ou persistance, fait référence à la durée pendant laquelle une session HTTP donnée est autorisée à persister. Par défaut, les sessions sont supprimées par les nœuds de stockage au bout de 10 minutes. Une persistance plus longue peut améliorer les performances, car les applications n'ont pas besoin de rétablir leurs sessions pour chaque action. Cependant, garder ces sessions ouvertes consomme des ressources. Si vous déterminez que votre charge de travail sera avantageuse, vous pouvez réduire la persistance des sessions sur un équilibreur de charge tiers.
+
+
+
+== Adressage virtuel de type hébergé
+
+La méthode par défaut d'AWS S3 est désormais de type hébergement virtuel. StorageGRID et de nombreuses applications prennent toujours en charge le style de chemin, mais il est recommandé d'implémenter la prise en charge de type hébergement virtuel. Les demandes de type hébergement virtuel disposent du compartiment dans le nom de l'hôte.
+
+Pour prendre en charge le style hébergé virtuel, procédez comme suit :
+
+* Prend en charge les recherches DNS génériques : *.s3.company.com
+* Utilisez un certificat SSL avec des noms alt d'objet pour prendre en charge le caractère générique : *.s3.company.com certains clients ont exprimé des préoccupations de sécurité concernant l'utilisation de certificats génériques. StorageGRID continue de prendre en charge l'accès de type chemin, tout comme les applications clés telles que FabricPool. Ceci étant dit, certains appels de l'API S3 échouent ou se comportent de manière incorrecte sans prise en charge hébergée virtuelle.
+
+
+
+
+== Terminaison SSL
+
+La terminaison SSL présente des avantages en termes de sécurité sur les équilibreurs de charge tiers. Si l'équilibreur de charge est compromis, le grid est compartimenté.
+
+Trois configurations sont prises en charge :
+
+* *Pass-through SSL.* Le certificat SSL est installé sur StorageGRID en tant que certificat de serveur personnalisé.
+* *Terminaison et re-cryptage SSL (recommandé).* Cela peut être bénéfique si vous effectuez déjà la gestion des certificats SSL sur l'équilibreur de charge plutôt que d'installer le certificat SSL sur StorageGRID. Cette configuration offre l'avantage de sécurité supplémentaire de limiter la surface d'attaque à l'équilibreur de charge.
+* *Terminaison SSL avec HTTP.* Dans cette configuration, SSL est interrompu sur l'équilibreur de charge tiers et la communication entre l'équilibreur de charge et StorageGRID n'est pas chiffrée pour tirer parti du déchargement SSL (avec les bibliothèques SSL intégrées dans les processeurs modernes, cela présente un avantage limité).
+
+
+
+
+== Configuration de passage
+
+Si vous préférez configurer votre équilibreur de charge pour le transfert, vous devez installer le certificat sur StorageGRID. Accédez au menu:Configuration[certificats de serveur > noeuds finaux du service API de stockage objet certificat de serveur].
+
+
+
+== Visibilité IP du client source
+
+StorageGRID 11.4 a introduit le concept d'équilibreur de charge tiers fiable. Pour transférer l'adresse IP de l'application client vers StorageGRID, vous devez configurer cette fonction. Pour plus d'informations, voir https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_configure_StorageGRID_to_work_with_third-party_Layer_7_load_balancers["Comment configurer StorageGRID pour qu'il fonctionne avec des équilibreurs de charge tiers de couche 7."^]
+
+Pour activer l'en-tête XFF pour afficher l'adresse IP de l'application client, procédez comme suit :
+
+.Étapes
+. Enregistrez l'adresse IP du client dans le journal d'audit.
+. Utilisez `aws:SourceIp` un compartiment S3 ou une règle de groupe.
+
+
+
+
+=== Stratégies d'équilibrage de charge
+
+La plupart des solutions d'équilibrage de charge offrent plusieurs stratégies d'équilibrage de charge. Les stratégies courantes sont les suivantes :
+
+* *Robin rond.* Une solution universelle, mais avec peu de nœuds et de grands transferts obstruant les nœuds uniques.
+* *Connexion minimale.* Convient parfaitement aux charges de travail mixtes et de petite taille qui offrent une distribution égale des connexions à tous les nœuds.
+
+
+Le choix de l'algorithme devient moins important, car le nombre de nœuds de stockage est de plus en plus important.
+
+
+
+=== Chemin d'accès aux données
+
+Les données transitent par les équilibreurs de charge du gestionnaire de trafic local. StorageGRID ne prend pas en charge le routage direct de serveur (DSR).
+
+
+
+==== Vérification de la distribution des connexions
+
+Pour vérifier que votre méthode répartit la charge uniformément entre les nœuds de stockage, vérifiez les sessions établies sur chaque nœud d'un site donné :
+
+* *Méthode UI.* Aller au menu:support[Metrics > S3 Overview > LDR HTTP sessions]
+* *API métriques.* Utilisation `storagegrid_http_sessions_incoming_currently_established`
+

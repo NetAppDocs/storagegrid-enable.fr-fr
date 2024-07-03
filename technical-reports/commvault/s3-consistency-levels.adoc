@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/commvault/s3-consistency-levels.html 
+keywords: Backup, on-premises, commvault, storagegrid, object, S3, WORM 
+summary: 'Explorez les quelques cas d"utilisation des configurations StorageGRID mises en œuvre par les clients et PAR NetApp IT.' 
+---
+= Recommandation de niveau de cohérence des compartiments
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+NetApp StorageGRID permet à l'utilisateur final de sélectionner le niveau de cohérence des opérations effectuées sur les objets dans des compartiments simple Storage Service (S3).
+
+CommVault MediaAgents sont les Data Movers d'un environnement CommVault. Dans la plupart des cas, les MediaAgents sont configurés pour écrire localement sur un site StorageGRID principal. Pour cette raison, un niveau de cohérence élevé est recommandé au sein d'un site primaire local. Lorsque vous définissez un niveau de cohérence sur les compartiments CommVault créés dans StorageGRID, veillez à respecter les consignes suivantes.
+
+[NOTE]
+====
+Si vous disposez d'une version de CommVault antérieure à 11.0.0 - Service Pack 16, envisagez de mettre à niveau CommVault vers la version la plus récente. Si ce n'est pas une option, assurez-vous de suivre les directives pour votre version.
+
+====
+* Versions CommVault antérieures à 11.0.0 - Service Pack 16.* dans les versions antérieures à 11.0.0 - Service Pack 16, CommVault effectue des opérations S3 HEAD et GET sur des objets inexistants dans le cadre du processus de restauration et de nettoyage. Définissez le niveau de cohérence du compartiment sur site forte pour atteindre un niveau de cohérence optimal pour les sauvegardes CommVault vers StorageGRID.
+* CommVault versions 11.0.0 - Service Pack 16 et ultérieures.* dans les versions 11.0.0 - Service Pack 16 et ultérieures, le nombre d'opérations S3 HEAD et GET effectuées sur des objets inexistants est réduit. Définissez le niveau de cohérence du compartiment par défaut sur lecture après nouvelle écriture afin d'assurer une cohérence élevée dans l'environnement CommVault et StorageGRID.
+

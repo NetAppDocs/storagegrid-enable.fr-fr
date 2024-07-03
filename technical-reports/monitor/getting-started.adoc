@@ -1,0 +1,31 @@
+---
+permalink: technical-reports/monitor/getting-started.html 
+sidebar: sidebar 
+keywords: get started, storagegrid 
+summary: 'Commencez votre parcours de surveillance de NetApp StorageGRID avec le tableau de bord GMI, qui vous offre une vue d"ensemble de la grille et de ses principaux composants.' 
+---
+= Utilisez le tableau de bord GMI pour surveiller StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Le tableau de bord de l'interface de gestion Grid (GMI) de StorageGRID offre une vue centralisée de l'infrastructure StorageGRID. Vous pouvez ainsi surveiller l'état, les performances et la capacité de l'ensemble du grid.
+
+Utilisez le tableau de bord GMI pour examiner chaque composant central de la grille.
+
+image:monitor-storagegrid-gmi-dashboard.png["monitor-storagegrid-gmi-dashboard"]
+
+
+
+== Informations à surveiller régulièrement
+
+Une version précédente de ce rapport technique énuméré les mesures à vérifier périodiquement par rapport aux tendances. Cette information est maintenant incluse dans le https://docs.netapp.com/us-en/storagegrid-118/landing-monitor-troubleshoot/index.html["Guide de surveillance et de dépannage"^].
+
+
+
+== Surveiller le stockage
+
+Dans une version précédente de ce rapport technique, nous liseous où surveiller les mesures importantes, telles que l'espace de stockage objet, l'espace de métadonnées, les ressources réseau, etc. Cette information est maintenant incluse dans le https://docs.netapp.com/us-en/storagegrid-118/landing-monitor-troubleshoot/index.html["Guide de surveillance et de dépannage"^].

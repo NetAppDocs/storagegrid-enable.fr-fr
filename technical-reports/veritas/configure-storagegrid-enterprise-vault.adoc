@@ -1,0 +1,94 @@
+---
+permalink: technical-reports/veritas/configure-storagegrid-enterprise-vault.html 
+sidebar: sidebar 
+keywords: storagegrid, enterprise vault, configure 
+summary: Découvrez comment implémenter des configurations de base pour StorageGRID 11.5 et Veritas Enterprise Vault 14.1. 
+---
+= Configurer StorageGRID et Veritas Enterprise Vault
+:hardbreaks:
+:allow-uri-read: 
+:experimental: 
+:icons: font
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Découvrez comment implémenter des configurations de base pour StorageGRID 11.5 ou version ultérieure et Veritas Enterprise Vault 14.1 ou version ultérieure.
+
+Ce guide de configuration est basé sur StorageGRID 11.5 et Enterprise Vault 14.1. Pour le stockage en mode WORM (Write Once, Read Many) avec le verrouillage des objets S3, StorageGRID 11.6 et Enterprise Vault 14.2.2 ont été utilisés. Pour plus d'informations sur ces instructions, rendez-vous sur la https://docs.netapp.com/us-en/storagegrid-118/["Documentation StorageGRID"^] page ou contactez un expert StorageGRID.
+
+
+
+== Conditions requises pour configurer StorageGRID et Veritas Enterprise Vault
+
+* Avant de configurer StorageGRID avec Veritas Enterprise Vault, vérifiez les conditions préalables suivantes :
+
+
+
+NOTE: Pour le stockage WORM (verrouillage objet), StorageGRID 11.6 ou version supérieure est requis.
+
+* Veritas Enterprise Vault 14.1 ou version ultérieure est installé.
+
+
+
+NOTE: Pour le stockage WORM (Object Lock), Enterprise Vault version 14.2.2 ou supérieure est requis.
+
+* Des groupes de magasins de coffre-fort et un magasin de coffre-fort ont été créés. Pour plus d'informations, reportez-vous au Guide d'administration de Veritas Enterprise Vault.
+* Un locataire StorageGRID, une clé d'accès, une clé secrète et un compartiment ont été créés.
+* Un noeud final de l'équilibreur de charge StorageGRID a été créé (HTTP ou HTTPS).
+* Si vous utilisez un certificat auto-signé, ajoutez le certificat CA auto-signé StorageGRID aux serveurs de coffre-fort d'entreprise. Pour plus d'informations, voir https://www.veritas.com/support/en_US/article.100049744["Article de la base de connaissances Veritas"^].
+* Mettez à jour et appliquez le dernier fichier de configuration du coffre-fort d'entreprise pour activer les solutions de stockage prises en charge telles que NetApp StorageGRID. Pour plus d'informations, voir https://www.veritas.com/content/support/en_US/article.100039174["Article de la base de connaissances Veritas"^].
+
+
+
+
+== Configurez StorageGRID avec Veritas Enterprise Vault
+
+Pour configurer StorageGRID avec Veritas Enterprise Vault, procédez comme suit :
+
+.Étapes
+. Lancez la console Enterprise Vault Administration.
++
+image:third-party-enterprise-vault.png["coffre-fort-fort-multimédia/tiers"]
+
+. Créez une nouvelle partition de magasin de coffre-fort dans le magasin de coffre-fort approprié. Développez le dossier groupes du magasin Vault, puis le magasin de coffre-fort approprié. Cliquez avec le bouton droit de la souris sur partition et sélectionnez menu:New[partition].
++
+image:third-party-enterprise-vault-2.png["média/tiers-enterprise-vault-2"]
+
+. Suivez l'assistant de création de nouvelle partition. Dans le menu déroulant Type de stockage, sélectionnez NetApp StorageGRID (S3). Cliquez sur Suivant.
++
+image:third-party-new-partition.png["nouvelle partition tierce"]
+
+. Ne cochez pas l'option stocker les données en mode WORM à l'aide du verrouillage d'objet S3. Cliquez sur Suivant.
++
+image:third-party-new-partition-2.png["nouvelle partition-tierce-2"]
+
+. Sur la page des paramètres de connexion, fournissez les informations suivantes :
++
+** ID de clé d'accès
+** Clé d'accès secrète
+** Nom d'hôte du service : assurez-vous d'inclure le port LBE (load balancer Endpoint) configuré dans StorageGRID (tel que \https://<hostname>:<LBE_port>)
+** Nom du compartiment : nom du compartiment cible pré-créé. Veritas Enterprise Vault ne crée pas le compartiment.
+** Région du compartiment : `us-east-1` est la valeur par défaut.
++
+image:third-party-new-partition-3.png["nouvelle partition tierce-3"]
+
+
+
+. Pour vérifier la connexion au compartiment StorageGRID, cliquez sur Test. Vérifiez que le test de connexion a réussi. Cliquez sur OK, puis sur Suivant.
++
+image:third-party-new-partition-4.png["nouvelle partition tierce-4"]
+
+. StorageGRID ne prend pas en charge le paramètre de réplication S3. Pour protéger vos objets, StorageGRID utilise des règles de gestion du cycle de vie des informations (ILM) afin de spécifier des schémas de protection des données : copies multiples ou code d'effacement. Sélectionnez l'option lorsque des fichiers archivés existent dans le stockage et cliquez sur Suivant.
++
+image:third-party-new-partition-5.png["nouvelle partition tierce-5"]
+
+. Vérifiez les informations sur la page de résumé et cliquez sur Terminer.
++
+image:third-party-new-partition-6.png["nouvelle partition tierce-6"]
+
+. Une fois la nouvelle partition de magasin de coffre-fort créée, vous pouvez archiver, restaurer et rechercher des données dans le coffre-fort d'entreprise avec StorageGRID comme stockage principal.
++
+image:third-party-new-partition-7.png["nouvelle partition tierce-7"]
+
+

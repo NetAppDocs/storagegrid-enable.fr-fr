@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/load-balancer/global-load-balancing-design.html 
+keywords: global load balancing, storagegrid 
+summary: 'Explorez les considérations et exigences de conception pour l"équilibrage global de la charge dans StorageGRID.' 
+---
+= Comprendre les exigences globales d'équilibrage de charge pour StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Explorez les considérations et exigences de conception pour l'équilibrage global de la charge dans StorageGRID.
+
+L'équilibrage global de la charge nécessite l'intégration à DNS pour assurer un routage intelligent sur plusieurs sites StorageGRID. Cette fonction ne relève pas du domaine StorageGRID et doit être fournie par une solution tierce, telle que les produits d'équilibrage de charge mentionnés précédemment et/ou une solution de contrôle du trafic DNS telle qu'Infoblox. Cet équilibrage de charge de niveau supérieur assure le routage intelligent vers le site de destination le plus proche dans l'espace de noms, ainsi que la détection des pannes et la redirection vers le site suivant dans l'espace de noms. Une implémentation GSLB type consiste en un GSLB de niveau supérieur avec des pools de site contenant des équilibreurs de charge site-local. Les équilibreurs de charge de site contiennent des pools de nœuds de stockage sur site local. Cela peut inclure une combinaison d'équilibreurs de charge tiers pour les fonctions GSLB et de StorageGRID fournissant l'équilibrage de charge site-local, ou une combinaison de tiers. Un grand nombre de tiers évoqués précédemment peuvent fournir à la fois un équilibrage de charge GSLB et site-local.
+
+image:load-balancer-generic-gslb.png["générique-gslb"]

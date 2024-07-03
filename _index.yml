@@ -73,12 +73,22 @@ indexpage:
       url: "/tools-apps-guides/integrate-gitlab.html"
   - title: Rapports techniques
     links:
-    - title: NetApp StorageGRID et analytique Big Data
-      url: "/technical-reports/datalake-analytics.html"
-    - title: Meilleures pratiques de réglage Hadoop S3A
-      url: "/technical-reports/s3a-tuning.html"
-    - title: Tr-4871 - CommVault Complete Backup and Recovery and NetApp StorageGRID
-      url: "/technical-reports/tr-4871-commvault.html"
+    - title: 'Tr-4993 : NetApp StorageGRID et analytique Big Data'
+      url: "/technical-reports/technical-reports/datalake-analytics.html"
+    - title: 'Tr-4994 : meilleures pratiques de réglage Hadoop S3A'
+      url: "/technical-reports/technical-reports/s3a-tuning.html"
+    - title: 'Tr-4871 : CommVault Complete Backup and Recovery and NetApp StorageGRID'
+      url: "/technical-reports/technical-reports/tr-4871-commvault.html"
+    - title: 'Tr-4645 : fonctions de sécurité'
+      url: "/technical-reports/data-security/index.html"
+    - title: 'Tr-4921 : défense contre les ransomware'
+      url: "/technical-reports/ransomware-protection/index.html"
+    - title: 'Tr-4765 : StorageGRID du moniteur'
+      url: "/technical-reports/monitor/index.html"
+    - title: 'Tr-4882 : installation d''une grille métallique StorageGRID'
+      url: "/technical-reports/bare-metal/index.html"
+    - title: 'Tr-4907 : configurer StorageGRID avec Veritas Enterprise Vault'
+      url: "/technical-reports/veritas/index.html"
   - title: Procédures et exemples d'API
     links:
     - title: Tester et démontrer le chiffrement S3

@@ -1,0 +1,61 @@
+---
+permalink: technical-reports/monitor/access-metrics-curl.html 
+sidebar: sidebar 
+keywords: access metrics, curl, storagegrid 
+summary: 'Découvrez comment accéder aux metrics via l"interface de ligne de commande en utilisant des jetons de boucle et d"autorisation dans NetApp StorageGRID pour une récupération efficace des données.' 
+---
+= Accédez aux metrics à l'aide de CURL dans StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:experimental: 
+:icons: font
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Découvrez comment accéder aux metrics via l'interface de ligne de commandes en utilisant curl.
+
+Pour effectuer cette opération, vous devez d'abord obtenir un jeton d'autorisation. Pour demander un jeton, procédez comme suit :
+
+.Étapes
+. Dans l'interface GMI, sélectionnez menu:aide[Documentation API].
+. Faites défiler jusqu'à Auth pour rechercher des opérations sur l'autorisation. La capture d'écran suivante montre les paramètres de la méthode POST.
++
+image:monitor-post-method.png["moniteur-post-méthode"]
+
+. Cliquez sur essayer et modifiez le corps avec votre nom d'utilisateur et votre mot de passe GMI.
+. Cliquez sur Exécuter.
+. Copiez la commande curl fournie dans la section curl et collez-la dans une fenêtre de terminal. La commande se présente comme suit :
++
+[listing]
+----
+curl -X POST "https:// <Primary_Admin_IP>/api/v3/authorize" -H "accept: application/json" -H "Content-Type: application/json" -H "X-Csrf-Token: dc30b080e1ca9bc05ddb81104381d8c8" -d "{ \"username\": \"MyUsername\", \"password\": \"MyPassword\", \"cookie\": true, \"csrfToken\": false}" -k
+----
++
+
+NOTE: Si votre mot de passe GMI contient des caractères spéciaux, n'oubliez pas d'utiliser \ pour échapper à des caractères spéciaux. Par exemple, remplacez ! avec \!
+
+. Après avoir exécuté la commande curl précédente, le résultat vous donne un jeton d'autorisation comme dans l'exemple suivant :
++
+[listing]
+----
+{"responseTime":"2020-06-03T00:12:17.031Z","status":"success","apiVersion":"3.2","data":"8a1e528d-18a7-4283-9a5e-b2e6d731e0b2"}
+----
++
+Vous pouvez désormais utiliser la chaîne de tokens d'autorisation pour accéder aux métriques via curl. Le processus d'accès aux mesures est similaire aux étapes de la section link:advanced-monitor-storagegrid.html#export-metrics-through-the-api["Surveillance avancée dans StorageGRID"]. Cependant, à des fins de démonstration, nous montrons un exemple avec /grid/Metric-labels/{label}/values sélectionnées dans la catégorie Metrics.
+
+. Par exemple, la commande curl suivante avec le jeton d'autorisation précédent répertorie les noms de sites dans StorageGRID.
++
+[listing]
+----
+curl -X GET "https://10.193.92.230/api/v3/grid/metric-labels/site_name/values" -H "accept: application/json" -H "Authorization: Bearer 8a1e528d-18a7-4283-9a5e-b2e6d731e0b2"
+----
++
+La commande CURL génère la sortie suivante :
+
++
+[listing]
+----
+{"responseTime":"2020-06-03T00:17:00.844Z","status":"success","apiVersion":"3.2","data":["us-east-fuse","us-west-fuse"]}
+----
+

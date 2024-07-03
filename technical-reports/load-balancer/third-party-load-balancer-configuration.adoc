@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/load-balancer/third-party-load-balancer-configuration.html 
+keywords: third-party load balancer, storagegrid 
+summary: Découvrez comment configurer un équilibreur de charge tiers fiable dans StorageGRID. 
+---
+= Configurez un équilibreur de charge tiers fiable dans StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Découvrez comment configurer un équilibreur de charge tiers fiable dans StorageGRID.
+
+Si vous utilisez un ou plusieurs équilibreurs de charge de couche 7 externes et une règle de compartiment S3 ou de groupe basée sur IP, StorageGRID doit déterminer l'adresse IP de l'expéditeur réel. Pour ce faire, il examine l'en-tête X-Forided-for (XFF), qui est inséré dans la demande par l'équilibreur de charge. Étant donné que l'en-tête XFF peut facilement être usurpé dans les requêtes envoyées directement aux nœuds de stockage, StorageGRID doit confirmer que chaque demande est routée par un équilibreur de charge de niveau 7 approuvé. Si StorageGRID ne peut pas faire confiance à la source de la demande, il ignore l'en-tête XFF. Une API de gestion du grid permet de configurer une liste d'équilibreurs de charge externes de couche 7 approuvés. Cette nouvelle API est privée et est susceptible d'être modifiée dans les prochaines versions d'StorageGRID. Pour obtenir les informations les plus récentes, consultez l'article de la base de connaissances, https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_configure_StorageGRID_to_work_with_third-party_Layer_7_load_balancers["Comment configurer StorageGRID pour qu'il fonctionne avec des équilibreurs de charge tiers de couche 7"^].

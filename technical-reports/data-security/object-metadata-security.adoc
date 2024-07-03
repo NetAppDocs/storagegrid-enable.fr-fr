@@ -1,0 +1,57 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/data-security/object-metadata-security.html 
+keywords: object metadata security, storagegrid 
+summary: Explorez les fonctionnalités de sécurité des objets et des métadonnées de StorageGRID. 
+---
+= Sécurité des objets et des métadonnées
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Explorez les fonctionnalités de sécurité des objets et des métadonnées de StorageGRID.
+
+[cols="20,30a,30,20"]
+|===
+| Fonction | Fonction | Impact | Conformité réglementaire 
+
+
+| Advanced Encryption Standard (AES) - chiffrement d'objets côté serveur  a| 
+StorageGRID assure le chiffrement des objets côté serveur basé sur AES 128 et AES 256. Les administrateurs du grid peuvent activer le chiffrement comme paramètre global par défaut. StorageGRID prend également en charge l'en-tête de chiffrement S3 x-amz côté serveur pour activer ou désactiver le chiffrement par objet. Lorsque cette option est activée, les objets sont chiffrés lorsqu'ils sont stockés ou en transit entre des nœuds de grid.
+| Stockage et transmission sécurisés d'objets, indépendamment du matériel de stockage sous-jacent. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Gestion intégrée des clés  a| 
+Lorsque le chiffrement est activé, chaque objet est chiffré avec une clé symétrique unique générée de manière aléatoire, stockée dans StorageGRID sans accès externe.
+| Permet le chiffrement des objets sans gestion externe des clés. |  
+
+
+| Disques de chiffrement conformes à la norme FIPS (Federal information Processing Standard) 140-2  a| 
+Les appliances StorageGRID SG5712, SG5760, SG6060 et SGF6024 offrent la possibilité d'utiliser des disques de chiffrement conformes à la norme FIPS 140-2. Les clés de chiffrement des disques peuvent être gérées par un serveur KMIP externe.
+| Stockage sécurisé des données, métadonnées et objets du système. Le chiffrement logiciel des objets StorageGRID sécurise le stockage et la transmission des objets. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Analyse de l'intégrité en arrière-plan et auto-rétablissement  a| 
+StorageGRID utilise un mécanisme d'interverrouillage de hachages, de checksums et de vérifications de la redondance cyclique (CRC) au niveau de l'objet et des sous-objets pour se protéger contre l'incohérence, la falsification ou la modification des données, aussi bien lorsque les objets sont en stockage qu'en transit. StorageGRID détecte automatiquement les objets corrompus et falsifiés et les remplace, tout en mettant en quarantaine les données modifiées et en alertant l'administrateur.
+| Permet aux administrateurs du grid de respecter les SLA, les réglementations et autres obligations en matière de durabilité des données. Aide les clients à détecter les ransomwares ou les virus qui tentent de chiffrer, d'altérer ou de modifier des données. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Placement et conservation des objets basés sur des règles  a| 
+StorageGRID permet aux administrateurs du grid de configurer des règles ILM, qui spécifient la conservation, le placement, la protection, la transition et l'expiration des objets. Les administrateurs du grid peuvent configurer StorageGRID pour filtrer les objets en fonction de leurs métadonnées et appliquer des règles à différents niveaux de granularité, notamment à l'échelle du grid, du locataire, du compartiment, du préfixe de clé et des paires clé-valeur de métadonnées définies par l'utilisateur. StorageGRID permet de s'assurer que les objets sont stockés conformément aux règles ILM tout au long de leur cycle de vie, à moins qu'ils ne soient explicitement supprimés par le client.
+| Renforce le placement, la protection et la conservation des données. Aide les clients à respecter les SLA en matière de durabilité, de disponibilité et de performance. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Analyse des métadonnées en arrière-plan  a| 
+StorageGRID analyse régulièrement les métadonnées d'objet en arrière-plan pour appliquer des modifications au placement ou à la protection des données d'objet, comme spécifié par la règle ILM.
+| Permet de détecter les objets corrompus. |  
+
+
+| Cohérence ajustable  a| 
+Les locataires peuvent sélectionner des niveaux de cohérence au niveau du compartiment pour s'assurer que les ressources, telles que la connectivité multisite, sont disponibles.
+| Offre la possibilité d'effectuer des écritures dans la grille uniquement lorsqu'un nombre requis de sites ou de ressources est disponible. |  
+|===
