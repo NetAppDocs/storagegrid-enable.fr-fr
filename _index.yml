@@ -74,11 +74,11 @@ indexpage:
   - title: Rapports techniques
     links:
     - title: 'Tr-4993 : NetApp StorageGRID et analytique Big Data'
-      url: "/technical-reports/technical-reports/datalake-analytics.html"
+      url: "/technical-reports/datalake-analytics.html"
     - title: 'Tr-4994 : meilleures pratiques de réglage Hadoop S3A'
-      url: "/technical-reports/technical-reports/s3a-tuning.html"
+      url: "/technical-reports/s3a-tuning.html"
     - title: 'Tr-4871 : CommVault Complete Backup and Recovery and NetApp StorageGRID'
-      url: "/technical-reports/technical-reports/tr-4871-commvault.html"
+      url: "/technical-reports/tr-4871-commvault.html"
     - title: 'Tr-4645 : fonctions de sécurité'
       url: "/technical-reports/data-security/index.html"
     - title: 'Tr-4921 : défense contre les ransomware'
