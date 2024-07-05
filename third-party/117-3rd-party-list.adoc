@@ -117,3 +117,18 @@ Ces solutions ont été testées.
 * QSTAR
 * Velasea
 
+
+
+
+== Gestionnaires de clés pris en charge sur StorageGRID
+
+Ces solutions ont été testées.
+
+* Thales CipherTrust Manager 2.0
+* Thales CipherTrust Manager 2.1
+* Thales CipherTrust Manager 2.2
+* Thales CipherTrust Manager 2.3
+* Thales CipherTrust Manager 2.4
+* Thales CipherTrust Manager 2.8
+* Thales CipherTrust Manager 2.9
+
