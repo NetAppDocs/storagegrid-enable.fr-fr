@@ -14,6 +14,10 @@ indexpage:
     du cycle de vie, pour stocker, sécuriser, protéger et conserver les données non
     structurées de manière économique sur de longues périodes.
   tiles:
+  - title: Essayer StorageGRID
+    links:
+    - title: Logiciel d'évaluation StorageGRID
+      url: "/evaluation-software.html"
   - title: Des solutions tierces validées
     links:
     - title: Présentation

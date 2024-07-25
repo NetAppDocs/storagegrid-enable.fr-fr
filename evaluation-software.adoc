@@ -1,0 +1,57 @@
+---
+permalink: evaluation-software.html 
+sidebar: sidebar 
+keywords: eval, StorageGRID, S3, software, download 
+summary: 'Étapes pour accéder au logiciel d"évaluation StorageGRID pour un client potentiel.' 
+---
+= Procédure d'accès au logiciel d'évaluation StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette instruction s'adresse aux commerciaux, aux partenaires et aux prospects NetApp qui travaillent avec NetApp.
+
+
+
+== Créez un compte
+
+. Créez un compte sur le https://mysupport.netapp.com/site/user/registration["Site de support NetApp"] à l'aide de votre adresse e-mail professionnelle.
++
+.. Si vous possédez déjà un compte, passez à l'étape suivante.
+
+
+. Connectez-vous avec le compte créé.
+. Créez un dossier de support non technique afin d'élever les niveaux d'accès au « prospect ». Pour ce faire, cliquez sur le "https://mysupport.netapp.com/site/help?relevanturl=%2Fuser%2Fregistration["Signalez les problèmes"]lien " dans le pied de page du site Web.
+. Sélectionnez « problème d'enregistrement » comme catégorie de commentaires.
+. Dans la section des commentaires, écrivez : « J'aimerais obtenir un accès prospect pour télécharger le logiciel d'évaluation StorageGRID. »
++
+.. Mentionnez le nom de la personne interne de NetApp qui a suggéré l'accès du prospect.
+
+
+
+
+
+
+== Télécharger StorageGRID
+
+. Une fois que votre dossier de demande de support a été examiné et approuvé, le support NetApp vous informe par e-mail que votre compte a été autorisé à accéder à vos prospects.
+. Téléchargez le https://mysupport.netapp.com/site/downloads/evaluation/storagegrid["Logiciel d'évaluation StorageGRID"].
+
+
+[NOTE]
+====
+Le fichier de licence Eval se trouve dans le fichier zip. Il s'agit de StorageGRID-Webscale-<version>\vsphere\NLF000000.txt une fois décompressé.
+
+====
+[NOTE]
+====
+Le téléchargement du logiciel est un processus qui implique des mesures de conformité commerciale pour se conformer aux exigences légales. Pour garantir la conformité, les utilisateurs doivent créer un compte et ouvrir un dossier de demande de support avant d'accéder à ce service. Ce processus nous aide à maintenir un contrôle et une documentation appropriés tout en fournissant aux prospects le logiciel prêt à la production dont ils ont besoin.
+
+Nous fournissons la version « prête pour la production » de StorageGRID, qui n'est pas une version open source ou alternative. Il est important de noter que *le support n'est pas fourni* à moins que le prospect ne passe à une licence de production.
+
+Veuillez contacter StorageGRID.Feedback@netapp.com pour tout problème avec les étapes ci-dessus.
+
+====
