@@ -140,7 +140,7 @@ Double allocation
 |===
 La règle ILM 2 Copy est la règle par défaut. La règle Erasure Coding 2+1 a été appliquée pour ce test à tout objet de 200 Ko ou plus. La règle par défaut a été appliquée aux objets inférieurs à 200 Ko. L'application des règles de cette manière est une bonne pratique StorageGRID.
 
-Pour obtenir des informations techniques sur cet environnement de test, consultez la section conception de la solution et meilleures pratiques du https://www.netapp.com/us/media/tr-4831.pdf["Protection des données scale-out NetApp avec CommVault"] rapport technique.
+Pour obtenir des informations techniques sur cet environnement de test, consultez la section conception de la solution et meilleures pratiques du https://www.netapp.com/pdf.html?item=/media/19372-tr-4831.pdf["Protection des données scale-out NetApp avec CommVault"^] rapport technique.
 
 
 
@@ -511,7 +511,7 @@ image:commvault/job-summary.png["Résumé du travail"]
 
 === Tests de performances de base
 
-Le Tableau 7 présente les résultats de nos tests de performances de base. Lors de l'opération copie auxiliaire, quatre MediaAgents CommVault ont sauvegardé des données sur un système NetApp AFF A300 et une copie auxiliaire a été créée sur NetApp StorageGRID. Pour plus d'informations sur l'environnement de configuration de test, consultez la section conception de la solution et meilleures pratiques du https://www.netapp.com/us/media/tr-4831.pdf["Protection des données scale-out NetApp avec CommVault"] rapport technique.
+Le Tableau 7 présente les résultats de nos tests de performances de base. Lors de l'opération copie auxiliaire, quatre MediaAgents CommVault ont sauvegardé des données sur un système NetApp AFF A300 et une copie auxiliaire a été créée sur NetApp StorageGRID. Pour plus d'informations sur l'environnement de configuration de test, consultez la section conception de la solution et meilleures pratiques du https://www.netapp.com/pdf.html?item=/media/19372-tr-4831.pdf["Protection des données scale-out NetApp avec CommVault"^] rapport technique.
 
 Les tests ont été réalisés avec 100 machines virtuelles et 1000 machines virtuelles, les deux tests portant sur 50/50 combinaisons de machines virtuelles Windows et CentOS.
 
