@@ -21,7 +21,7 @@ Pour vous assurer que l'installation se termine correctement, lisez attentivemen
 .Étapes
 . Afficher la page Résumé.
 +
-image:bare-metal-summary-page.png["page-résumé-bare-metal"]
+image:bare-metal/bare-metal-summary-page.png["page-résumé-bare-metal"]
 
 . Vérifiez que toutes les informations de configuration de la grille sont correctes. Utilisez les liens Modifier de la page Résumé pour revenir en arrière et corriger les erreurs.
 . Cliquez sur installation.
@@ -42,13 +42,13 @@ CAUTION: Le fichier du progiciel de récupération doit être sécurisé car il 
 
 . Sélectionnez l'option J'ai téléchargé et vérifié le fichier de package de récupération, puis cliquez sur Suivant.
 +
-image:bare-metal-download-recovery-package.png["package-restauration-téléchargement-bare-metal"]
+image:bare-metal/bare-metal-download-recovery-package.png["package-restauration-téléchargement-bare-metal"]
 
 +
 Si l'installation est toujours en cours, la page État de l'installation s'ouvre. Cette page indique la progression de l'installation pour chaque nœud de la grille.
 
 +
-image:bare-metal-installation-status.png["état-installation-bare-metal"]
+image:bare-metal/bare-metal-installation-status.png["état-installation-bare-metal"]
 
 +
 Lorsque l'étape complète est atteinte pour tous les nœuds de grille, la page de connexion de Grid Manager s'ouvre.

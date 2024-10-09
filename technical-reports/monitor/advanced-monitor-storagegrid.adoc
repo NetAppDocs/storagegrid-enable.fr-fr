@@ -21,11 +21,11 @@ Découvrez comment accéder à des metrics et les exporter pour résoudre vos pr
 
 Prometheus est un logiciel open source qui collecte des metrics. Pour accéder au Prometheus intégré de StorageGRID via l'interface GMI, accédez au menu:support[Metrics].
 
-image:monitor-metrics-page.png["page-metrics-moniteur"]
+image:monitor/monitor-metrics-page.png["page-metrics-moniteur"]
 
 Vous pouvez également accéder directement au lien.
 
-image:monitor-prometheus-interface.png["interface-prometheus"]
+image:monitor/monitor-prometheus-interface.png["interface-prometheus"]
 
 Avec cette vue, vous pouvez accéder à l'interface Prometheus. Ensuite, vous pouvez effectuer des recherches parmi les mesures disponibles et même tester des requêtes.
 
@@ -35,7 +35,7 @@ Pour effectuer une requête URL Prometheus, procédez comme suit :
 . Commencez à taper dans la zone de texte de la requête. Au fur et à mesure que vous tapez, les indicateurs sont répertoriés. À nos fins, seuls les metrics commençant par StorageGRID et Node sont importants.
 . Pour afficher le nombre de sessions HTTP pour chaque nœud, tapez `storagegrid_http` et sélectionnez `storagegrid_http_sessions_incoming_currently_established`. Cliquez sur Exécuter et affichez les informations au format graphique ou console.
 +
-image:monitor-http-sessions.png["monitor-http-sessions"]
+image:monitor/monitor-http-sessions.png["monitor-http-sessions"]
 
 
 
@@ -56,13 +56,13 @@ Pour exporter des metrics via l'API, effectuez la procédure suivante :
 . Dans l'interface GMI, sélectionnez menu:aide[Documentation API].
 . Faites défiler jusqu'à Metrics et sélectionnez GET /grid/Metric-query.
 +
-image:monitor-metrics-query.png["surveillance-metrics-requête"]
+image:monitor/monitor-metrics-query.png["surveillance-metrics-requête"]
 
 +
 La réponse inclut les mêmes informations que celles que vous pouvez obtenir via une requête URL Prometheus. Vous pouvez à nouveau voir le nombre de sessions HTTP actuellement établies sur chaque nœud de stockage. Vous pouvez également télécharger la réponse au format JSON pour plus de lisibilité. La figure suivante présente des exemples de réponses à des requêtes Prometheus.
 
 +
-image:monitor-sample-prometheus-query-responses.png["monitor-sample-réponses-requêtes-prometheus"]
+image:monitor/monitor-sample-prometheus-query-responses.png["monitor-sample-réponses-requêtes-prometheus"]
 
 
 

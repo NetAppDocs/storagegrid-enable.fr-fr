@@ -21,7 +21,7 @@ Pour effectuer cette opération, vous devez d'abord obtenir un jeton d'autorisat
 . Dans l'interface GMI, sélectionnez menu:aide[Documentation API].
 . Faites défiler jusqu'à Auth pour rechercher des opérations sur l'autorisation. La capture d'écran suivante montre les paramètres de la méthode POST.
 +
-image:monitor-post-method.png["moniteur-post-méthode"]
+image:monitor/monitor-post-method.png["moniteur-post-méthode"]
 
 . Cliquez sur essayer et modifiez le corps avec votre nom d'utilisateur et votre mot de passe GMI.
 . Cliquez sur Exécuter.

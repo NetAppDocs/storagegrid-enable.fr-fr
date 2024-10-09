@@ -172,7 +172,7 @@ En combinant les exigences de calcul et de réseau indiquées dans le tableau ci
 
 Comme illustré dans la figure ci-dessous, ces serveurs hébergent six conteneurs Docker, deux par hôte. La RAM est calculée en fournissant 24 Go par conteneur et 16 Go pour le système d'exploitation hôte lui-même.
 
-image:bare-metal-layout-for-three-hosts.png["Exemple de disposition pour trois hôtes."]
+image:bare-metal/bare-metal-layout-for-three-hosts.png["Exemple de disposition pour trois hôtes."]
 
 La mémoire RAM totale requise par hôte physique (ou machine virtuelle) est de 24 x 2 + 16 = 64 Go. Les tableaux suivants répertorient le stockage sur disque requis pour les hôtes 1, 2 et 3.
 

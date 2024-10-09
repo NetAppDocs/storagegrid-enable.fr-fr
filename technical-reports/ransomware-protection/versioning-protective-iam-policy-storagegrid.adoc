@@ -20,7 +20,7 @@ Une méthode pour protéger vos données sans verrouillage objet ou réplication
 
 Dans StorageGRID 11.7, une nouvelle option de stratégie de groupe S3 « réduction des ransomware » a été introduite pour faciliter l'implémentation de cette solution. Lorsque vous créez un groupe d'utilisateurs dans le tenant, après avoir sélectionné les autorisations de groupe, vous pouvez voir cette nouvelle stratégie facultative.
 
-image:ransomware-protection-create-group.png["protection-ransomware-create-group"]
+image:ransomware/ransomware-protection-create-group.png["protection-ransomware-create-group"]
 
 Voici le contenu de la stratégie de groupe qui inclut la plupart des opérations disponibles explicitement autorisées et le minimum requis refusé.
 

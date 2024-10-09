@@ -16,7 +16,7 @@ Le tableau de bord de l'interface de gestion Grid (GMI) de StorageGRID offre une
 
 Utilisez le tableau de bord GMI pour examiner chaque composant central de la grille.
 
-image:monitor-storagegrid-gmi-dashboard.png["monitor-storagegrid-gmi-dashboard"]
+image:monitor/monitor-storagegrid-gmi-dashboard.png["monitor-storagegrid-gmi-dashboard"]
 
 
 

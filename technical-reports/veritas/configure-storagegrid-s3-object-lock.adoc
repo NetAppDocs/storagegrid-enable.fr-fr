@@ -29,19 +29,19 @@ Pour configurer la rétention des compartiments par défaut du verrouillage obje
 .Étapes
 . Dans le gestionnaire de locataires StorageGRID, créez un compartiment et cliquez sur Continuer
 +
-image:third-party-create-bucket.png["third-party-create-bucket.png"]
+image:veritas/veritas-create-bucket.png["vertias/veritas-create-bucket.png"]
 
 . Sélectionnez l'option Activer le verrouillage d'objet S3 et cliquez sur Créer un compartiment.
 +
-image:third-party-create-bucket-2.png["third-party-create-bucket-2.png"]
+image:veritas/veritas-create-bucket-2.png["vertias/veritas-create-bucket-2.png"]
 
 . Une fois le godet créé, sélectionner le godet pour afficher les options de compartiment. Développez l'option de liste déroulante verrouillage objet S3.
 +
-image:third-party-overview.png["third-party-overview.png"]
+image:veritas/veritas-overview.png["vertias/veritas-overview.png"]
 
 . Sous conservation par défaut, sélectionnez Activer et définissez une période de conservation par défaut de 1 jour. Cliquez sur Save Changes.
 +
-image:third-party-s3-object-lock.png["verrouillage-objet-s3-tiers"]
+image:veritas/veritas-s3-object-lock.png["vertias/veritas-s3-verrouillage-objet"]
 
 +
 Le compartiment est désormais prêt à être utilisé par Enterprise Vault pour stocker les données WORM.
@@ -57,7 +57,7 @@ Pour configurer Enterprise Vault, procédez comme suit :
 .Étapes
 . Répétez les étapes 1 à 1-3 de la link:configure-storagegrid-s3-object-lock.html#configure-storagegrid-s3-object-lock-default-bucket-retention["Configuration de base"] section, mais cette fois, sélectionnez l'option stocker les données en mode WORM à l'aide du verrouillage objet S3. Cliquez sur Suivant.
 +
-image:third-party-new-partition-8.png["nouvelle partition tierce-8"]
+image:veritas/veritas-new-partition-8.png["vertias/veritas-nouvelle-partition-8"]
 
 . Lorsque vous entrez vos paramètres de connexion du compartiment S3, assurez-vous d'entrer le nom d'un compartiment S3 pour lequel la conservation par défaut du verrouillage objet S3 est activée.
 . Testez la connexion pour vérifier les paramètres.

@@ -22,7 +22,7 @@ Une fois les compartiments source et destination créés et la destination confi
 .Étapes
 . Pour configurer CloudMirror, créez un terminal de services de plateforme pour la destination S3.
 +
-image:ransomware-protection-create-endpoint.png["protection-ransomware-créer-terminal"]
+image:ransomware/ransomware-protection-create-endpoint.png["protection-ransomware-créer-terminal"]
 
 . Sur le compartiment source, configurez la réplication pour utiliser le terminal configuré.
 +
@@ -42,10 +42,10 @@ image:ransomware-protection-create-endpoint.png["protection-ransomware-créer-te
 ----
 . Créez des règles ILM pour gérer le placement du stockage et la gestion de la durée du stockage des versions. Dans cet exemple, les versions non actuelles des objets à stocker sont configurées.
 +
-image:ransomware-protection-create-ilm-rule.png["règle-protection-ransomware-create-ilm"]
+image:ransomware/ransomware-protection-create-ilm-rule.png["règle-protection-ransomware-create-ilm"]
 
 +
-image:ransomware-protection-create-ilm-rule-step-2.png["protection-ransomware-create-ilm-rule-step-2"]
+image:ransomware/ransomware-protection-create-ilm-rule-step-2.png["protection-ransomware-create-ilm-rule-step-2"]
 
 +
 Il y a deux copies sur le site 1 pendant 30 jours. Vous configurez également les règles de la version actuelle des objets en fonction de l'utilisation de l'heure d'ingestion comme heure de référence dans la règle ILM pour correspondre à la durée de stockage du compartiment source. Le placement de stockage des versions d'objets peut être codé par effacement ou répliqué.

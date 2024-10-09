@@ -32,12 +32,12 @@ NOTE: Si un nœud de grid n'est pas inclus, vérifiez qu'il a été déployé co
 
 . Cliquez sur le bouton radio en regard d'un nœud en attente que vous souhaitez approuver.
 +
-image:bare-metal-approve-configure-grid-nodes.png["supports/bare-metal-approve-configure-grid-nodes"]
+image:bare-metal/bare-metal-approve-configure-grid-nodes.png["supports/bare-metal-approve-configure-grid-nodes"]
 
 . Cliquez sur approuver.
 . Dans Paramètres généraux, modifiez les paramètres des propriétés suivantes, si nécessaire.
 +
-image:bare-metal-admin-node-configuration.png["configuration-nœud-admin-bare-metal"]
+image:bare-metal/bare-metal-admin-node-configuration.png["configuration-nœud-admin-bare-metal"]
 
 +
 -- *site* : le nom système du site pour ce noeud de grille.
@@ -109,9 +109,9 @@ NOTE: Si vous avez sélectionné DHCP pour la configuration réseau d'administra
 
 . Cliquez sur Enregistrer. L'entrée de nœud de la grille passe à la liste nœuds approuvés.
 +
-image:bare-metal-approved-node-list.png["liste-nœuds-approuvés-bare-metal"]
+image:bare-metal/bare-metal-approved-node-list.png["liste-nœuds-approuvés-bare-metal"]
 
-. Répétez les étapes 1 à 8 pour chaque nœud de grille en attente que vous souhaitez approuver.
+. Répétez les étapes 1 à 1-8 pour chaque nœud de grille en attente que vous souhaitez approuver.
 +
 Vous devez approuver tous les nœuds que vous souhaitez dans la grille. Cependant, vous pouvez revenir à cette page à tout moment avant de cliquer sur installer sur la page Résumé. Pour modifier les propriétés d'un nœud de grille approuvé, cliquez sur son bouton radio, puis cliquez sur Modifier.
 

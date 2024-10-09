@@ -32,7 +32,7 @@ Pour configurer le moniteur de vérification de l'état du gestionnaire de trafi
 .. Dans le champ Envoyer chaîne, entrez `OPTIONS / HTTP/1.1\r\n\r\n.` \r\n sont des retours chariot ; les différentes versions du logiciel BIG-IP nécessitent zéro, un ou deux ensembles de séquences \r\n. Pour plus d'informations, voir https://support.f5.com/csp/article/K10655[].
 .. Dans le champ chaîne de réception, entrez : `HTTP/1.1 200 OK`.
 +
-image:load-balancer-monitor-configuration-page.png["Page de configuration du moniteur"]
+image:load-balancer/load-balancer-monitor-configuration-page.png["Page de configuration du moniteur"]
 
 
 
@@ -56,9 +56,9 @@ Utilisez le moniteur de vérification de l'état de santé HTTPS-ECV pour créer
 
 Pour plus d'informations, consultez la documentation Citrix, https://docs.citrix.com/en-us/citrix-adc/current-release/load-balancing/load-balancing-builtin-monitors/monitor-ssl-services.html#sample-configuration-for-https-ecv-health-check-monitor["Exemple de configuration pour le moniteur de vérification de l'état HTTP-ECV"^].
 
-image:load-balancer-citrix-netscaler-configuration-page.png["Page de configuration de Citrix NetScaler Monitor"]
+image:load-balancer/load-balancer-citrix-netscaler-configuration-page.png["Page de configuration de Citrix NetScaler Monitor"]
 
-image:load-balancer-configure-monitor.png["Configure-monitor.png"]
+image:load-balancer/load-balancer-configure-monitor.png["Configure-monitor.png"]
 
 
 

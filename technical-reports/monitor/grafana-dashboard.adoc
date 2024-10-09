@@ -23,10 +23,10 @@ Ces tableaux de bord préconstruits sont non seulement utiles pour la surveillan
 . Dans l'interface GMI, menu:support[Metrics].
 . Dans la section Grafana, sélectionnez le tableau de bord Node.
 +
-image:monitor-node-dashboard.png["tableau de bord-moniteur-nœud"]
+image:monitor/monitor-node-dashboard.png["tableau de bord-moniteur-nœud"]
 
 . Dans Grafana, définissez les hôtes sur le nœud sur lequel vous souhaitez afficher les mesures. Dans ce cas, un nœud de stockage est sélectionné. Plus d'informations sont fournies que les captures d'écran suivantes.
 +
-image:monitor-grafana-metrics.png["surveillez les grafana-metrics"]
+image:monitor/monitor-grafana-metrics.png["surveillez les grafana-metrics"]
 
 

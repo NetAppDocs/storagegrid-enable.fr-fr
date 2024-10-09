@@ -2,7 +2,7 @@
 permalink: technical-reports/veritas/index.html 
 sidebar: sidebar 
 keywords: storagegrid, primary storage, configure, veritas, enterprise vault 
-summary: Découvrez comment Veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident. 
+summary: Découvrez comment veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident. 
 ---
 = Introduction à la configuration de StorageGRID pour le basculement de site
 :hardbreaks:
@@ -12,17 +12,17 @@ summary: Découvrez comment Veritas Enterprise Vault utilise StorageGRID comme c
 
 
 [role="lead"]
-Découvrez comment Veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident.
+Découvrez comment veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident.
 
-Ce guide de configuration fournit les étapes de configuration de NetApp® StorageGRID® en tant que cible de stockage principale avec Veritas Enterprise Vault. Elle décrit également comment configurer StorageGRID pour un basculement de site dans un scénario de reprise d'activité.
+Ce guide de configuration fournit les étapes de configuration de NetApp® StorageGRID® en tant que cible de stockage principale avec veritas Enterprise Vault. Elle décrit également comment configurer StorageGRID pour un basculement de site dans un scénario de reprise d'activité.
 
 
 
 == Architecture de référence
 
-StorageGRID fournit une cible de sauvegarde dans le cloud sur site compatible avec S3 pour Veritas Enterprise Vault. La figure suivante illustre l'architecture de Veritas Enterprise Vault et StorageGRID.
+StorageGRID fournit une cible de sauvegarde dans le cloud sur site compatible avec S3 pour veritas Enterprise Vault. La figure suivante illustre l'architecture de veritas Enterprise Vault et StorageGRID.
 
-image:third-party-veritas-enterprise-vault-and-storagegrid-architecture.png["architecture-coffre-fort-et-storagegrid-entreprise-tierce"]
+image:veritas/veritas-enterprise-vault-and-storagegrid-architecture.png["architecture-coffre-fort-et-StorageGRID-veritas-veritas-entreprise"]
 
 
 

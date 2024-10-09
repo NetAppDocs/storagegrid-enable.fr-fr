@@ -25,20 +25,20 @@ Pour configurer une stratégie de classification de trafic, procédez comme suit
 . Entrez un nom et une description pour votre police.
 . Créez une règle correspondante.
 +
-image:monitor-matching-rule.png["règle-correspondance-moniteur"]
+image:monitor/monitor-matching-rule.png["règle-correspondance-moniteur"]
 
 . Définissez une limite (facultatif).
 +
-image:monitor-limit.png["limite-moniteur"]
+image:monitor/monitor-limit.png["limite-moniteur"]
 
 . Enregistrez votre police
 +
-image:monitor-traffic-policy.png["surveiller la stratégie de trafic"]
+image:monitor/monitor-traffic-policy.png["surveiller la stratégie de trafic"]
 
 +
 Pour afficher les mesures associées à votre stratégie de classification de trafic, sélectionnez votre stratégie et cliquez sur métriques. Un tableau de bord Grafana est généré et affiche des informations telles que le trafic des demandes Load Balancer et la durée moyenne des demandes.
 
 +
-image:monitor-dashboard-showing-metrics.png["tableau de bord-moniteur-affichage-mesures"]
+image:monitor/monitor-dashboard-showing-metrics.png["tableau de bord-moniteur-affichage-mesures"]
 
 

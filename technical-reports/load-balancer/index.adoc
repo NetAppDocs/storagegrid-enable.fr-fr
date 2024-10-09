@@ -30,7 +30,7 @@ Les équilibreurs de charge sont un composant essentiel d'un système de stockag
 
 La figure suivante utilise l'exemple URL/ nom de domaine complet (FQDN) « s3.company.com”. L'équilibreur de charge crée une adresse IP virtuelle (VIP) qui résout le nom de domaine complet via DNS, puis dirige toutes les requêtes des applications vers un pool de nœuds StorageGRID. L'équilibreur de charge vérifie l'état de chaque nœud et établit uniquement les connexions aux nœuds sains.
 
-image:load-balancer-local-traffic-manager-load-balancer.png["Équilibreur de charge du gestionnaire du trafic local"]
+image:load-balancer/load-balancer-local-traffic-manager-load-balancer.png["Équilibreur de charge du gestionnaire du trafic local"]
 
 La figure présente l'équilibreur de charge fourni par StorageGRID, mais le concept est le même pour les équilibreurs de charge tiers. Les applications établissent une session HTTP à l'aide du VIP sur l'équilibreur de charge et le trafic passe par l'équilibreur de charge aux nœuds de stockage. Par défaut, l'ensemble du trafic, de l'application à l'équilibreur de charge et de l'équilibreur de charge au nœud de stockage, est chiffré via HTTPS. HTTP est une option prise en charge.
 

@@ -1,0 +1,112 @@
+---
+permalink: product-feature-guides/ontap-migrate/populate-replicate.html 
+sidebar: sidebar 
+keywords: S3, ONTAP S3, ONTAP, StorageGRID, migration 
+summary: Migrez de ONTAP S3 vers StorageGRID. 
+---
+= Bénéficiez d'un stockage S3 haute performance en migrant de manière fluide le stockage basé sur les objets d'ONTAP S3 vers StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../../media/
+
+
+[role="lead"]
+Bénéficiez d'un stockage S3 haute performance en migrant de manière fluide le stockage basé sur les objets d'ONTAP S3 vers StorageGRID
+
+
+
+== Remplissez le compartiment source
+
+Mettons quelques objets dans le compartiment ONTAP source. Nous utiliserons S3Browser pour cette démo, mais vous pourriez utiliser n'importe quel outil que vous êtes à l'aise avec.
+
+À l'aide des touches ONTAP utilisateur s3 créées ci-dessus, configurez S3Browser pour qu'il se connecte à votre système ONTAP.
+
+image:ontap-migrate/ontap-s3browser-conf.png["S3Config navigateur"]
+
+Chargeons maintenant certains fichiers dans le compartiment compatible avec la gestion des versions.
+
+image:ontap-migrate/ontap-s3browser-upload-01.png["Cliquez sur Télécharger"]
+
+image:ontap-migrate/ontap-s3browser-upload-02.png["Sélectionnez les fichiers à télécharger"]
+
+image:ontap-migrate/ontap-s3browser-upload-03.png["Fichiers téléchargés"]
+
+Créons maintenant certaines versions d'objet dans le compartiment.
+
+Supprimer un fichier.
+
+image:ontap-migrate/ontap-s3browser-delete.png["Supprimer un fichier"]
+
+Téléchargez un fichier qui existe déjà dans le compartiment pour copier le fichier sur lui-même et en créer une nouvelle version.
+
+image:ontap-migrate/ontap-s3browser-overwrite.png["téléchargez un fichier qui existe déjà"]
+
+Dans S3Browser, nous pouvons visualiser les versions des objets que nous venons de créer.
+
+image:ontap-migrate/ontap-s3browser-versions.png["Afficher les versions"]
+
+
+
+=== Établissement de la relation de réplication
+
+Commençons à envoyer des données de ONTAP à StorageGRID.
+
+Dans ONTAP System Manager, accédez à protection/Présentation. Faites défiler jusqu'à « Cloud object stores », cliquez sur le bouton « Add » et sélectionnez « StorageGRID ».
+
+image:ontap-migrate/ontap-protection-add-01.png["Protection ONTAP"]
+
+Entrez les informations StorageGRID en fournissant un nom, un style d'URL (pour cette démonstration, nous utiliserons les URL Path-styl). Définissez l'étendue du magasin d'objets sur « Storage VM ».
+
+image:ontap-migrate/ontap-protection-configure-01.png["Entrez les informations StorageGRID"]
+
+Si vous utilisez SSL, définissez le port du noeud final de l'équilibreur de charge et copiez-le dans le certificat du noeud final StorageGRID ici. Sinon, décochez la case SSL et entrez le port du noeud final HTTP ici.
+
+Entrez les clés S3 d'utilisateur StorageGRID et le nom de compartiment dans la configuration StorageGRID ci-dessus pour la destination.
+
+image:ontap-migrate/ontap-protection-configure-02.png["Entrez les informations StorageGRID"]
+
+Maintenant qu'une cible de destination est configurée, nous pouvons configurer les paramètres de stratégie pour la cible. Développez « Paramètres de stratégie locale » et sélectionnez « continu ».
+
+image:ontap-migrate/ontap-local-setting.png["Paramètres de stratégie locale"]
+
+Modifiez la stratégie continue et changez l'objectif de point de récupération de « 1 heure » à « 3 secondes ».
+
+image:ontap-migrate/ontap-local-edit-01.png["Modification des paramètres de stratégie locale"]
+
+Nous pouvons maintenant configurer SnapMirror pour répliquer le compartiment.
+
+[]
+====
+SnapMirror create -source-path sv_demo: /Bucket/bucket -destination-path sgws_demo: /Objstore -policy continu
+
+====
+image:ontap-migrate/ontap-snapmirror-create.png["Créer une relation SnapMirror"]
+
+Le compartiment affiche alors un symbole de nuage dans la liste de compartiments sous protection.
+
+image:ontap-migrate/ontap-bucket-protected.png["Le compartiment est protégé vers la cible cloud"]
+
+Si nous sélectionnons le compartiment et passons à l'onglet SnapMirror (ONTAP ou Cloud), nous verrons le statut de réexpédition SnapMirror.
+
+image:ontap-migrate/ontap-snapmirror-status.png["Vérifier la relation SnapMirror"]
+
+
+
+=== Détails de la réplication
+
+Nous disposons désormais d'un compartiment de réplication réussi de ONTAP vers StorageGRID. Mais qu'est-ce qui se réplique réellement ? La source et la destination sont toutes les deux des compartiments avec version. Les versions précédentes sont-elles également répliquées vers la destination ? Si nous examinons notre compartiment StorageGRID avec S3Browser, nous constatons que les versions existantes ne se répliquent pas et que notre objet supprimé n'existe pas, pas plus qu'un marqueur de suppression pour cet objet. Notre objet dupliqué ne possède qu'une seule version dans le compartiment StorageGRID.
+
+image:ontap-migrate/sg-s3browser-initial.png["S3browser vue du compartiment StorageGRID après la synchronisation initiale"]
+
+Dans notre compartiment ONTAP, ajoutons une nouvelle version à notre objet que nous avons utilisé précédemment et voyons comment il se réplique.
+
+image:ontap-migrate/ontap-s3browser-new-rep.png["S3browser vue du compartiment ONTAP après le téléchargement de la nouvelle version"]
+
+En ce qui concerne StorageGRID, nous constatons qu'une nouvelle version a également été créée dans ce compartiment, mais qu'elle manque la version initiale d'avant la relation SnapMirror.
+
+image:ontap-migrate/sg-s3browser-rep-ver.png["S3browser vue du compartiment ONTAP après le téléchargement de la nouvelle version"]
+
+En effet, le processus ONTAP SnapMirror S3 ne réplique que la version actuelle de l'objet. C'est pourquoi nous avons créé un compartiment versionné côté StorageGRID pour être la destination. De cette façon, StorageGRID peut conserver un historique des versions des objets.
+
+_Par Rafael Guedes, et Aron Klein_
