@@ -16,7 +16,7 @@ Vous trouverez d'excellents blogs NetApp StorageGRID ici :
 
 * 16 2024 février : https://www.netapp.com/blog/storagegrid-11-8-enhanced-security-and-simplicity/["Présentation de StorageGRID 11.8 : sécurité améliorée, simplicité et expérience utilisateur"^]
 * 16 2024 février : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Introducing-StorageGRID-11-8/ba-p/450762["Présentation de StorageGRID 11.8"^]
-* 2 février 2024 :  https://community.netapp.com/t5/Tech-ONTAP-Blogs/Announcing-the-StorageGRID-lakeFS-Solution-Brief/ba-p/450611["Annonce de la description de la solution StorageGRID + lakeFS"^]
+* 2 février 2024 :  https://community.netapp.com/t5/Tech-ONTAP-Blogs/Announcing-the-StorageGRID-lakeFS-Solution-Brief/ba-p/451465["Annonce de la description de la solution StorageGRID + lakeFS"^]
 * Décembre 12 2023 : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Big-data-analytics-on-StorageGRID-Dremio-performs-23-times-faster-than-Apache/ba-p/449695["Analytique Big Data sur StorageGRID : Dremio est 23 fois plus rapide qu'Apache Hive"^]
 * Novembre 7 2023 : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Spectra-Logic-On-Prem-Glacier-with-StorageGRID/ba-p/448686["Spectra Logic On-sur-site Glacier avec StorageGRID"^]
 * 17 2023 octobre : https://community.netapp.com/t5/Tech-ONTAP-Blogs/Moving-on-from-Hadoop-Modernizing-Data-Analytics-with-Dremio-and-StorageGRID/ba-p/448335["Hadoop, modernisation de l'analytique avec Dremio et StorageGRID"^]
