@@ -71,8 +71,8 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * Trino
 * Vernis Enterprise 6.0.4
 * Veeam 12
-* veritas Enterprise Vault 14
-* veritas NetBackup 8.0
+* Veritas Enterprise Vault 14
+* Veritas NetBackup 8.0
 * Vertica 10.x
 * Vidispine
 * Virtalica StorageFabric
@@ -90,8 +90,8 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * OpenText Documentum 21.4
 * Rubrik
 * Veeam 12
-* veritas Enterprise Vault 14.2.2
-* veritas NetBackup 10.1.1 et versions ultérieures
+* Veritas Enterprise Vault 14.2.2
+* Veritas NetBackup 10.1.1 et versions ultérieures
 
 
 

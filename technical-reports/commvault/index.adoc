@@ -107,8 +107,7 @@ Non pris en charge
 
 Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
 
-* Centre de documentation StorageGRID 11.8 +
-https://docs.netapp.com/us-en/storagegrid-118/[]
+* Centre de documentation StorageGRID 11.9 + https://docs.netapp.com/us-en/storagegrid-119/[]
 * Documentation produit NetApp +
 https://docs.netapp.com[]
 * Documentation CommVault +

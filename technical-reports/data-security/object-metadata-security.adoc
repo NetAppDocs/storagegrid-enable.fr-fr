@@ -32,7 +32,7 @@ Lorsque le chiffrement est activé, chaque objet est chiffré avec une clé sym�
 
 
 | Disques de chiffrement conformes à la norme FIPS (Federal information Processing Standard) 140-2  a| 
-Les appliances StorageGRID SG5712, SG5760, SG6060 et SGF6024 offrent la possibilité d'utiliser des disques de chiffrement conformes à la norme FIPS 140-2. Les clés de chiffrement des disques peuvent être gérées par un serveur KMIP externe.
+Les appliances StorageGRID SG5812, SG5860, SG6160 et SGF6024 offrent la possibilité d'utiliser des disques de chiffrement conformes à la norme FIPS 140-2. Les clés de chiffrement des disques peuvent être gérées par un serveur KMIP externe.
 | Stockage sécurisé des données, métadonnées et objets du système. Le chiffrement logiciel des objets StorageGRID sécurise le stockage et la transmission des objets. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
 
 

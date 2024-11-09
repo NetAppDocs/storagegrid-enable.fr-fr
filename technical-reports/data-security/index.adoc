@@ -16,11 +16,11 @@ summary: Découvrez les fonctions de sécurité intégrées à la solution de st
 [role="lead"]
 Découvrez les fonctions de sécurité intégrées à la solution de stockage objet StorageGRID.
 
-Il s'agit d'une présentation des nombreuses fonctionnalités de sécurité de NetApp® StorageGRID®, couvrant l'accès aux données, les objets et les métadonnées, l'accès administratif et la sécurité de la plate-forme. Il a été mis à jour pour inclure les nouvelles fonctionnalités de StorageGRID 11.8.
+Il s'agit d'une présentation des nombreuses fonctionnalités de sécurité de NetApp® StorageGRID®, couvrant l'accès aux données, les objets et les métadonnées, l'accès administratif et la sécurité de la plate-forme. Il a été mis à jour pour inclure les nouvelles fonctionnalités de StorageGRID 11.9.
 
 La sécurité fait partie intégrante de la solution de stockage objet NetApp StorageGRID. La sécurité est particulièrement importante, car de nombreux types de données riches bien adaptées au stockage objet sont également sensibles, soumises aux réglementations et à la conformité. À mesure que les fonctionnalités StorageGRID continuent d'évoluer, le logiciel met à disposition de nombreuses fonctionnalités de sécurité précieuses pour protéger la stratégie de sécurité de l'entreprise et aider l'entreprise à respecter les bonnes pratiques du secteur.
 
-Ce document présente les nombreuses fonctionnalités de sécurité d'StorageGRID 11.8, réparties en cinq catégories :
+Ce document présente les nombreuses fonctionnalités de sécurité d'StorageGRID 11.9, réparties en cinq catégories :
 
 * Sécurité de l'accès aux données
 * Fonctionnalités de sécurité des objets et des métadonnées
@@ -42,7 +42,7 @@ NetApp StorageGRID fournit des fonctionnalités de sécurité avancées pour les
 Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
 
 * NetApp StorageGRID : évaluation de la conformité SEC 17a-4(f), FINRA 4511(c) et CFTC 1.31(c)-(d) https://www.netapp.com/media/9041-ar-cohasset-netapp-storagegrid-sec-assessment.pdf[]
-* Page de documentation StorageGRID 11.8 https://docs.netapp.com/us-en/storagegrid-118/[]
+* Page de documentation StorageGRID 11.9 https://docs.netapp.com/us-en/storagegrid-119/[]
 * Ressources de documentation StorageGRID https://www.netapp.com/data-storage/storagegrid/documentation/[]
 * Documentation des produits NetApp https://www.netapp.com/support-and-training/documentation/[]
 

@@ -122,6 +122,6 @@ StorageGRID fait évoluer les performances en utilisant soit des nœuds de perfo
 
 [NOTE]
 ====
-Pour plus d'informations sur l'extension du système StorageGRID, reportez-vous à la section https://docs.netapp.com/us-en/storagegrid-118/landing-expand/index.html["Guide d'extension StorageGRID 11.8"].
+Pour plus d'informations sur l'extension du système StorageGRID, reportez-vous àla section https://docs.netapp.com/us-en/storagegrid-119/landing-expand/index.html["Guide d'extension StorageGRID 11.9"].
 
 ====

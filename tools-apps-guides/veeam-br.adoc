@@ -186,7 +186,7 @@ image:veeam-bp/tc_2.png["Métriques de stratégie de classification du trafic"]
 
 Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
 
-* link:https://docs.netapp.com/us-en/storagegrid-118/["Documentation du produit NetApp StorageGRID 11.8"^]
+* link:https://docs.netapp.com/us-en/storagegrid-119/["Documentation du produit NetApp StorageGRID 11.9"^]
 * link:https://www.veeam.com/documentation-guides-datasheets.html?productId=8&version=product%3A8%2F221["Sauvegarde et réplication Veeam"^]
 
 
