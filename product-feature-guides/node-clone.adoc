@@ -30,7 +30,11 @@ Le clone de nœud peut être une méthode plus rapide pour remplacer les nœuds 
 
 
 * Le processus de clonage de nœud nécessite que le nœud source soit hors ligne de la grille pendant toute la durée du processus de clonage. Si un nœud supplémentaire se déconnecte pendant ce temps, les services client peuvent être affectés.
-* Un nœud de stockage ne peut être hors ligne que pendant 15 jours. Si l'estimation du processus de clonage est proche de 15 jours ou supérieure à 15 jours, utilisez les procédures d'extension et de désaffectation.
+* 11.8 et ci-dessous : un nœud de stockage ne peut être hors ligne que pendant 15 jours. Si l'estimation du processus de clonage est proche de 15 jours ou supérieure à 15 jours, utilisez les procédures d'extension et de désaffectation.
++
+** 11.9: La limite de 15 jours a été supprimée.
+
+
 * Pour un SG6060 ou un SG6160 avec tiroirs d'extension, vous devez ajouter l'heure de la taille de tiroir appropriée à l'heure de l'appliance de base pour obtenir la durée totale du clone.
 * Le nombre de volumes d'une appliance de stockage cible doit être supérieur ou égal au nombre de volumes du nœud source. Vous ne pouvez pas cloner un nœud source avec 16 volumes de magasin d'objets (rangedb) vers une appliance de stockage cible avec 12 volumes de magasin d'objets, même si l'appliance cible a une capacité supérieure au nœud source. La plupart des appliances de stockage disposent de 16 volumes de stockage objet, à l'exception de l'appliance SGF6112 qui ne dispose que de 12 volumes de stockage objet. Par exemple, vous ne pouvez pas cloner à partir d'un SG5760 vers un SGF6112.
 
@@ -47,11 +51,11 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 
 
 
-==== SG5612 -> tous
+==== SG5612/SG5712/SG5812 -> TOUS
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -68,6 +72,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 4 jours
  a| 
 4.5 jours
+ a| 
+5.5 jours
 
 
 
@@ -85,99 +91,63 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 4 jours
  a| 
 4.5 jours
-
-|===
-
-
-==== SG5712/SG5812 -> tout
-
-[cols="2a,1a,1a,1a,1a,1a,1a"]
-|===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
-
-
  a| 
-10 GBIT/S.
- a| 
-1 jour
- a| 
-2 jours
- a| 
-2.5 jours
- a| 
-3 jours
- a| 
-4 jours
- a| 
-4.5 jours
-
-
-
- a| 
-25 GO
- a| 
-1 jour
- a| 
-2 jours
- a| 
-2.5 jours
- a| 
-3 jours
- a| 
-4 jours
- a| 
-4.5 jours
+5.5 jours
 
 |===
 
 
 ==== SG5660 -> SG5760/SG5860
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
 10 GBIT/S.
  a| 
-3 jours
- a| 
-6 jours
+3.5 jours
  a| 
 7 jours
  a| 
 8.5 jours
  a| 
-11.5 jours
+10.5 jours
  a| 
-*13 jours*
+*13,5 jours*
+ a| 
+*15,5 jours*
+ a| 
+*18,5 jours*
 
 
 
  a| 
 25 GO
  a| 
-3 jours
- a| 
-6 jours
+3.5 jours
  a| 
 7 jours
  a| 
 8.5 jours
  a| 
-11.5 jours
+10.5 jours
  a| 
-*13 jours*
+*13,5 jours*
+ a| 
+*15,5 jours*
+ a| 
+*18,5 jours*
 
 |===
 
 
 ==== SG5660 -> SG6060/SG6160
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -194,6 +164,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 9 jours
  a| 
 10 jours
+ a| 
+*12 jours*
 
 
 
@@ -211,57 +183,63 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 8 jours
  a| 
 9 jours
+ a| 
+10 jours
 
 |===
 
 
 ==== SG5760/SG5860 -> SG5760/SG5860
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
 10 GBIT/S.
  a| 
-3 jours
- a| 
-6 jours
+3.5 jours
  a| 
 7 jours
  a| 
 8.5 jours
  a| 
-11.5 jours
+10.5 jours
  a| 
-*13 jours*
+*13,5 jours*
+ a| 
+*15,5 jours*
+ a| 
+*18,5 jours*
 
 
 
  a| 
 25 GO
  a| 
-3 jours
- a| 
-6 jours
+3.5 jours
  a| 
 7 jours
  a| 
 8.5 jours
  a| 
-11.5 jours
+10.5 jours
  a| 
-*13 jours*
+*13,5 jours*
+ a| 
+*15,5 jours*
+ a| 
+*18,5 jours*
 
 |===
 
 
 ==== SG5760/SG5860 -> SG6060/SG6160
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -278,32 +256,36 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 9 jours
  a| 
 10 jours
+ a| 
+*12 jours*
 
 
 
  a| 
 25 GO
  a| 
-1.5 jours
- a| 
-3 jours
+2 jours
  a| 
 3.5 jours
  a| 
 4.5 jours
  a| 
-6 jours
+5.5 jours
  a| 
-6.5 jours
+7 jours
+ a| 
+8 jours
+ a| 
+9.5 jours
 
 |===
 
 
 ==== SG6060/SG6160 -> SG6060/SG6160
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -320,23 +302,27 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 8.5 jours
  a| 
 9.5 jours
+ a| 
+11.5 jours
 
 
 
  a| 
 25 GO
  a| 
-1.5 jours
+2 jours
  a| 
 3 jours
  a| 
-3.5 jours
- a| 
 4 jours
  a| 
-5.5 jours
+4.5 jours
  a| 
 6 jours
+ a| 
+7 jours
+ a| 
+8.5 jours
 
 |===
 
@@ -347,9 +333,9 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 
 ==== SG5760/SG5860 -> SG5760/SG5860
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -363,9 +349,11 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
  a| 
 9.5 jours
  a| 
-12.5 jours
+*12,5 jours*
  a| 
 *14 jours*
+ a| 
+*17 jours*
 
 
 
@@ -380,18 +368,20 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
  a| 
 9.5 jours
  a| 
-12.5 jours
+*12,5 jours*
  a| 
 *14 jours*
+ a| 
+*17 jours*
 
 |===
 
 
 ==== SG5760/SG5860 -> SG6060/SG6160
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -408,6 +398,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 10 jours
  a| 
 11 jours
+ a| 
+*13 jours*
 
 
 
@@ -425,21 +417,23 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 6.5 jours
  a| 
 7 jours
+ a| 
+8.5 jours
 
 |===
 
 
 ==== SG6060/SG6160 -> SG6060/SG6160
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
 10 GBIT/S.
  a| 
-3.5 jours
+3 jours
  a| 
 5 jours
  a| 
@@ -450,6 +444,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 9.5 jours
  a| 
 10.5 jours
+ a| 
+*13 jours*
 
 
 
@@ -458,24 +454,26 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
  a| 
 2 jours
  a| 
-3 jours
- a| 
-4 jours
+3.5 jours
  a| 
 4.5 jours
  a| 
-6 jours
+5 jours
  a| 
 7 jours
+ a| 
+7.5 jours
+ a| 
+9 jours
 
 |===
 
 
 ==== Tiroir d'extension (à ajouter au-dessus des SG6060/SG6160 pour chaque tiroir de l'appliance source)
 
-[cols="2a,1a,1a,1a,1a,1a,1a"]
+[cols="2a,1a,1a,1a,1a,1a,1a,1a"]
 |===
-| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To 
+| Vitesse de l'interface réseau | Taille de disque de 4 To | Taille de disque de 8 To | Taille de disque de 10 To | Taille des disques de 12 To | Taille de disque de 16 To | Taille des disques de 18 To | Taille du disque 22 To 
 
 
  a| 
@@ -492,6 +490,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 9.5 jours
  a| 
 10.5 jours
+ a| 
+*12 jours*
 
 
 
@@ -509,6 +509,8 @@ Les tableaux suivants contiennent des estimations calculées pour la durée du c
 6 jours
  a| 
 7 jours
+ a| 
+8.5 jours
 
 |===
 _Par Aron Klein_
