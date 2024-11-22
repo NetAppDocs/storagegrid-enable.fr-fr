@@ -12,6 +12,8 @@ summary: Ce rapport traite du réglage S3A pour StorageGRID.
 
 
 [role="lead"]
+_Par Angela Cheng_
+
 Le connecteur Hadoop S3A facilite l'interaction transparente entre les applications Hadoop et le stockage objet S3. Le réglage du connecteur Hadoop S3A est essentiel pour optimiser les performances lorsque vous travaillez avec le stockage objet S3. Avant d'entrer dans les détails d'ajustement, analysons très bien Hadoop et ses composants.
 
 

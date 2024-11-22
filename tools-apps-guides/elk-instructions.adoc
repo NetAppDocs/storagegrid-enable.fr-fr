@@ -12,7 +12,9 @@ summary: 'Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez c
 
 
 [role="lead"]
-Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez configurer un serveur syslog externe afin de collecter et d'analyser les messages journaux StorageGRID. ELK (Elasticsearch, Logstash, Kibana) est devenu l'une des solutions d'analytique des journaux les plus populaires. Regardez la https://media.netapp.com/video-detail/3d090a61-23d7-5ad7-9746-4cebbb7452fb/storagegrid-log-analysis-using-elk-stack["Analyse du journal StorageGRID à l'aide de la vidéo ELK"^] pour afficher un exemple de configuration ELK et découvrir comment elle peut être utilisée pour identifier et dépanner les requêtes S3 ayant échoué. Cet article fournit des exemples de fichiers de configuration Logstash, de requêtes Kibana, de graphiques et de tableau de bord, pour vous offrir un démarrage rapide de la gestion des journaux et de l'analytique StorageGRID.
+_Par Angela Cheng_
+
+Grâce à la fonction de transfert syslog StorageGRID, vous pouvez configurer un serveur syslog externe pour collecter et analyser les messages journaux StorageGRID. ELK (Elasticsearch, Logstash, Kibana) est devenu l'une des solutions d'analytique des journaux les plus populaires. Regardez la https://media.netapp.com/video-detail/3d090a61-23d7-5ad7-9746-4cebbb7452fb/storagegrid-log-analysis-using-elk-stack["Analyse du journal StorageGRID à l'aide de la vidéo ELK"^] pour afficher un exemple de configuration ELK et découvrir comment elle peut être utilisée pour identifier et dépanner les requêtes S3 ayant échoué. StorageGRID 11.9 prend en charge l'exportation du journal d'accès aux noeuds finaux de l'équilibreur de charge vers le serveur syslog externe. Regardez cette https://youtu.be/hnnT0QqLSgA?si=tDMPc4bdbqumYzFz["Vidéo YouTube"^] vidéo pour en savoir plus sur cette nouvelle fonctionnalité. Cet article fournit des exemples de fichiers de configuration Logstash, de requêtes Kibana, de graphiques et de tableau de bord, pour vous offrir un démarrage rapide de la gestion des journaux et de l'analytique StorageGRID.
 
 
 
@@ -28,6 +30,7 @@ Avec la fonctionnalité StorageGRID 11.6 syslog Forward, vous pouvez configurer 
 
 * link:../media/elk-config/elk7-sample.zip["Téléchargez le paquet Logstash 7.x."] + *md5 checksum* 148c23d0021d9a4bb4a6c0287464deab + *sha256 checksum* f51ec9e2e3f842d5a781566b167a561b4373038b4e7bb3c8b5d52f2f2d2f2f2f2f2d2f2f2f2f2f2f2f2f2f6f6f
 * link:../media/elk-config/elk8-sample.zip["Téléchargez le paquet Logstash 8.x."] + *md5 checksum* e11bae3a662f87c310ef363d0fe06835 + *total de contrôle sha256* 5c670755742cfdfd5aa723a596ba087e0153a65bcaef3934afdb682f61cd278d
+* link:../media/elk-config/elk8-sample-for-sg119.zip["Téléchargez le paquet Logstash 8.x des fichiers d'exemple pour StorageGRID 11.9"] + *somme de contrôle md5* 41272857c4a54600f95995f6ed74800d + *somme de contrôle sha256* 67048ee8661052719990851e1ad960d4902fe537a6e135e8600177188da677c9
 
 
 
@@ -108,7 +111,7 @@ Importez elk<version>-query-chart-sample.ndjson. + lorsque vous êtes invité à
 image:elk-config/kibana-import-conflict.png["Conflit Kibana"]
 
 +
-Les objets Kibana suivants sont importés : + *Query* + * audit-msg-s3rq-orlm + * journal de distribution messages liés s3 + * avertissement de niveau de journalisation ou supérieur + * échec de sécurité + *Chart* + * nombre de requêtes s3 basé sur bycast.log + * code d'état HTTP + * décomposition du msg d'audit par type + * réponse moyenne s3 Temps + *Tableau de bord* + * Tableau de bord de demande S3 à l'aide des tableaux ci-dessus.
+Les objets Kibana suivants sont importés : + *Query* + * audit-msg-s3rq-orlm + * bycast log s3 messages liés + * loglevel warning or above + * échec de l'événement de sécurité + bycast.log * nginx-gw journal d'accès au point final (disponible uniquement dans elk8-sample-for-sgg.zip) + *Chart* analyse de type de sécurité + nombre moyen de messages HTTP * s3 sur la base du tableau de temps de réponse * s3 * s3 + nombre de demandes supérieur à la demande * s3 *.
 
 
 
@@ -126,5 +129,3 @@ Vous êtes maintenant prêt à effectuer une analyse des journaux StorageGRID à
 * https://www.elastic.co/guide/en/kibana/master/document-explorer.html["Guide Kibana - Explorez le document"]
 * https://docs.netapp.com/us-en/storagegrid-116/audit/index.html["Référence des messages du journal d'audit StorageGRID"]
 
-
-_Par Angela Cheng_

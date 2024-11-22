@@ -12,6 +12,8 @@ summary: 'Hadoop permet le traitement distribué d"importants jeux de données s
 
 
 [role="lead"]
+_Par Angela Cheng_
+
 Hadoop est devenu l'un des préférés des data Scientists depuis un certain temps. Hadoop permet le traitement distribué d'importants jeux de données sur des clusters d'ordinateurs à l'aide d'infrastructures de programmation simples. Hadoop a été conçu pour évoluer verticalement de serveurs uniques à des milliers de machines, chaque machine étant en possession de ressources de calcul et de stockage locales.
 
 

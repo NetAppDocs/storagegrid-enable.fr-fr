@@ -12,6 +12,8 @@ summary: 'StorageGRID et l"API S3 proposent plusieurs façons de chiffrer vos do
 
 
 [role="lead"]
+_Par Aron Klein_
+
 StorageGRID et l'API S3 proposent plusieurs façons de chiffrer vos données au repos. Pour en savoir plus, voir https://docs.netapp.com/us-en/storagegrid-116/admin/reviewing-storagegrid-encryption-methods.html["Étudiez les méthodes de cryptage StorageGRID"^].
 
 Ce guide présente les méthodes de chiffrement de l'API S3.
@@ -186,5 +188,3 @@ aws s3api head-object --bucket <bucket> --key <file> --endpoint-url https://s3.e
 aws s3api get-object --bucket <bucket>  --key <file> <file> --endpoint-url https://s3.example.com
 ----
 
-
-_Par Aron Klein_

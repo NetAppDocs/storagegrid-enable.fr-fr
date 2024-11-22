@@ -12,6 +12,8 @@ summary: 'Le verrouillage d"objet fournit un modèle WORM pour éviter que les o
 
 
 [role="lead"]
+_Par Aron Klein_
+
 Le verrouillage d'objet fournit un modèle WORM pour éviter que les objets ne soient supprimés ou remplacés. L'implémentation StorageGRID du verrouillage d'objet est une fonctionnalité qui est évaluée afin de respecter les exigences réglementaires, et qui prend en charge le mode de conservation légale et de conformité pour la conservation des objets et les règles de conservation des compartiments par défaut.
 
 Ce guide présente l'API de verrouillage d'objet S3.
@@ -221,5 +223,3 @@ aws s3api delete-object  --bucket <bucket> --key <file> --version-id "<VersionId
 An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
 ----
 
-
-_Par Aron Klein_

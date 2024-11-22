@@ -12,6 +12,8 @@ summary: 'Ce guide décrit la procédure de création d"une base de données Ver
 
 
 [role="lead"]
+_Par Angela Cheng_
+
 Ce guide décrit la procédure de création d'une base de données Vertica Eon mode avec stockage communautaire sur NetApp StorageGRID.
 
 

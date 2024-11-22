@@ -12,6 +12,8 @@ summary: Configurez la source de données Dremio avec StorageGRID
 
 
 [role="lead"]
+_Par Angela Cheng_
+
 Dremio prend en charge la rareté des sources de données, y compris le stockage objet dans le cloud ou sur site.  Vous pouvez configurer Dremio pour qu'il utilise StorageGRID comme source de données de stockage objet.
 
 
@@ -88,5 +90,3 @@ image:dremio/dremio-add-source-advanced.png["Nouvelle source - Options avancées
 image:dremio/dremio-source-added.png["Nouvelle source de données ajoutée"]
 
 
-
-_Par Angela Cheng_
