@@ -30,8 +30,6 @@ La solution de stockage objet NetApp StorageGRID offre évolutivité, disponibil
 
 *Diffusion de contenu :* StorageGRID S3 peut être utilisé pour stocker et fournir aux utilisateurs du monde entier du contenu statique, des fichiers multimédias et des téléchargements logiciels, en exploitant la répartition géographique et l'espace de noms global de StorageGRID pour une diffusion de contenu rapide et fiable.
 
-*Tiering des données :* les clients NetApp utilisent la fonction ONTAP FabricPool pour déplacer automatiquement les données entre un niveau local hautes performances vers StorageGRID. Le Tiering libère du stockage Flash coûteux pour les données actives tout en maintenant les données inactives disponibles dans un stockage objet à faible coût. Cela optimise les performances et les économies.
-
 *Archives de données :* StorageGRID offre différents types de stockage et prend en charge la hiérarchisation vers des options de stockage public à faible coût à long terme, en faisant une solution idéale pour l'archivage et la conservation à long terme des données qui doivent être conservées à des fins de conformité ou d'historique.
 
 *Cas d'utilisation du stockage objet*
@@ -132,7 +130,7 @@ Tous les ACCÈS à la gamme | Plage de 80 % de 2 Ko à 2 Mo à partir d'objets d
 | Requêtes TPCDS 99 + minutes totales (cache désactivé) | 30 | 28 | 22 
 
 
-| Requêtes TPCDS 99 + minutes totales (mémoire cache activée) | 22 | 28 | 21,5 
+| Requêtes TPCDS 99 + minutes totales ^2^ (mémoire cache activée) | 22 | 28 | 21,5 
 
 
  a| 
@@ -163,6 +161,8 @@ Tous les ACCÈS à la gamme | Taille GET de plage : 67 % 1 Mo, 15 % 100 Ko, 10 %
 
 | Nombre total de requêtes (cache désactivé) | 2 156 578 | 939 148 | 932 071 
 |===
+^2^ les performances de Trino/Starburst sont des engorgements dus aux ressources de calcul ; l'ajout de RAM au cluster réduit le temps total de requête.
+
 Comme le montre le premier tableau, Hive est beaucoup plus lente que les autres écosystèmes de maisons de données modernes. Nous avons observé qu'Hive a envoyé un grand nombre de requêtes d'objets de liste S3, qui sont généralement lentes sur toutes les plateformes de stockage objet, en particulier lorsqu'il s'agit de compartiments contenant de nombreux objets. Cela augmente considérablement la durée globale des requêtes. En outre, les écosystèmes de lakehouse modernes peuvent envoyer un grand nombre de requêtes GET en parallèle, allant de 2,000 à 5,000 requêtes par seconde, contre 50 à 100 requêtes par seconde de Hive. La copie de système de fichiers standard de Hive et Hadoop S3A contribue à la lenteur d'Hive lors de l'interaction avec le stockage objet S3.
 
 L'utilisation d'Hadoop (HDFS ou le stockage objet S3) avec Hive ou Spark nécessite une connaissance approfondie de Hadoop et Hive/Spark, ainsi qu'une compréhension des interactions entre les paramètres de chaque service. Ensemble, ils ont plus de 1,000 réglages, dont beaucoup sont liés et ne peuvent pas être modifiés indépendamment. Trouver la combinaison optimale de paramètres et de valeurs nécessite beaucoup de temps et d'efforts.
