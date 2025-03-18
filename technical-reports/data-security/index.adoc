@@ -43,7 +43,6 @@ Pour en savoir plus sur les informations données dans ce livre blanc, consultez
 
 * NetApp StorageGRID : évaluation de la conformité SEC 17a-4(f), FINRA 4511(c) et CFTC 1.31(c)-(d) https://www.netapp.com/media/9041-ar-cohasset-netapp-storagegrid-sec-assessment.pdf[]
 * Page de documentation StorageGRID 11.9 https://docs.netapp.com/us-en/storagegrid-119/[]
-* Ressources de documentation StorageGRID https://www.netapp.com/data-storage/storagegrid/documentation/[]
 * Documentation des produits NetApp https://www.netapp.com/support-and-training/documentation/[]
 
 
