@@ -72,7 +72,7 @@ Ces solutions ont été testées en collaboration avec les partenaires respectif
 * Vernis Enterprise 6.0.4
 * Veeam 12
 * Veritas Enterprise Vault 14
-* Veritas NetBackup 8.0
+* Veritas NetBackup 10.1.1 et versions ultérieures
 * Vertica 10.x
 * Vidispine
 * Virtalica StorageFabric
