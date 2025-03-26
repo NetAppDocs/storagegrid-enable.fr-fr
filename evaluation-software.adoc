@@ -20,13 +20,13 @@ Cette instruction s'adresse aux commerciaux, aux partenaires et aux prospects Ne
 
 . Créez un compte sur le https://mysupport.netapp.com/site/user/registration["Site de support NetApp"] à l'aide de votre adresse e-mail professionnelle.
 +
-.. Si vous possédez déjà un compte, passez à l'étape suivante.
+.. Assurez-vous que vous n'êtes pas connecté avec le nouveau compte créé.
+.. Si vous possédez déjà un compte, assurez-vous que vous n'êtes pas connecté et passez à l'étape suivante.
 
 
-. Connectez-vous avec le compte créé.
 . Créez un dossier de support non technique afin d'élever les niveaux d'accès au « prospect ». Pour ce faire, cliquez sur le "https://mysupport.netapp.com/site/help?relevanturl=%2Fuser%2Fregistration["Signalez les problèmes"]lien " dans le pied de page du site Web.
 . Sélectionnez « problème d'enregistrement » comme catégorie de commentaires.
-. Dans la section des commentaires, écrivez : « J'aimerais obtenir un accès prospect pour télécharger le logiciel d'évaluation StorageGRID. »
+. Dans la section des commentaires, écrivez : « mon adresse e-mail de compte est _votre-adresse e-mail_. J'aimerais obtenir un accès prospect pour télécharger le logiciel d'évaluation StorageGRID. »
 +
 .. Mentionnez le nom de la personne interne de NetApp qui a suggéré l'accès du prospect.
 

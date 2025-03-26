@@ -1850,7 +1850,6 @@ StorageGRID fait évoluer les performances en utilisant soit des nœuds de perfo
   <block id="e3581082ba2aa18febff247afdaf6344" category="paragraph">Pour en savoir plus sur les informations données dans ce rapport technique, consultez les ressources de documentation suivantes :</block>
   <block id="d794ca6edf18a97bedb2ad1af37d0c71" category="list-text">Centre de documentation NetApp StorageGRID <block ref="47ea1c2d0f136bec8b3e66c2121bf70f" category="inline-link-rx"></block></block>
   <block id="f26db73036faf2fd4369e53f7b67c6e7" category="list-text">Accompagnement NetApp StorageGRID <block ref="4d58579ecd86e7d907ec63f13f2199dd" category="inline-link-rx"></block></block>
-  <block id="a3fd6da95928caff4c3eee3c06fd7ad8" category="list-text">Ressources de documentation StorageGRID <block ref="68d4d5362a15088f2ac3fa494c971af5" category="inline-link-rx"></block></block>
   <block id="8b8bc5296c7be638754abb2f408d2099" category="list-text">Documentation des produits NetApp <block ref="3cd8b5fe5ca94a9fdb5caaf96875ef7e" category="inline-link-rx"></block></block>
   <block id="fb0cb3928e42fcd12b5e4d384c0b36e1" category="summary">Découvrez comment installer Docker pour StorageGRID.</block>
   <block id="4794aa13334c3a67cb956b8bb0b717cc" category="doc">Installez Docker pour StorageGRID</block>
@@ -2739,12 +2738,9 @@ StorageGRID fait évoluer les performances en utilisant soit des nœuds de perfo
   <block id="d45294caa04dc2a59a6a9779ecb261e1" category="section-title">Créez un compte</block>
   <block id="8c41baf1ca98e1184f48c4721d44d431" category="inline-link">Site de support NetApp</block>
   <block id="6b2e1d4820e2c64094628af51b07c4ae" category="list-text">Créez un compte sur le<block ref="a49f41675f7c48eedf0647a0a62c5043" category="inline-link-rx"></block> à l'aide de votre adresse e-mail professionnelle.</block>
-  <block id="c3864a0d9e7266b854aa1d673036710a" category="list-text">Si vous possédez déjà un compte, passez à l'étape suivante.</block>
-  <block id="0fedb2e26434d49a94f9450ce477c3cc" category="list-text">Connectez-vous avec le compte créé.</block>
   <block id="0c6d9ab23098fd3e876c216fe1ca7ffc" category="inline-link">Signalez les problèmes</block>
   <block id="8751d140672b36b77b265c8fe793befc" category="list-text">Créez un dossier de support non technique afin d'élever les niveaux d'accès au « prospect ». Pour ce faire, cliquez sur le <block ref="94c9ec214c60b057a12eaba547e0acae" category="inline-link-rx"></block>lien " dans le pied de page du site Web.</block>
   <block id="940ab06ee98cba17f3c21dea0e603eb5" category="list-text">Sélectionnez « problème d'enregistrement » comme catégorie de commentaires.</block>
-  <block id="c1d4a23af565c411cff6271ce577104f" category="list-text">Dans la section des commentaires, écrivez : « J'aimerais obtenir un accès prospect pour télécharger le logiciel d'évaluation StorageGRID. »</block>
   <block id="ea7ab0148c9999f65837f6a1483f42ee" category="list-text">Mentionnez le nom de la personne interne de NetApp qui a suggéré l'accès du prospect.</block>
   <block id="ed721060d54c51e35da28db6ea8337ef" category="section-title">Télécharger StorageGRID</block>
   <block id="aed8ceb0f85821c90dc49c2c3bf1e494" category="list-text">Une fois que votre dossier de demande de support a été examiné et approuvé, le support NetApp vous informe par e-mail que votre compte a été autorisé à accéder à vos prospects.</block>
@@ -3172,4 +3168,7 @@ StorageGRID fait évoluer les performances en utilisant soit des nœuds de perfo
   <block id="c913303f392ffc643f7240b180602652" category="cell">1464</block>
   <block id="6cd2cdb0fa97e6793df3667997292b8a" category="cell">3 702</block>
   <block id="93ee6d81759b8ae556ed02d6b52a3447" category="cell">1 992 553</block>
+  <block id="45d98cb0c4dacd6be68da4095e1fa5f2" category="list-text">Assurez-vous que vous n'êtes pas connecté avec le nouveau compte créé.</block>
+  <block id="37ff5d731eafce0bad2c1bdfb0ed1f55" category="list-text">Si vous possédez déjà un compte, assurez-vous que vous n'êtes pas connecté et passez à l'étape suivante.</block>
+  <block id="21c24fa624a44fa1b3fc1c27be1061d5" category="list-text">Dans la section des commentaires, écrivez : « mon adresse e-mail de compte est _votre-adresse e-mail_. J'aimerais obtenir un accès prospect pour télécharger le logiciel d'évaluation StorageGRID. »</block>
 </blocks>
