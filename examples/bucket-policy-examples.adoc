@@ -33,7 +33,7 @@ NOTE: L'action s3:ListBucket autorisée est requise pour que les utilisateurs pu
 
 La ressource *Resource* est le compartiment ou les compartiments auxquels les principaux ont été accordés ou refusés la capacité d'exécuter les actions sur. En option, il peut y avoir une *condition* lorsque l'action de stratégie est valide.
 
-Le format de la police JSON se présente comme suit :
+Le format de la politique JSON se présente comme suit :
 
 [source, json]
 ----
@@ -66,11 +66,11 @@ Le format de la police JSON se présente comme suit :
 
 Le générateur de règles AWS est un excellent outil pour vous aider à obtenir le code json avec le format et les informations que vous essayez d'implémenter.
 
-Pour générer les autorisations d'une stratégie de groupe StorageGRID : * Choisissez la stratégie IAM pour le type de stratégie. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations de refus, puis d'ajouter les autorisations d'autorisation * dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou dans la zone « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::examplebucket »
+Pour générer les autorisations d'une stratégie de groupe StorageGRID : * Choisissez la stratégie IAM pour le type de stratégie. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations de refus, puis d'ajouter les autorisations d'autorisation * dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou dans la zone « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::example_bucket »
 
 image:policy/group-generic.png["Générez une stratégie de groupe"]
 
-Pour générer les autorisations d'une règle de compartiment : * Choisissez la règle de compartiment S3 pour le type de règle. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations refuser, puis d'ajouter le type Autoriser les autorisations * dans les informations sur l'utilisateur ou le groupe pour le principal. * Dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou de la case « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::examplebucket »
+Pour générer les autorisations d'une règle de compartiment : * Choisissez la règle de compartiment S3 pour le type de règle. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations refuser, puis d'ajouter le type Autoriser les autorisations * dans les informations sur l'utilisateur ou le groupe pour le principal. * Dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou de la case « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::example_bucket »
 
 image:policy/bucket-generic.png["Générez une règle de compartiment"]
 
@@ -80,7 +80,7 @@ Par exemple, si vous souhaitez générer une stratégie de compartiment pour per
 * Choisissez l'effet d'autorisation
 * Entrez les informations du groupe Marketing - arn:aws:iam::95390887230002558202:Federated-group/Marketing
 * Cliquez sur la case « toutes les actions ».
-* Entrez les informations relatives au compartiment - arn:aws:s3:::examplebucket,arn:aws:s3:::examplebucket/*
+* Entrez les informations relatives au compartiment - arn:aws:s3:::example_bucket,arn:aws:s3:::example_bucket/*
 
 
 image:policy/example-bucket1.png["Générez la première autorisation dans la stratégie"]
@@ -97,7 +97,7 @@ image:policy/permission1.png["Première autorisation dans la police saisie"]
 
 image:policy/getobject.png["Sélectionnez GetObject"] image:policy/listbucket.png["Sélectionnez ListBucket"]
 
-* Entrez les informations relatives au compartiment - arn:aws:s3:::examplebucket,arn:aws:s3:::examplebucket/*
+* Entrez les informations relatives au compartiment - arn:aws:s3:::example_bucket,arn:aws:s3:::example_bucket/*
 
 
 image:policy/example-bucket2.png["Générez la deuxième autorisation dans la stratégie"]
@@ -105,7 +105,7 @@ image:policy/example-bucket2.png["Générez la deuxième autorisation dans la st
 * Cliquez sur le bouton « Ajouter une déclaration »
 
 
-image:policy/permission3.png["Deuxième autorisation dans la stratégie"]
+image:policy/permission2.png["Deuxième autorisation dans la stratégie"]
 
 * Cliquez sur le bouton « générer une politique » et une fenêtre contextuelle s'affiche avec votre police générée.
 
@@ -126,8 +126,8 @@ image:policy/example-output.png["La sortie finale"]
       "Action": "s3:*",
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::examplebucket",
-        "arn:aws:s3:::examplebucket/*"
+        "arn:aws:s3:::example_bucket",
+        "arn:aws:s3:::example_bucket/*"
       ],
       "Principal": {
         "AWS": [
@@ -143,8 +143,8 @@ image:policy/example-output.png["La sortie finale"]
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::examplebucket",
-        "arn:aws:s3:::examplebucket/*"
+        "arn:aws:s3:::example_bucket",
+        "arn:aws:s3:::example_bucket/*"
       ],
       "Principal": "*"
     }
@@ -164,8 +164,8 @@ Par exemple :
       "Action": "s3:*",
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::examplebucket",
-        "arn:aws:s3:::examplebucket/*"
+        "arn:aws:s3:::example_bucket",
+        "arn:aws:s3:::example_bucket/*"
       ],
       "Principal": {
         "AWS": [
@@ -181,8 +181,8 @@ Par exemple :
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::examplebucket",
-        "arn:aws:s3:::examplebucket/*"
+        "arn:aws:s3:::example_bucket",
+        "arn:aws:s3:::example_bucket/*"
       ],
       "Principal": "*"
     }
