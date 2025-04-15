@@ -2,7 +2,7 @@
 permalink: examples/bucket-policy-examples.html 
 sidebar: sidebar 
 keywords: iam, bucket policy, group policy, policy 
-summary: 'Voici des exemples de politiques de compartiment et de règles de groupe (règles IAM).' 
+summary: 'Voici des exemples de règles et d"autorisations dans StorageGRID S3.' 
 ---
 = Exemples de règles de compartiment et de groupe (IAM
 :hardbreaks:
@@ -12,8 +12,183 @@ summary: 'Voici des exemples de politiques de compartiment et de règles de grou
 
 
 [role="lead"]
-Voici des exemples de politiques de compartiment et de règles de groupe (règles IAM).
+Voici des exemples de règles et d'autorisations dans StorageGRID S3.
 
+
+
+== Structure d'une politique
+
+Dans StorageGRID, les règles de groupe sont identiques aux règles de service S3 de l'utilisateur AWS (IAM).
+
+Les stratégies de groupe sont requises dans StorageGRID. Un utilisateur avec des clés d'accès S3, mais qui n'est pas affecté à un groupe d'utilisateurs, ou affecté à un groupe sans règle lui accordant certaines autorisations, ne pourra accéder à aucune donnée.
+
+Les règles de compartiment et de groupe partagent la plupart des mêmes éléments. Les stratégies sont créées au format json et peuvent être générées à l'aide de https://awspolicygen.s3.amazonaws.com/policygen.html["Générateur de règles AWS"]
+
+Toutes les règles définissent l'effet, les actions et les ressources. Les politiques de compartiment définiront également un principal.
+
+*Effet* sera soit permettre ou refuser la demande. Le *principal* est le(s) compte(s)/utilisateur(s) accordé(s) ou refusé(s) les capacités. Ceci peut être défini comme un caractère générique "++*+" ou un utilisateur ou un groupe local ou fédéré à partir du locataire du compartiment, ou un autre locataire de la grille. L'utilisateur ou le groupe peut être identifié par un nom ou une chaîne d'ID. *Action* est l'ensemble des opérations S3 accordées ou refusées aux utilisateurs.
+
+
+NOTE: L'action s3:ListBucket autorisée est requise pour que les utilisateurs puissent exécuter n'importe quelle action S3.
+
+La ressource *Resource* est le compartiment ou les compartiments auxquels les principaux ont été accordés ou refusés la capacité d'exécuter les actions sur. En option, il peut y avoir une *condition* lorsque l'action de stratégie est valide.
+
+Le format de la police JSON se présente comme suit :
+
+[source, json]
+----
+{
+  "Statement": [
+    {
+      "Sid": "Custom name for this permission",
+      "Effect": "Allow or Deny",
+      "Principal": {
+        "AWS": "arn:aws:iam::Tenant_ID:federated-group/Group_Name",
+        "AWS": "arn:aws:iam::Tenant_ID:group/Group_Name",
+        "AWS": "arn:aws:iam::Tenant_ID::federated-user/User_Name",
+        "AWS": "User_Name"
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:Other_Action"
+      ],
+      "Resource": [
+        "arn:aws:s3:::Example_Bucket",
+        "arn:aws:s3:::Example_Bucket/*"
+      ],
+    }
+  ]
+}
+----
+
+
+== À l'aide du générateur de règles AWS
+
+Le générateur de règles AWS est un excellent outil pour vous aider à obtenir le code json avec le format et les informations que vous essayez d'implémenter.
+
+Pour générer les autorisations d'une stratégie de groupe StorageGRID : * Choisissez la stratégie IAM pour le type de stratégie. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations de refus, puis d'ajouter les autorisations d'autorisation * dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou dans la zone « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::examplebucket »
+
+image:policy/group-generic.png["Générez une stratégie de groupe"]
+
+Pour générer les autorisations d'une règle de compartiment : * Choisissez la règle de compartiment S3 pour le type de règle. * Sélectionnez le bouton pour l'effet désiré - Autoriser ou refuser. Il est recommandé de démarrer vos stratégies avec les autorisations refuser, puis d'ajouter le type Autoriser les autorisations * dans les informations sur l'utilisateur ou le groupe pour le principal. * Dans la liste déroulante actions, cliquez sur la case en regard du nombre d'actions S3 que vous souhaitez inclure dans cette autorisation ou de la case « toutes les actions ». * Tapez les chemins de compartiment dans la zone Amazon Resource Name (ARN). Incluez "arn:aws:s3:::" avant le nom du compartiment. Ex. « arn:aws:s3:::examplebucket »
+
+image:policy/bucket-generic.png["Générez une règle de compartiment"]
+
+Par exemple, si vous souhaitez générer une stratégie de compartiment pour permettre à tous les utilisateurs d'effectuer des opérations GetObject sur tous les objets du compartiment, alors que seuls les utilisateurs appartenant au groupe « Marketing » du compte spécifié disposent d'un accès complet.
+
+* Sélectionnez S3 Bucket Policy comme type de règle.
+* Choisissez l'effet d'autorisation
+* Entrez les informations du groupe Marketing - arn:aws:iam::95390887230002558202:Federated-group/Marketing
+* Cliquez sur la case « toutes les actions ».
+* Entrez les informations relatives au compartiment - arn:aws:s3:::examplebucket,arn:aws:s3:::examplebucket/*
+
+
+image:policy/example-bucket1.png["Générez la première autorisation dans la stratégie"]
+
+* Cliquez sur le bouton « Ajouter une déclaration »
+
+
+image:policy/permission1.png["Première autorisation dans la police saisie"]
+
+* Choisissez l'effet d'autorisation
+* Entrez l'astérisque ++*+ pour tout le monde
+* Cliquez sur la case en regard des actions GetObject et ListBucket »
+
+
+image:policy/getobject.png["Sélectionnez GetObject"] image:policy/listbucket.png["Sélectionnez ListBucket"]
+
+* Entrez les informations relatives au compartiment - arn:aws:s3:::examplebucket,arn:aws:s3:::examplebucket/*
+
+
+image:policy/example-bucket2.png["Générez la deuxième autorisation dans la stratégie"]
+
+* Cliquez sur le bouton « Ajouter une déclaration »
+
+
+image:policy/permission3.png["Deuxième autorisation dans la stratégie"]
+
+* Cliquez sur le bouton « générer une politique » et une fenêtre contextuelle s'affiche avec votre police générée.
+
+
+image:policy/example-output.png["La sortie finale"]
+
+* Copiez le texte Json complet qui devrait ressembler à ceci :
+
+
+[source, json]
+----
+{
+  "Id": "Policy1744399292233",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1744399152830",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::examplebucket",
+        "arn:aws:s3:::examplebucket/*"
+      ],
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::95390887230002558202:federated-group/Marketing"
+        ]
+      }
+    },
+    {
+      "Sid": "Stmt1744399280838",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::examplebucket",
+        "arn:aws:s3:::examplebucket/*"
+      ],
+      "Principal": "*"
+    }
+  ]
+}
+----
+Ce Json peut être utilisé tel quelle, ou vous pouvez supprimer les lignes ID et version au-dessus de la ligne « Statement » et vous pouvez personnaliser l'ID pour chaque autorisation avec un titre plus significatif pour chaque autorisation ou elles peuvent également être supprimées.
+
+Par exemple :
+
+[source, json]
+----
+{
+  "Statement": [
+    {
+      "Sid": "MarketingAllowFull",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::examplebucket",
+        "arn:aws:s3:::examplebucket/*"
+      ],
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::95390887230002558202:federated-group/Marketing"
+        ]
+      }
+    },
+    {
+      "Sid": "EveryoneReadOnly",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::examplebucket",
+        "arn:aws:s3:::examplebucket/*"
+      ],
+      "Principal": "*"
+    }
+  ]
+}
+----
 
 
 == Stratégies de groupe (IAM)
@@ -26,6 +201,7 @@ Cette stratégie de groupe autorise uniquement les utilisateurs à accéder aux 
 
 [source, json]
 ----
+{
 "Statement": [
     {
       "Sid": "AllowListBucketOfASpecificUserPrefix",
@@ -133,6 +309,14 @@ Cette stratégie de groupe empêche les utilisateurs de supprimer des objets mul
     ]
 }
 ----
+
+
+== Règles de compartiment
+
+
+
+=== Limitez les suppressions d'objets multiversion par l'utilisateur dans un compartiment
+
 Cette stratégie de compartiment empêche un utilisateur (identifié par l'ID utilisateur « 56622399308951294926 ») de supprimer des objets multiversion par l'ID de version
 
 [source, json]
@@ -178,29 +362,29 @@ Cette stratégie permet à un seul utilisateur de disposer d'un accès en lectur
             "Sid": "Deny non user1",
             "Effect": "Deny",
             "NotPrincipal": {
-                "AWS": "urn:sgws:identity::34921514133002833665:user/user1"
+                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
             },
             "Action": [
                 "s3:*"
             ],
             "Resource": [
-                "urn:sgws:s3:::bucket1",
-                "urn:sgws:s3:::bucket1/*"
+                "arn:aws:s3:::bucket1",
+                "arn:aws:s3:::bucket1/*"
             ]
         },
         {
             "Sid": "Allow user1 read access to bucket bucket1",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "urn:sgws:identity::34921514133002833665:user/user1"
+                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
             },
             "Action": [
                 "s3:GetObject",
                 "s3:ListBucket"
             ],
             "Resource": [
-                "urn:sgws:s3:::bucket1",
-                "urn:sgws:s3:::bucket1/*"
+                "arn:aws:s3:::bucket1",
+                "arn:aws:s3:::bucket1/*"
             ]
         }
     ]
