@@ -26,10 +26,61 @@ Les règles de compartiment et de groupe partagent la plupart des mêmes éléme
 
 Toutes les règles définissent l'effet, les actions et les ressources. Les politiques de compartiment définiront également un principal.
 
-*Effet* sera soit permettre ou refuser la demande. Le *principal* est le(s) compte(s)/utilisateur(s) accordé(s) ou refusé(s) les capacités. Ceci peut être défini comme un caractère générique "++*+" ou un utilisateur ou un groupe local ou fédéré à partir du locataire du compartiment, ou un autre locataire de la grille. L'utilisateur ou le groupe peut être identifié par un nom ou une chaîne d'ID. *Action* est l'ensemble des opérations S3 accordées ou refusées aux utilisateurs.
+*Effet* sera soit permettre ou refuser la demande.
+
+Le *principal*
+
+* S'applique uniquement aux politiques de compartiment.
+* L'entité de sécurité est le(s) compte(s)/utilisateur(s) auquel(s) les autorisations ont été accordées ou refusées.
+* Peut être défini comme :
++
+** Un caractère générique "++*+"
++
+[listing]
+----
+"Principal":"*"
+----
++
+[listing]
+----
+"Principal":{"AWS":"*"}
+----
+** ID de locataire pour tous les utilisateurs d'un locataire (équivalent au compte AWS)
++
+[listing]
+----
+"Principal": { "AWS": "27233906934684427525" }
+----
+** Utilisateur (local ou fédéré depuis le locataire où réside le compartiment ou un autre locataire de la grille)
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::76233906934699427431:user/tenant1user1" }
+----
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated-user/tenant2user1" }
+----
+** Un groupe (local ou fédéré depuis le locataire où réside le compartiment ou un autre locataire de la grille).
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::76233906934699427431:group/DevOps"  }
+----
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated-group/Managers"  }
+----
 
 
-NOTE: L'action s3:ListBucket autorisée est requise pour que les utilisateurs puissent exécuter n'importe quelle action S3.
+
+
+*Action* est l'ensemble des opérations S3 accordées ou refusées aux utilisateurs.
+
+
+NOTE: Pour les stratégies de groupe, l'action s3:ListBucket autorisée est requise pour que les utilisateurs puissent exécuter n'importe quelle action S3.
 
 La ressource *Resource* est le compartiment ou les compartiments auxquels les principaux ont été accordés ou refusés la capacité d'exécuter les actions sur. En option, il peut y avoir une *condition* lorsque l'action de stratégie est valide.
 
@@ -43,10 +94,13 @@ Le format de la politique JSON se présente comme suit :
       "Sid": "Custom name for this permission",
       "Effect": "Allow or Deny",
       "Principal": {
-        "AWS": "arn:aws:iam::Tenant_ID:federated-group/Group_Name",
-        "AWS": "arn:aws:iam::Tenant_ID:group/Group_Name",
-        "AWS": "arn:aws:iam::Tenant_ID::federated-user/User_Name",
-        "AWS": "User_Name"
+        "AWS": [
+          "arn:aws:iam::tenant_ID::user/User_Name",
+          "arn:aws:iam::tenant_ID::federated-user/User_Name",
+          "arn:aws:iam::tenant_ID:group/Group_Name",
+          "arn:aws:iam::tenant_ID:federated-group/Group_Name",
+          "tenant_ID"
+        ]
       },
       "Action": [
         "s3:ListBucket",
@@ -311,87 +365,6 @@ Cette stratégie de groupe empêche les utilisateurs de supprimer des objets mul
 ----
 
 
-== Règles de compartiment
-
-
-
-=== Limitez les suppressions d'objets multiversion par l'utilisateur dans un compartiment
-
-Cette stratégie de compartiment empêche un utilisateur (identifié par l'ID utilisateur « 56622399308951294926 ») de supprimer des objets multiversion par l'ID de version
-
-[source, json]
-----
-{
-  "Statement": [
-    {
-      "Action": [
-        "s3:DeleteObjectVersion"
-      ],
-      "Effect": "Deny",
-      "Resource": "arn:aws:s3:::verdeny/*",
-      "Principal": {
-        "AWS": [
-          "56622399308951294926"
-        ]
-      }
-    },
-    {
-      "Action": "s3:*",
-      "Effect": "Allow",
-      "Resource": "arn:aws:s3:::verdeny/*",
-      "Principal": {
-        "AWS": [
-          "56622399308951294926"
-        ]
-      }
-    }
-  ]
-}
-----
-
-
-=== Restriction du compartiment à un seul utilisateur avec un accès en lecture seule
-
-Cette stratégie permet à un seul utilisateur de disposer d'un accès en lecture seule à un compartiment et d'accéder explicitement à tous les autres utilisateurs. Le regroupement des déclarations de refus en haut de la politique est une bonne pratique pour une évaluation plus rapide.
-
-[source, json]
-----
-{
-    "Statement": [
-        {
-            "Sid": "Deny non user1",
-            "Effect": "Deny",
-            "NotPrincipal": {
-                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
-            },
-            "Action": [
-                "s3:*"
-            ],
-            "Resource": [
-                "arn:aws:s3:::bucket1",
-                "arn:aws:s3:::bucket1/*"
-            ]
-        },
-        {
-            "Sid": "Allow user1 read access to bucket bucket1",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
-            },
-            "Action": [
-                "s3:GetObject",
-                "s3:ListBucket"
-            ],
-            "Resource": [
-                "arn:aws:s3:::bucket1",
-                "arn:aws:s3:::bucket1/*"
-            ]
-        }
-    ]
-}
-----
-
-
 === Limiter un groupe à un sous-répertoire unique (préfixe) avec accès en lecture seule
 
 Cette règle permet aux membres du groupe d'accéder en lecture seule à un sous-répertoire (préfixe) au sein d'un compartiment. Le nom du compartiment est « Study » et le sous-répertoire est « study01 ».
@@ -459,5 +432,135 @@ Cette règle permet aux membres du groupe d'accéder en lecture seule à un sous
             ]
         }
     ]
+}
+----
+
+
+== Règles de compartiment
+
+
+
+=== Restriction du compartiment à un seul utilisateur avec un accès en lecture seule
+
+Cette stratégie permet à un seul utilisateur de disposer d'un accès en lecture seule à un compartiment et d'accéder explicitement à tous les autres utilisateurs. Le regroupement des déclarations de refus en haut de la politique est une bonne pratique pour une évaluation plus rapide.
+
+[source, json]
+----
+{
+    "Statement": [
+        {
+            "Sid": "Deny non user1",
+            "Effect": "Deny",
+            "NotPrincipal": {
+                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
+            },
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket1",
+                "arn:aws:s3:::bucket1/*"
+            ]
+        },
+        {
+            "Sid": "Allow user1 read access to bucket bucket1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::34921514133002833665:user/user1"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket1",
+                "arn:aws:s3:::bucket1/*"
+            ]
+        }
+    ]
+}
+----
+
+
+=== limitez un compartiment à quelques utilisateurs disposant d'un accès en lecture seule.
+
+[source, json]
+----
+{
+    "Statement": [
+      {
+        "Sid": "Deny all S3 actions to employees 002-005",
+        "Effect": "deny",
+        "Principal": {
+          "AWS": [
+            "arn:aws:iam::46521514133002703882:user/employee-002",
+            "arn:aws:iam::46521514133002703882:user/employee-003",
+            "arn:aws:iam::46521514133002703882:user/employee-004",
+            "arn:aws:iam::46521514133002703882:user/employee-005"
+          ]
+        },
+        "Action": "*",
+        "Resource": [
+          "arn:aws:s3:::databucket1",
+          "arn:aws:s3:::databucket1/*"
+        ]
+      },
+      {
+        "Sid": "Allow read-only access for employees 002-005",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": [
+            "arn:aws:iam::46521514133002703882:user/employee-002",
+            "arn:aws:iam::46521514133002703882:user/employee-003",
+            "arn:aws:iam::46521514133002703882:user/employee-004",
+            "arn:aws:iam::46521514133002703882:user/employee-005"
+          ]
+        },
+        "Action": [
+          "s3:GetObject",
+          "s3:GetObjectTagging",
+          "s3:GetObjectVersion"
+        ],
+        "Resource": [
+          "arn:aws:s3:::databucket1",
+          "arn:aws:s3:::databucket1/*"
+        ]
+      }
+    ]
+}
+----
+
+
+=== Limitez les suppressions d'objets multiversion par l'utilisateur dans un compartiment
+
+Cette stratégie de compartiment empêche un utilisateur (identifié par l'ID utilisateur « 56622399308951294926 ») de supprimer des objets multiversion par l'ID de version
+
+[source, json]
+----
+{
+  "Statement": [
+    {
+      "Action": [
+        "s3:DeleteObjectVersion"
+      ],
+      "Effect": "Deny",
+      "Resource": "arn:aws:s3:::verdeny/*",
+      "Principal": {
+        "AWS": [
+          "56622399308951294926"
+        ]
+      }
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::verdeny/*",
+      "Principal": {
+        "AWS": [
+          "56622399308951294926"
+        ]
+      }
+    }
+  ]
 }
 ----
