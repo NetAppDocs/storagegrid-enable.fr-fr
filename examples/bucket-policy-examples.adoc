@@ -2,9 +2,9 @@
 permalink: examples/bucket-policy-examples.html 
 sidebar: sidebar 
 keywords: iam, bucket policy, group policy, policy 
-summary: 'Voici des exemples de règles et d"autorisations dans StorageGRID S3.' 
+summary: Stratégies et autorisations dans StorageGRID . 
 ---
-= Exemples de règles de compartiment et de groupe (IAM
+= Stratégies et autorisations dans StorageGRID
 :hardbreaks:
 :allow-uri-read: 
 :icons: font
@@ -24,7 +24,7 @@ Les stratégies de groupe sont requises dans StorageGRID. Un utilisateur avec de
 
 Les règles de compartiment et de groupe partagent la plupart des mêmes éléments. Les stratégies sont créées au format json et peuvent être générées à l'aide de https://awspolicygen.s3.amazonaws.com/policygen.html["Générateur de règles AWS"]
 
-Toutes les règles définissent l'effet, les actions et les ressources. Les politiques de compartiment définiront également un principal.
+Toutes les règles définissent l'effet, les actions et les ressources. Les règles de compartiment définiront également un principal.
 
 *Effet* sera soit permettre ou refuser la demande.
 
