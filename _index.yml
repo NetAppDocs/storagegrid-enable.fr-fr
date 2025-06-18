@@ -107,6 +107,8 @@ indexpage:
       url: "/examples/test-demonstrate-S3-object-lock.html"
     - title: Exemples de stratégie de compartiment et de groupe
       url: "/examples/bucket-policy-examples.html"
+    - title: Exemples de politiques de cycle de vie des buckets
+      url: "/examples/bucket-lifecycle-examples.html"
   - title: Articles de blog
     links:
     - title: Blogs StorageGRID

@@ -20,9 +20,9 @@ Ce rapport technique fournit un guide complet sur l'implémentation des stratég
 
 NetApp StorageGRID est un système de stockage objet qui prend en charge l'API Amazon simple Storage Service (Amazon S3) standard.
 
-StorageGRID fournit un espace de noms unique à plusieurs emplacements avec des niveaux de service variables basés sur des règles de gestion du cycle de vie des informations (ILM). Ces règles vous permettent d'optimiser l'emplacement des données tout au long de leur cycle de vie.
+StorageGRID fournit un espace de noms unique à plusieurs emplacements avec des niveaux de service variables basés sur des règles de gestion du cycle de vie des informations (ILM). Grâce à ces politiques de cycle de vie, vous pouvez optimiser l’emplacement de vos données tout au long de leur cycle de vie.
 
-StorageGRID permet une durabilité et une disponibilité configurables de vos données dans des solutions locales et réparties géographiquement. Que vos données soient sur site ou dans un cloud public, les workflows intégrés de cloud hybride vous permettent d'exploiter les services cloud comme Amazon simple notification Service (Amazon SNS), Google Cloud, Microsoft Azure Blob, Amazon S3 Glacier, Elasticsearch et bien plus encore.
+StorageGRID permet une durabilité et une disponibilité configurables de vos données dans des solutions locales et réparties géographiquement. Que vos données soient sur site ou dans un cloud public, les flux de travail cloud hybrides intégrés permettent à votre entreprise de tirer parti de services cloud tels qu'Amazon Simple Notification Service (Amazon SNS), Google Cloud, Microsoft Azure Blob, Amazon S3 Glacier, Elasticsearch, etc.
 
 
 
@@ -30,7 +30,14 @@ StorageGRID permet une durabilité et une disponibilité configurables de vos do
 
 StorageGRID peut être déployé avec seulement 3 nœuds de stockage et un grid unique peut évoluer jusqu'à 200 nœuds. Une grille unique peut être déployée en tant que site unique ou s'étendre à 16 sites. Un grid minimal se compose d'un nœud d'administration et de 3 nœuds de stockage dans un seul site. Le nœud d'administration contient l'interface de gestion, un point central pour les mesures et la journalisation, et maintient la configuration des composants StorageGRID. Le nœud d'administration contient également un équilibreur de charge intégré pour l'accès à l'API S3. StorageGRID peut être déployé en tant qu'appliance exclusivement logicielle, en tant qu'appliance de machine virtuelle VMware ou en tant qu'appliance dédiée.
 
-Un nœud StorageGRID peut être déployé en tant que nœud de métadonnées uniquement, afin d'optimiser le nombre d'objets, un nœud de stockage objet uniquement qui optimise l'espace objet ou un nœud combiné de métadonnées et de stockage objet qui ajoute à la fois le nombre d'objets et l'espace objet. Chaque nœud de stockage peut évoluer jusqu'à plusieurs pétaoctets de capacité pour le stockage objet, permettant ainsi à un seul namespace de centaines de pétaoctets. StorageGRID propose également un équilibreur de charge intégré pour les opérations de l'API S3 appelé nœud de passerelle.
+Un nœud StorageGRID peut être déployé comme :
+
+* Un nœud de métadonnées uniquement maximisant le nombre d'objets
+* Un nœud de stockage d'objets uniquement maximisant l'espace objet
+* Un nœud combiné de métadonnées et de stockage d'objets ajoutant à la fois le nombre d'objets et l'espace d'objets
+
+
+Chaque nœud de stockage peut évoluer jusqu'à plusieurs pétaoctets de capacité pour le stockage objet, permettant ainsi à un seul namespace de centaines de pétaoctets. StorageGRID propose également un équilibreur de charge intégré pour les opérations de l'API S3 appelé nœud de passerelle.
 
 image:zero-rpo/delivery-paths.png["Options de déploiement StorageGRID"]
 
@@ -64,7 +71,7 @@ StorageGRID utilise les métadonnées d'objet pour suivre l'emplacement de tous 
 
 Les métadonnées de l'objet incluent les informations suivantes :
 
-* Métadonnées du système, y compris un ID unique pour chaque objet (UUID), le nom de l'objet, le nom du compartiment S3, le nom ou l'ID du compte locataire, la taille logique de l'objet, la date et l'heure de création de l'objet, ainsi que la date et l'heure de la dernière modification de l'objet.
+* Métadonnées système, y compris un ID unique pour chaque objet, le nom de l'objet, le nom du compartiment S3, le nom ou l'ID du compte locataire, la taille logique de l'objet, la date et l'heure de la première création de l'objet et la date et l'heure de la dernière modification de l'objet.
 * Emplacement de stockage actuel de chaque réplique d'objet ou fragment avec code d'effacement.
 * Toutes les paires de clé-valeur de métadonnées utilisateur personnalisées associées à l'objet.
 * Pour les objets S3, toutes les paires clé-valeur de balise d'objet associées à l'objet
