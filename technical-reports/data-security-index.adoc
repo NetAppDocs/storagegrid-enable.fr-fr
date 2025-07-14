@@ -1,0 +1,103 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/data-security-index.html 
+keywords: security features, storagegrid 
+summary: Découvrez les fonctions de sécurité intégrées à la solution de stockage objet StorageGRID. 
+---
+= Sécurisation des données et des métadonnées StorageGRID dans un magasin d'objets
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez les fonctions de sécurité intégrées à la solution de stockage objet StorageGRID.
+
+Il s'agit d'une présentation des nombreuses fonctionnalités de sécurité de NetApp® StorageGRID®, couvrant l'accès aux données, les objets et les métadonnées, l'accès administratif et la sécurité de la plate-forme. Il a été mis à jour pour inclure les nouvelles fonctionnalités de StorageGRID 11.9.
+
+La sécurité fait partie intégrante de la solution de stockage objet NetApp StorageGRID. La sécurité est particulièrement importante, car de nombreux types de données riches bien adaptées au stockage objet sont également sensibles, soumises aux réglementations et à la conformité. À mesure que les fonctionnalités StorageGRID continuent d'évoluer, le logiciel met à disposition de nombreuses fonctionnalités de sécurité précieuses pour protéger la stratégie de sécurité de l'entreprise et aider l'entreprise à respecter les bonnes pratiques du secteur.
+
+Ce document présente les nombreuses fonctionnalités de sécurité d'StorageGRID 11.9, réparties en cinq catégories :
+
+* Sécurité de l'accès aux données
+* Fonctionnalités de sécurité des objets et des métadonnées
+* Fonctions de sécurité de l'administration
+* Fonctions de sécurité de la plate-forme
+* Intégration au cloud
+
+
+Ce document est destiné à être une fiche technique de sécurité. Il ne détaille pas comment configurer le système pour prendre en charge les fonctions de sécurité énumérées dans qui ne sont pas configurées par défaut. Le https://docs.netapp.com/us-en/storagegrid-118/harden/index.html["Guide de renforcement de la StorageGRID"^] est disponible sur la page officielle https://docs.netapp.com/us-en/storagegrid-118/["Documentation StorageGRID"^] .
+
+Outre les fonctionnalités décrites dans ce rapport, StorageGRID suit le https://www.netapp.com/us/legal/vulnerability-response.aspx["Politique de notification et de réponse aux vulnérabilités de sécurité des produits NetApp"^]. Les vulnérabilités signalées sont vérifiées et une réponse est apportée conformément au processus de réponse aux incidents de sécurité du produit.
+
+NetApp StorageGRID fournit des fonctionnalités de sécurité avancées pour les cas d'utilisation très exigeants du stockage objet.
+
+
+
+== Où trouver des informations complémentaires
+
+Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
+
+* NetApp StorageGRID : évaluation de la conformité SEC 17a-4(f), FINRA 4511(c) et CFTC 1.31(c)-(d) https://www.netapp.com/media/9041-ar-cohasset-netapp-storagegrid-sec-assessment.pdf[]
+* Page de documentation StorageGRID 11.9 https://docs.netapp.com/us-en/storagegrid-119/[]
+* Documentation des produits NetApp https://www.netapp.com/support-and-training/documentation/[]
+
+
+
+
+== Termes et acronymes
+
+Cette section fournit des définitions de la terminologie utilisée dans le document.
+
+[cols="40,60"]
+|===
+| Terme ou acronyme | Définition 
+
+
+| S3 | Simple Storage Service. 
+
+
+| Client | Application pouvant interagir avec StorageGRID via le protocole S3 d'accès aux données ou le protocole HTTP de gestion. 
+
+
+| Administrateur des locataires | Administrateur du compte locataire StorageGRID 
+
+
+| Utilisateur locataire | Utilisateur d'un compte de locataire StorageGRID 
+
+
+| TLS | Sécurité de la couche de transport 
+
+
+| ILM | Gestion du cycle de vie des informations 
+
+
+| RÉSEAU LOCAL | Réseau local 
+
+
+| Administrateur du grid | Administrateur du système StorageGRID 
+
+
+| Grille | Le système StorageGRID 
+
+
+| Godet | Un conteneur pour les objets stockés dans S3 
+
+
+| LDAP | Protocole d'accès à l'annuaire simplifié 
+
+
+| SEC | Securities and Exchange Commission; réglemente les membres de change, les courtiers ou les courtiers 
+
+
+| FINRA | Autorité de réglementation du secteur financier ; diffère des exigences de format et de support de la règle SEC 17a-4(f) 
+
+
+| CFTC | Commissions sur les opérations à terme sur les matières premières; réglemente les opérations à terme sur les matières premières 
+
+
+| NIST | Institut national des normes et de la technologie 
+|===

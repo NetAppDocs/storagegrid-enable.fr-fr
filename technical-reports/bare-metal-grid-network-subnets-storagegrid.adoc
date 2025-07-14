@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal-grid-network-subnets-storagegrid.html 
+keywords: grid network, subnets ,storagegrid 
+summary: Découvrez comment configurer les sous-réseaux réseau de la grille pour StorageGRID. 
+---
+= Spécifiez les sous-réseaux de réseau de grille pour StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment configurer les sous-réseaux réseau de la grille pour StorageGRID.
+
+Vous devez spécifier les sous-réseaux utilisés sur le réseau de la grille.
+
+Les entrées de sous-réseau incluent les sous-réseaux du réseau de grille pour chaque site de votre système StorageGRID, en plus des sous-réseaux qui doivent être accessibles via le réseau de grille (par exemple, les sous-réseaux hébergeant vos serveurs NTP).
+
+Si vous avez plusieurs sous-réseaux de grille, la passerelle de réseau de grille est requise. Tous les sous-réseaux de la grille spécifiés doivent être accessibles via cette passerelle.
+
+Pour spécifier des sous-réseaux de réseau de grille, procédez comme suit :
+
+.Étapes
+. Dans la zone de texte sous-réseau 1, spécifiez l'adresse réseau CIDR d'au moins un réseau de grille.
+. Cliquez sur le signe plus à côté de la dernière entrée pour ajouter une entrée réseau supplémentaire. Si vous avez déjà déployé au moins un nœud, cliquez sur détecter les sous-réseaux de réseaux de grille pour remplir automatiquement la liste de sous-réseaux de réseau de grille avec les sous-réseaux signalés par les nœuds de grille qui ont été enregistrés avec Grid Manager.
++
+image:bare-metal/bare-metal-subnets-grid-network.png["réseau-grille-sous-réseaux-bare-metal"]
+
+. Cliquez sur Suivant.
+

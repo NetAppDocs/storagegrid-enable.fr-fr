@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/ransomware-protection-replicate-bucket-versioning-storagegrid.html 
+keywords: bucket versioning, cloudmirror, storagegrid 
+summary: 'Découvrez comment répliquer des objets vers un compartiment secondaire à l"aide de StorageGRID CloudMirror.' 
+---
+= Protection contre les ransomwares à l'aide d'un compartiment répliqué avec gestion des versions
+:allow-uri-read: 
+
+
+[role="lead"]
+Découvrez comment répliquer des objets vers un compartiment secondaire à l'aide de StorageGRID CloudMirror.
+
+Les applications et les charges de travail ne seront pas toutes compatibles avec le verrouillage en mode objet. Une autre option consiste à répliquer les objets vers un compartiment secondaire dans la même grille (de préférence un locataire différent avec accès limité) ou tout autre terminal S3 avec le service de plateforme StorageGRID, CloudMirror.
+
+StorageGRID CloudMirror est un composant de StorageGRID qui peut être configuré pour répliquer les objets d'un compartiment vers une destination définie lors de leur ingestion dans le compartiment source et ne réplique pas les suppressions. Comme CloudMirror est un composant intégré de StorageGRID, il ne peut pas être désactivé ou manipulé par une attaque basée sur l'API S3. Vous pouvez configurer ce compartiment répliqué avec la gestion des versions activée. Dans ce scénario, vous avez besoin d'un nettoyage automatisé des anciennes versions du compartiment répliqué qui peuvent être jetées en toute sécurité. Pour cela, vous pouvez utiliser le moteur de règles ILM de StorageGRID. Créez des règles pour gérer le placement des objets en fonction d'une période non actuelle pendant plusieurs jours, suffisamment pour avoir identifié et récupéré une attaque.
+
+L'un des inconvénients de cette approche est qu'elle consomme plus de stockage en conservant une seconde copie complète du compartiment et plusieurs versions des objets pendant un certain temps. En outre, les objets qui ont été supprimés intentionnellement du compartiment principal doivent être supprimés manuellement du compartiment répliqué. Il existe d'autres options de réplication en dehors du produit, telles que NetApp CloudSync, qui peuvent répliquer les suppressions pour une solution similaire. Un autre inconvénient est que la gestion des versions du compartiment secondaire est activée et que le verrouillage d'objet n'est pas activé, c'est qu'il existe un certain nombre de comptes privilégiés qui peuvent être utilisés pour causer des dommages à l'emplacement secondaire. L'avantage est qu'il doit s'agir d'un compte unique pour ce terminal ou ce compartiment locataire, et le compromis n'inclut probablement pas l'accès aux comptes sur l'emplacement principal, et inversement.
+
+Une fois les compartiments source et destination créés et la destination configurée avec la gestion des versions, vous pouvez configurer et activer la réplication comme suit :
+
+.Étapes
+. Pour configurer CloudMirror, créez un terminal de services de plateforme pour la destination S3.
++
+image:ransomware/ransomware-protection-create-endpoint.png["protection-ransomware-créer-terminal"]
+
+. Sur le compartiment source, configurez la réplication pour utiliser le terminal configuré.
++
+[listing]
+----
+<ReplicationConfiguration>
+    <Role></Role>
+    <Rule>
+        <Status>Enabled</Status>
+        <Prefix></Prefix>
+        <Destination>
+            <Bucket>arn:aws:s3:::mybucket</Bucket>
+            <StorageClass>STANDARD</StorageClass>
+        </Destination>
+    </Rule>
+</ReplicationConfiguration>
+----
+. Créez des règles ILM pour gérer le placement du stockage et la gestion de la durée du stockage des versions. Dans cet exemple, les versions non actuelles des objets à stocker sont configurées.
++
+image:ransomware/ransomware-protection-create-ilm-rule.png["règle-protection-ransomware-create-ilm"]
+
++
+image:ransomware/ransomware-protection-create-ilm-rule-step-2.png["protection-ransomware-create-ilm-rule-step-2"]
+
++
+Il y a deux copies sur le site 1 pendant 30 jours. Vous configurez également les règles de la version actuelle des objets en fonction de l'utilisation de l'heure d'ingestion comme heure de référence dans la règle ILM pour correspondre à la durée de stockage du compartiment source. Le placement de stockage des versions d'objets peut être codé par effacement ou répliqué.
+
+

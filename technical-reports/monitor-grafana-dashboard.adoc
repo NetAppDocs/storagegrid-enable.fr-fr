@@ -1,0 +1,32 @@
+---
+permalink: technical-reports/monitor-grafana-dashboard.html 
+sidebar: sidebar 
+keywords: grafana dashboard, storagegrid 
+summary: 'Découvrez comment utiliser Grafana pour la visualisation des metrics dans NetApp StorageGRID, y compris l"accès à des tableaux de bord prédéfinis pour la surveillance et la résolution de problèmes.' 
+---
+= Affichez les metrics à l'aide du tableau de bord Grafana dans StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:experimental: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment utiliser l'interface Grafana pour visualiser et surveiller vos données StorageGRID.
+
+Grafana est un logiciel open source pour la visualisation des mesures. Par défaut, nous disposons de tableaux de bord préconstruits qui fournissent des informations utiles et puissantes sur votre système StorageGRID.
+
+Ces tableaux de bord préconstruits sont non seulement utiles pour la surveillance, mais aussi pour le dépannage d'un problème. Certains sont destinés à être utilisés par le support technique. Par exemple, pour afficher les mesures d'un nœud de stockage, procédez comme suit.
+
+.Étapes
+. Dans l'interface GMI, menu:support[Metrics].
+. Dans la section Grafana, sélectionnez le tableau de bord Node.
++
+image:monitor/monitor-node-dashboard.png["tableau de bord-moniteur-nœud"]
+
+. Dans Grafana, définissez les hôtes sur le nœud sur lequel vous souhaitez afficher les mesures. Dans ce cas, un nœud de stockage est sélectionné. Plus d'informations sont fournies que les captures d'écran suivantes.
++
+image:monitor/monitor-grafana-metrics.png["surveillez les grafana-metrics"]
+
+

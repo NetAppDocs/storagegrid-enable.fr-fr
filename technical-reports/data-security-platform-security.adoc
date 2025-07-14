@@ -1,0 +1,82 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/data-security-platform-security.html 
+keywords: platform security, storagegrid 
+summary: Découvrez les fonctionnalités de sécurité de la plate-forme dans StorageGRID. 
+---
+= Fonctions de sécurité de la plate-forme
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez les fonctionnalités de sécurité de la plate-forme dans StorageGRID.
+
+[cols="20,30a,30,20"]
+|===
+| Fonction | Fonction | Impact | Conformité réglementaire 
+
+
+| Infrastructure de clé publique (PKI) interne, certificats de nœud et TLS  a| 
+StorageGRID utilise une PKI interne et des certificats de nœud pour authentifier et crypter les communications internœuds. La communication internœud est sécurisée par TLS.
+| Permet de sécuriser le trafic système sur le LAN ou le WAN, en particulier dans un déploiement multisite. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Pare-feu de nœud  a| 
+StorageGRID configure automatiquement les tables IP et les règles de pare-feu pour contrôler le trafic réseau entrant et sortant, ainsi que pour fermer les ports inutilisés.
+| Protection du système StorageGRID, des données et des métadonnées contre le trafic réseau non sollicité. | -- 
+
+
+| Durcicement du système d'exploitation  a| 
+Le système d'exploitation de base des appliances physiques et des nœuds virtuels StorageGRID est renforcé ; les logiciels non liés sont supprimés.
+| Permet de minimiser les surfaces d'attaque potentielles. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Mises à jour périodiques de la plate-forme et des logiciels  a| 
+StorageGRID fournit régulièrement des versions logicielles, notamment des systèmes d'exploitation, des binaires d'applications et des mises à jour logicielles.
+| Ils permettent de maintenir le système StorageGRID à jour avec les logiciels et les binaires d'applications les plus récents. | -- 
+
+
+| Connexion racine désactivée via SSH (Secure Shell)  a| 
+La connexion root via SSH est désactivée sur tous les nœuds StorageGRID. L'accès SSH utilise l'authentification par certificat.
+| Aide les clients à se protéger contre les éventuels problèmes de piratage à distance des mots de passe de la connexion racine. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Synchronisation temporelle automatisée  a| 
+StorageGRID synchronise automatiquement les horloges système de chaque nœud avec plusieurs serveurs NTP (External Time Network Time Protocol). Au moins quatre serveurs NTP de Stratum 3 ou version ultérieure sont requis.
+| Garantit la même référence de temps sur tous les nœuds. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Réseaux séparés pour le trafic client, administrateur et grid interne  a| 
+Les nœuds logiciels et les appliances matérielles StorageGRID prennent en charge plusieurs interfaces réseau physiques et virtuelles, de sorte que les clients peuvent séparer le trafic client, d'administration et le trafic réseau interne sur différents réseaux.
+| Permettez aux administrateurs du grid de séparer le trafic réseau interne et externe et de fournir le trafic sur les réseaux avec différents SLA. | -- 
+
+
+| Plusieurs interfaces VLAN (Virtual LAN)  a| 
+StorageGRID prend en charge la configuration des interfaces VLAN sur vos réseaux client et grid StorageGRID.
+| Permettez aux administrateurs de Grid de partitionner et d'isoler le trafic des applications pour plus de sécurité, de flexibilité et de performances. |  
+
+
+| Réseau client non fiable  a| 
+L'interface réseau client non fiable accepte les connexions entrantes uniquement sur les ports qui ont été explicitement configurés comme des noeuds finaux d'équilibrage de charge.
+| Garantit que les interfaces exposées à des réseaux non fiables sont sécurisées. | -- 
+
+
+| Pare-feu configurable  a| 
+Gérez les ports ouverts et fermés pour les réseaux Admin, Grid et client.
+| Autoriser les administrateurs du grid à contrôler l'accès aux ports et à gérer l'accès aux périphériques approuvés aux ports. |  
+
+
+| Comportement SSH amélioré  a| 
+De nouveaux certificats d'hôte SSH et clés d'hôte sont générés lors de la mise à niveau d'un nœud vers StorageGRID 11.5.
+| Améliore la protection contre les attaques de l'homme du milieu. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Chiffrement de nœud  a| 
+Dans le cadre de la nouvelle fonction de chiffrement du serveur hôte KMS, un nouveau paramètre de chiffrement de nœud est ajouté au programme d'installation de l'appliance StorageGRID.
+| Ce paramètre doit être activé pendant la phase de configuration matérielle de l'installation de l'appliance. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+|===

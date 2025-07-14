@@ -1,0 +1,21 @@
+---
+permalink: technical-reports/monitor-audit-log-monitoring.html 
+sidebar: sidebar 
+keywords: audit logs, storagegrid 
+summary: 'Découvrez comment utiliser le journal d"audit StorageGRID pour obtenir des informations détaillées sur l"activité des locataires et du grid et comment exploiter des outils tels que Splunk pour l"analyse des journaux.' 
+---
+= Utilisez les journaux d'audit pour surveiller StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment utiliser le journal d'audit StorageGRID pour obtenir des informations détaillées sur les activités des locataires et du grid et comment exploiter des outils tels que Splunk pour l'analyse des journaux.
+
+Le journal des audits StorageGRID vous permet de collecter des informations détaillées sur les activités du locataire et du grid. Le journal des audits peut être exposé à des fins d'analytique via le protocole NFS. Pour obtenir des instructions détaillées sur l’exportation du journal d’audit, reportez-vous au Guide de l’administrateur.
+
+Une fois l'audit exporté, vous pouvez utiliser des outils d'analyse des journaux tels que Splunk ou Logstash + Elasticsearch pour comprendre l'activité des locataires ou créer des rapports détaillés de facturation et de facturation interne.
+
+Des informations détaillées sur les messages d'audit sont disponibles dans la documentation StorageGRID. Voir https://docs.netapp.com/us-en/storagegrid-118/audit/audit-messages-main.html["Messages d'audit"^].

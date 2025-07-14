@@ -1,0 +1,44 @@
+---
+permalink: technical-reports/monitor-traffic-classification-policies.html 
+sidebar: sidebar 
+keywords: traffic classification policies, storagegrid 
+summary: Découvrez comment configurer et surveiller les stratégies de classification du trafic dans StorageGRID 11.4 pour une gestion efficace du trafic et une optimisation de la bande passante réseau. 
+---
+= Utilisez les stratégies de classification du trafic dans StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:experimental: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment configurer et configurer des règles de classification du trafic pour gérer et optimiser le trafic réseau dans StorageGRID.
+
+Les règles de classification du trafic fournissent une méthode de surveillance et/ou de limitation du trafic basée sur un locataire, un compartiments, des sous-réseaux IP ou des terminaux d'équilibrage de charge spécifiques. La connectivité réseau et la bande passante sont des mesures particulièrement importantes pour StorageGRID.
+
+Pour configurer une stratégie de classification de trafic, procédez comme suit :
+
+.Étapes
+. Dans l'interface GMI, accédez au menu:Configuration[Paramètres système > Classification du trafic].
+. Cliquez sur Créer +
+. Entrez un nom et une description pour votre police.
+. Créez une règle correspondante.
++
+image:monitor/monitor-matching-rule.png["règle-correspondance-moniteur"]
+
+. Définissez une limite (facultatif).
++
+image:monitor/monitor-limit.png["limite-moniteur"]
+
+. Enregistrez votre police
++
+image:monitor/monitor-traffic-policy.png["surveiller la stratégie de trafic"]
+
++
+Pour afficher les mesures associées à votre stratégie de classification de trafic, sélectionnez votre stratégie et cliquez sur métriques. Un tableau de bord Grafana est généré et affiche des informations telles que le trafic des demandes Load Balancer et la durée moyenne des demandes.
+
++
+image:monitor/monitor-dashboard-showing-metrics.png["tableau de bord-moniteur-affichage-mesures"]
+
+

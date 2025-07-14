@@ -1,0 +1,25 @@
+---
+permalink: technical-reports/monitor-alerts-monitoring.html 
+sidebar: sidebar 
+keywords: alerts, storagegrid 
+summary: 'Découvrez comment utiliser le système d"alertes de StorageGRID pour surveiller les problèmes, gérer les alertes personnalisées et étendre les notifications d"alertes via SNMP ou par e-mail.' 
+---
+= Utilisez les alertes pour surveiller StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment utiliser le système d'alertes de StorageGRID pour surveiller les problèmes, gérer les alertes personnalisées et étendre les notifications d'alertes via SNMP ou par e-mail.
+
+Les alertes fournissent des informations critiques qui vous permettent de surveiller les divers événements et conditions de votre système StorageGRID.
+
+Le système d'alertes est conçu pour être le principal outil de surveillance des problèmes susceptibles de survenir dans votre système StorageGRID. Le système d'alertes se concentre sur les problèmes exploitables du système et propose une interface simple d'utilisation.
+
+Nous fournissons un ensemble de règles d'alerte par défaut qui visent à faciliter la surveillance et le dépannage de votre système. Vous pouvez davantage gérer les alertes en créant des alertes personnalisées, en modifiant ou en désactivant les alertes par défaut et en désactivant les notifications d'alerte.
+
+Les alertes sont également extensibles via SNMP ou la notification par e-mail.
+
+Pour plus d'informations sur les alertes, reportez-vous à la https://docs.netapp.com/us-en/storagegrid-118/monitor/managing-alerts-and-alarms.html["documentation produit"^] page disponible en ligne et au format PDF.

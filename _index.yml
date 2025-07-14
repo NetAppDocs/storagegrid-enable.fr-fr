@@ -57,7 +57,7 @@ indexpage:
     - title: Comment déplacer un site et modifier le réseau
       url: "/product-feature-guides/site-relocation-and-network-change.html"
     - title: Migration du stockage basé sur les objets d'ONTAP S3 vers StorageGRID
-      url: "/product-feature-guides/ontap-migrate/index.html"
+      url: "/product-feature-guides/ontap-migrate-index.html"
   - title: Guides d'utilisation et d'outils
     links:
     - title: Utilisez le connecteur Cloudera Hadoop S3A
@@ -88,17 +88,19 @@ indexpage:
     - title: 'Tr-4994 : meilleures pratiques de réglage Hadoop S3A'
       url: "/technical-reports/s3a-tuning.html"
     - title: 'Tr-4871 : CommVault Complete Backup and Recovery and NetApp StorageGRID'
-      url: "/technical-reports/tr-4871-commvault.html"
+      url: "/technical-reports/commvault-index.html"
+    - title: 'Tr-4626 : équilibreurs de charge'
+      url: "/technical-reports/load-balancer-index.html"
     - title: 'Tr-4645 : fonctions de sécurité'
-      url: "/technical-reports/data-security/index.html"
+      url: "/technical-reports/data-security-index.html"
     - title: 'Tr-4921 : défense contre les ransomware'
-      url: "/technical-reports/ransomware-protection/index.html"
+      url: "/technical-reports/ransomware-protection-index.html"
     - title: 'Tr-4765 : StorageGRID du moniteur'
-      url: "/technical-reports/monitor/index.html"
+      url: "/technical-reports/monitor-index.html"
     - title: 'Tr-4882 : installation d''une grille métallique StorageGRID'
-      url: "/technical-reports/bare-metal/index.html"
+      url: "/technical-reports/bare-metal-index.html"
     - title: 'Tr-4907 : configurer StorageGRID avec veritas Enterprise Vault'
-      url: "/technical-reports/veritas/index.html"
+      url: "/technical-reports/veritas-index.html"
   - title: Procédures et exemples d'API
     links:
     - title: Tester et démontrer le chiffrement S3

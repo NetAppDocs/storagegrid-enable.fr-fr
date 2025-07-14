@@ -1,0 +1,64 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal-start-storagegrid-host-service.html 
+keywords: host service, storagegrid 
+summary: Découvrez comment démarrer le service hôte StorageGRID. 
+---
+= Démarrez le service d'hôte StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment démarrer le service hôte StorageGRID.
+
+Pour démarrer les nœuds StorageGRID et vous assurer qu'ils redémarrent après un redémarrage de l'hôte, vous devez activer et démarrer le service hôte StorageGRID.
+
+Pour démarrer le service hôte StorageGRID, procédez comme suit.
+
+.Étapes
+. Exécutez les commandes suivantes sur chaque hôte :
++
+[listing]
+----
+sudo systemctl enable storagegrid
+sudo systemctl start storagegrid
+----
++
+
+NOTE: Le processus de démarrage peut prendre un certain temps lors de l'exécution initiale.
+
+. Exécutez la commande suivante pour vérifier que le déploiement se déroule :
++
+[listing]
+----
+sudo storagegrid node status node-name
+----
+. Pour tout nœud qui renvoie un état de `Not-Running` ou `Stopped`, exécutez la commande suivante :
++
+[listing]
+----
+sudo storagegrid node start node-name
+----
++
+Par exemple, dans le résultat suivant, vous démarriez le `dc1-adm1` nœud :
+
++
+[listing]
+----
+[user@host1]# sudo storagegrid node status
+Name Config-State Run-State
+dc1-adm1 Configured Not-Running
+dc1-sn1 Configured Running
+----
+. Si vous avez précédemment activé et démarré le service hôte StorageGRID (ou si vous n'êtes pas sûr que le service a été activé et démarré), exécutez également la commande suivante :
++
+[listing]
+----
+sudo systemctl reload-or-restart storagegrid
+----
+

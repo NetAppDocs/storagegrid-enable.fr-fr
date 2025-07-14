@@ -1,0 +1,57 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal-review-config-complete-storagegrid-install.html 
+keywords: summary page, storagegrid install 
+summary: 'Découvrez comment valider les informations de configuration du grid et terminer le processus d"installation de StorageGRID.' 
+---
+= Vérifiez la configuration et terminez l'installation de StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment valider les informations de configuration du grid et terminer le processus d'installation de StorageGRID.
+
+Pour vous assurer que l'installation se termine correctement, lisez attentivement les informations de configuration que vous avez saisies. Effectuez la procédure suivante.
+
+.Étapes
+. Afficher la page Résumé.
++
+image:bare-metal/bare-metal-summary-page.png["page-résumé-bare-metal"]
+
+. Vérifiez que toutes les informations de configuration de la grille sont correctes. Utilisez les liens Modifier de la page Résumé pour revenir en arrière et corriger les erreurs.
+. Cliquez sur installation.
++
+
+NOTE: Si un nœud est configuré pour utiliser le réseau client, la passerelle par défaut de ce nœud passe du réseau grid au réseau client lorsque vous cliquez sur installer. En cas de perte de connectivité, assurez-vous que vous accédez au nœud d'administration principal via un sous-réseau accessible. Pour plus d'informations, reportez-vous à la section « installation et provisionnement réseau ».
+
+. Cliquez sur Télécharger le pack de récupération.
++
+Lorsque l'installation progresse jusqu'au point où la topologie de la grille est définie, vous êtes invité à télécharger le fichier du progiciel de récupération (`.zip`) et à confirmer que vous pouvez accéder au contenu de ce fichier. Vous devez télécharger le fichier du package de récupération pour pouvoir récupérer le système StorageGRID en cas de défaillance d'un ou plusieurs nœuds de grille.
+
++
+Vérifiez que vous pouvez extraire le contenu du `.zip` fichier, puis l'enregistrer dans deux emplacements sécurisés et séparés.
+
++
+
+CAUTION: Le fichier du progiciel de récupération doit être sécurisé car il contient des clés de cryptage et des mots de passe qui peuvent être utilisés pour obtenir des données du système StorageGRID.
+
+. Sélectionnez l'option J'ai téléchargé et vérifié le fichier de package de récupération, puis cliquez sur Suivant.
++
+image:bare-metal/bare-metal-download-recovery-package.png["package-restauration-téléchargement-bare-metal"]
+
++
+Si l'installation est toujours en cours, la page État de l'installation s'ouvre. Cette page indique la progression de l'installation pour chaque nœud de la grille.
+
++
+image:bare-metal/bare-metal-installation-status.png["état-installation-bare-metal"]
+
++
+Lorsque l'étape complète est atteinte pour tous les nœuds de grille, la page de connexion de Grid Manager s'ouvre.
+
+. Connectez-vous à Grid Manager en tant qu'utilisateur root avec le mot de passe que vous avez spécifié lors de l'installation.
+

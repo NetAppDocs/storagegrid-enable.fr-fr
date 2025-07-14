@@ -22,12 +22,12 @@ entries:
   pdf-filename: Migration du stockage basé sur les objets d'ONTAP S3 vers StorageGRID
   entries:
   - title: Migrez de ONTAP S3 vers StorageGRID
-    url: "/product-feature-guides/ontap-migrate/index.html"
+    url: "/product-feature-guides/ontap-migrate-index.html"
   - title: Préparation de ONTAP
-    url: "/product-feature-guides/ontap-migrate/preparing-ontap.html"
+    url: "/product-feature-guides/ontap-migrate-preparing-ontap.html"
   - title: Préparation de StorageGRID
-    url: "/product-feature-guides/ontap-migrate/preparing-sg.html"
+    url: "/product-feature-guides/ontap-migrate-preparing-sg.html"
   - title: Remplir et répliquer le godet
-    url: "/product-feature-guides/ontap-migrate/populate-replicate.html"
+    url: "/product-feature-guides/ontap-migrate-populate-replicate.html"
   - title: Migration des utilisateurs et des clés, puis mise en service
-    url: "/product-feature-guides/ontap-migrate/migrate-cutover.html"
+    url: "/product-feature-guides/ontap-migrate-cutover.html"

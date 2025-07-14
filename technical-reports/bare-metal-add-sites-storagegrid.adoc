@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal-add-sites-storagegrid.html 
+keywords: add sites, storagegrid 
+summary: 'Découvrez comment ajouter des sites à StorageGRID afin d"améliorer la fiabilité et la capacité de stockage.' 
+---
+= Ajouter des sites à StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment ajouter des sites à StorageGRID afin d'améliorer la fiabilité et la capacité de stockage.
+
+Lorsque vous installez StorageGRID, vous devez créer au moins un site. Vous pouvez créer des sites supplémentaires pour augmenter la fiabilité et la capacité de stockage de votre système StorageGRID.
+
+Pour ajouter des sites, procédez comme suit :
+
+.Étapes
+. Sur la page sites, entrez le nom du site.
+. Pour ajouter des sites supplémentaires, cliquez sur le signe plus en regard de la dernière entrée de site et entrez le nom dans la zone de texte Nouveau nom de site. Ajoutez autant de sites supplémentaires que nécessaire pour votre topologie de grille. Vous pouvez ajouter jusqu'à 16 sites.
++
+image:bare-metal/bare-metal-add-sites.png["ajout-de-sites-bare-metal"]
+
+. Cliquez sur Suivant.
+

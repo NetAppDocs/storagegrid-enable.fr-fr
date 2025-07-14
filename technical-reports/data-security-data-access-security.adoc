@@ -1,0 +1,143 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/data-security-data-access-security.html 
+keywords: data access security, storagegrid 
+summary: 'Découvrez les fonctionnalités de sécurité d"accès aux données de StorageGRID.' 
+---
+= Sécurité de l'accès aux données
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez les fonctionnalités de sécurité d'accès aux données de StorageGRID.
+
+[cols="20,30a,30,20"]
+|===
+| Fonction | Fonction | Impact | Conformité réglementaire 
+
+
+| TLS (transport Layer Security) configurable  a| 
+TLS établit un protocole de liaison pour la communication entre un client et un nœud de passerelle StorageGRID, un nœud de stockage ou un point d'extrémité d'équilibreur de charge.
+
+StorageGRID prend en charge les suites de chiffrement suivantes pour TLS :
+
+* TLS_AES_256_GCM_SHA384
+* TLS_AES_128_GCM_SHA256
+* ECDHE-ECDSA-AES256-GCM-SHA384
+* ECDHE-RSA-AES256-GCM-SHA384
+* ECDHE-ECDSA-AES128-GCM-SHA256
+* ECDHE-RSA-AES128-GCM-SHA256
+* TLS_AES_256_GCM_SHA384
+* DHE-RSA-AES128-GCM-SHA256
+* DHE-RSA-AES256-GCM-SHA384
+* AES256-GCM-SHA384
+* AES128-GCM-SHA256
+* TLS_CHACHA20_POLY1305_SHA256
+* ECDHE-ECDSA-CHACHA20-POLY1305
+* ECDHE-RSA-CHACHA20-POLY1305
+
+
+TLS v1.2 et 1.3 pris en charge.
+
+SSLv3, TLS v1.1 et versions antérieures ne sont plus pris en charge.
+| Permet à un client et à StorageGRID de s'identifier et de s'authentifier mutuellement et de communiquer avec confidentialité et intégrité des données. Garantit l'utilisation d'une version TLS récente. Les chiffrements sont désormais configurables sous les paramètres de configuration/sécurité | -- 
+
+
+| Certificat de serveur configurable (noeud final Load Balancer)  a| 
+Les administrateurs du grid peuvent configurer les noeuds finaux Load Balancer pour générer ou utiliser un certificat de serveur.
+| Permet l'utilisation de certificats numériques signés par leur autorité de certification approuvée standard pour authentifier les opérations d'API d'objet entre la grille et le client par point final Load Balancer. | -- 
+
+
+| Certificat de serveur configurable (terminal API)  a| 
+Les administrateurs du grid peuvent configurer de manière centralisée tous les terminaux de l'API StorageGRID pour qu'ils utilisent un certificat de serveur signé par l'autorité de certification de confiance de leur entreprise.
+| Permet l'utilisation de certificats numériques signés par leur autorité de certification standard de confiance pour authentifier les opérations de l'API objet entre un client et la grille. | -- 
+
+
+| Colocation  a| 
+StorageGRID prend en charge plusieurs locataires par grille ; chaque locataire dispose de son propre espace de noms. Un locataire utilise le protocole S3. Par défaut, l'accès aux compartiments/conteneurs et aux objets est limité aux utilisateurs au sein du compte. Les locataires peuvent avoir un utilisateur (par exemple, un déploiement d'entreprise, dans lequel chaque utilisateur a son propre compte) ou plusieurs utilisateurs (par exemple, un déploiement de fournisseur de services, dans lequel chaque compte est une entreprise et un client du fournisseur de services). Les utilisateurs peuvent être locaux ou fédérés. Les utilisateurs fédérés sont définis par Active Directory ou LDAP (Lightweight Directory Access Protocol). StorageGRID fournit un tableau de bord par locataire, dans lequel les utilisateurs se connectent à l'aide de leurs informations d'identification de compte locales ou fédérées. Les utilisateurs peuvent accéder à des rapports visualisés sur l'utilisation des locataires par rapport au quota attribué par l'administrateur de la grille, y compris des informations d'utilisation dans les données et objets stockés par compartiments. Les utilisateurs disposant d'autorisations administratives peuvent effectuer des tâches d'administration système au niveau du locataire, telles que la gestion des utilisateurs et des groupes et des clés d'accès.
+| Permet aux administrateurs StorageGRID d'héberger les données de plusieurs locataires tout en isolant l'accès des locataires et d'établir l'identité des utilisateurs en fédérant les utilisateurs avec un fournisseur d'identité externe, tel qu'Active Directory ou LDAP. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Non-répudiation des identifiants d'accès  a| 
+Chaque opération S3 est identifiée et consignée à l'aide d'un compte de locataire, d'un utilisateur et d'une clé d'accès uniques.
+| Permet aux administrateurs du grid d'établir les actions d'API exécutées par des individus. | -- 
+
+
+| Accès anonyme désactivé  a| 
+Par défaut, l'accès anonyme est désactivé pour les comptes S3. Un demandeur doit disposer d'un droit d'accès valide pour qu'un utilisateur valide du compte de tenant puisse accéder aux compartiments, conteneurs ou objets du compte. L'accès anonyme aux compartiments ou objets S3 peut être activé avec une règle IAM explicite.
+| Permet aux administrateurs de Grid de désactiver ou de contrôler l'accès anonyme aux compartiments/conteneurs et objets. | -- 
+
+
+| Conformité WORM  a| 
+Conçu pour répondre aux exigences de la règle SEC 17a-4(f) et validé par Cohasset. Les clients peuvent assurer la conformité au niveau du compartiment. La conservation peut être étendue, mais jamais réduite. Les règles de gestion du cycle de vie des informations (ILM) appliquent des niveaux minimaux de protection des données.
+| Permet aux locataires qui ont des exigences réglementaires en matière de conservation des données d'activer la protection WORM sur les objets stockés et les métadonnées d'objet. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| VER  a| 
+Les administrateurs du grid peuvent activer le mode WORM au niveau de la grille en activant l'option Désactiver la modification du client, qui empêche les clients d'écraser ou de supprimer des objets ou des métadonnées d'objet dans tous les comptes de locataires.
+
+Les administrateurs de locataires S3 peuvent également activer le mode WORM par locataire, compartiment ou préfixe d'objet en spécifiant une règle IAM qui inclut l'autorisation S3 : PutOverwriteObject personnalisée pour le remplacement d'objets et de métadonnées.
+| Permet aux administrateurs du grid et aux locataires de contrôler la protection WORM sur les objets stockés et les métadonnées d'objet. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Gestion des clés de cryptage du serveur hôte KM  a| 
+Les administrateurs du grid peuvent configurer un ou plusieurs serveurs de gestion externe des clés (KMS) dans Grid Manager afin que les clés de chiffrement soient attribuées aux services StorageGRID et aux appliances de stockage. Chaque serveur hôte KMS ou cluster de serveurs hôtes KMS utilise le protocole KMIP (Key Management Interoperability Protocol) pour fournir une clé de chiffrement aux nœuds de l'appliance sur le site StorageGRID associé.
+| Vous pouvez chiffrer les données au repos. Une fois les volumes de l'appliance chiffrés, vous ne pouvez pas accéder aux données de l'appliance sauf si le nœud peut communiquer avec le serveur hôte KMS. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Basculement automatique  a| 
+StorageGRID fournit une redondance intégrée et un basculement automatisé. L'accès aux comptes de locataires, aux compartiments et aux objets peut continuer même en cas de pannes multiples, depuis des disques ou des nœuds jusqu'à des sites entiers. StorageGRID est conscient des ressources et redirige automatiquement les requêtes vers les nœuds disponibles et les emplacements de données. Les sites StorageGRID peuvent même fonctionner en mode iskattered. En cas de panne de réseau étendu, un site est déconnecté du reste du système, les lectures et écritures peuvent continuer avec les ressources locales, et la réplication reprend automatiquement lorsque le réseau WAN est restauré.
+| Permet aux administrateurs du grid de répondre aux exigences de disponibilité, aux contrats de niveau de service et aux autres obligations contractuelles et de mettre en œuvre des plans de continuité de l'activité. | -- 
+
+
+ a| 
+*Fonctions de sécurité d'accès aux données spécifiques à S3*
+
+
+
+| Signature AWS version 2 et version 4  a| 
+La signature des requêtes d'API permet d'authentifier les opérations de l'API S3. Amazon prend en charge deux versions de Signature version 2 et version 4. Le processus de signature vérifie l'identité du demandeur, protège les données en transit et les protège contre les attaques de relecture potentielles.
+| S'aligne sur la recommandation AWS pour Signature version 4 et permet une rétrocompatibilité avec les anciennes applications avec Signature version 2. | -- 
+
+
+| Verrouillage d'objet S3  a| 
+La fonctionnalité de verrouillage objet S3 d'StorageGRID est une solution de protection objet équivalente au verrouillage objet S3 dans Amazon S3.
+| Permet aux locataires de créer des compartiments avec S3 Object Lock activé pour se conformer aux réglementations exigeant la conservation de certains objets pendant une durée fixe ou indéfiniment. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Stockage sécurisé des identifiants S3  a| 
+Les clés d'accès S3 sont stockées dans un format protégé par une fonction de hachage des mots de passe (SHA-2).
+| Permet le stockage sécurisé des clés d'accès par une combinaison de longueur de clé (un nombre généré de manière aléatoire de 10^31^) et d'un algorithme de hachage de mot de passe. | -- 
+
+
+| Clés d'accès S3 limitées dans le temps  a| 
+Lorsque vous créez une clé d'accès S3 pour un utilisateur, les clients peuvent définir une date et une heure d'expiration sur la clé d'accès.
+| Permet aux administrateurs du grid de provisionner des clés d'accès S3 temporaires. | -- 
+
+
+| Plusieurs clés d'accès par compte d'utilisateur  a| 
+StorageGRID permet de créer plusieurs clés d'accès et de les activer simultanément pour un compte utilisateur. Chaque action d'API étant consignée avec un compte utilisateur de locataire et une clé d'accès, la non-répudiation est préservée même si plusieurs clés sont actives.
+| Permet aux clients de faire pivoter les clés d'accès sans interruption et à chaque client d'avoir sa propre clé, décourageant ainsi le partage des clés entre les clients. | -- 
+
+
+| Règle d'accès IAM S3  a| 
+StorageGRID prend en charge les règles IAM S3, ce qui permet aux administrateurs du grid de spécifier le contrôle d'accès granulaire par locataire, compartiment ou préfixe d'objet. StorageGRID prend également en charge les conditions et les variables des règles IAM, ce qui permet des règles de contrôle d'accès plus dynamiques.
+| Permet aux administrateurs de Grid de spécifier le contrôle d'accès par groupes d'utilisateurs pour l'ensemble du tenant ; permet également aux utilisateurs locataires de spécifier le contrôle d'accès pour leurs propres compartiments et objets. | -- 
+
+
+| Chiffrement côté serveur avec clés gérées par StorageGRID (SSE)  a| 
+StorageGRID prend en charge SSE, ce qui permet une protection mutualisée des données au repos avec des clés de chiffrement gérées par StorageGRID.
+| Permet aux locataires de chiffrer les objets. Une clé de chiffrement est requise pour écrire et récupérer ces objets. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+
+
+| Chiffrement côté serveur avec clés de chiffrement fournies par le client (SSE-C)  a| 
+StorageGRID prend en charge SSE-C, ce qui permet une protection mutualisée des données au repos avec des clés de chiffrement gérées par le client.
+
+Bien que StorageGRID gère toutes les opérations de chiffrement et de déchiffrement d'objets, avec SSE-C, le client doit gérer les clés de cryptage lui-même.
+| Permet aux clients de chiffrer les objets avec des clés qu'ils contrôlent. Une clé de chiffrement est requise pour écrire et récupérer ces objets. | Règle SEC 17a-4(f) CTFC 1.31(c)-(d) (FINRA) règle 4511(c) 
+|===

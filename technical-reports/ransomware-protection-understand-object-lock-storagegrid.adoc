@@ -1,0 +1,117 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/ransomware-protection-understand-object-lock-storagegrid.html 
+keywords: object lock, storagegrid 
+summary: 'Découvrez comment le verrouillage d"objets dans StorageGRID fournit un modèle WORM pour empêcher la suppression ou le remplacement des données, et comment il répond aux exigences réglementaires.' 
+---
+= Protégez vos données contre les ransomwares à l'aide d'un verrouillage objet
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment le verrouillage d'objets dans StorageGRID fournit un modèle WORM pour empêcher la suppression ou le remplacement des données, et comment il répond aux exigences réglementaires.
+
+Le verrouillage des objets fournit un modèle WORM qui empêche la suppression ou l'écrasement d'objets. L'implémentation du verrouillage objet par StorageGRID https://www.netapp.com/media/9041-ar-cohasset-netapp-storagegrid-sec-assessment.pdf["Cohasset évalué"^] permet de respecter les exigences réglementaires et prend en charge la conservation à des fins juridiques, le mode de conformité et le mode de gouvernance pour la conservation des objets ainsi que les règles de conservation des compartiments par défaut. Vous devez activer le verrouillage d'objet dans le cadre de la création de compartiment et de la gestion des versions. Une version spécifique d'un objet est verrouillée, et si aucun ID de version n'est défini, la rétention est placée sur la version actuelle de l'objet. Si la conservation de la version actuelle est configurée et qu'une tentative de suppression, de modification ou d'écrasement de l'objet est effectuée, une nouvelle version est créée avec un marqueur de suppression ou la nouvelle révision de l'objet comme version actuelle, et la version verrouillée est conservée comme une version non actuelle. Pour les applications qui ne sont pas encore compatibles, vous pouvez toujours utiliser le verrouillage objet et une configuration de conservation par défaut placée sur le compartiment. Une fois la configuration définie, une conservation d'objet est appliquée à chaque nouvel objet placé dans le compartiment. Cela fonctionne tant que l'application est configurée pour ne pas supprimer ou écraser les objets avant que la durée de conservation ne soit écoulée.
+
+Voici quelques exemples d'utilisation de l'API de verrouillage d'objet :
+
+La mise en attente légale du verrouillage d'objet est un état activé/désactivé simple appliqué à un objet.
+
+[listing]
+----
+aws s3api put-object-legal-hold --bucket mybucket --key myfile.txt --legal-hold Status=ON --endpoint-url https://s3.company.com
+
+----
+La définition de l'état de mise en attente légale ne renvoie aucune valeur si elle a réussi, de sorte qu'elle peut être vérifiée à l'aide d'une opération GET.
+
+[listing]
+----
+aws s3api get-object-legal-hold --bucket mybucket --key myfile.txt --endpoint-url https://s3.company.com
+{
+    "LegalHold": {
+        "Status": "ON"
+    }
+}
+----
+Pour désactiver la mise en attente légale, appliquez le statut OFF.
+
+[listing]
+----
+aws s3api put-object-legal-hold --bucket mybucket --key myfile.txt --legal-hold Status=OFF --endpoint-url https://s3.company.com
+aws s3api get-object-legal-hold --bucket mybucket --key myfile.txt --endpoint-url https://s3.company.com
+{
+    "LegalHold": {
+        "Status": "OFF"
+    }
+}
+
+----
+La définition de la conservation d'objet s'effectue à l'aide d'un horodatage de conservation jusqu'à.
+
+[listing]
+----
+aws s3api put-object-retention --bucket mybucket --key myfile.txt --retention '{"Mode":"COMPLIANCE", "RetainUntilDate": "2022-06-10T16:00:00"}'  --endpoint-url https://s3.company.com
+----
+Encore une fois, il n'y a pas de valeur renvoyée en cas de réussite, vous pouvez donc vérifier l'état de conservation de la même manière avec un appel GET.
+
+[listing]
+----
+aws s3api get-object-retention --bucket mybucket --key myfile.txt  --endpoint-url https://s3.company.com
+{
+    "Retention": {
+        "Mode": "COMPLIANCE",
+        "RetainUntilDate": "2022-06-10T16:00:00+00:00"
+    }
+----
+Le fait de conserver une conservation par défaut dans un compartiment activé pour le verrouillage d'objet applique une période de conservation en jours et en années.
+
+[listing]
+----
+aws s3api put-object-lock-configuration --bucket mybucket --object-lock-configuration '{ "ObjectLockEnabled": "Enabled", "Rule": { "DefaultRetention": { "Mode": "COMPLIANCE", "Days": 1 }}}' --endpoint-url https://s3.company.com
+----
+Comme pour la plupart de ces opérations, aucune réponse n'est renvoyée en cas de succès. Par conséquent, nous pouvons effectuer une OPÉRATION GET pour que la configuration puisse être vérifiée.
+
+[listing]
+----
+aws s3api get-object-lock-configuration --bucket mybucket --endpoint-url https://s3.company.com
+{
+    "ObjectLockConfiguration": {
+        "ObjectLockEnabled": "Enabled",
+        "Rule": {
+            "DefaultRetention": {
+                "Mode": "COMPLIANCE",
+                "Days": 1
+            }
+        }
+    }
+}
+----
+Vous pouvez ensuite placer un objet dans le compartiment avec la configuration de conservation appliquée.
+
+[listing]
+----
+aws s3 cp myfile.txt s3://mybucket --endpoint-url https://s3.company.com
+----
+L'opération PUT renvoie une réponse.
+
+[listing]
+----
+upload: ./myfile.txt to s3://mybucket/myfile.txt
+----
+Sur l'objet de conservation, la durée de conservation définie dans le compartiment de l'exemple précédent est convertie en horodatage de conservation de l'objet.
+
+[listing]
+----
+aws s3api get-object-retention --bucket mybucket --key myfile.txt --endpoint-url https://s3.company.com
+{
+    "Retention": {
+        "Mode": "COMPLIANCE",
+        "RetainUntilDate": "2022-03-02T15:22:47.202000+00:00"
+    }
+}
+----

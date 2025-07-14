@@ -1,0 +1,36 @@
+---
+permalink: technical-reports/veritas-index.html 
+sidebar: sidebar 
+keywords: storagegrid, primary storage, configure, veritas, enterprise vault 
+summary: Découvrez comment veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident. 
+---
+= Introduction à la configuration de StorageGRID pour le basculement de site
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Découvrez comment veritas Enterprise Vault utilise StorageGRID comme cible de stockage primaire pour la reprise après incident.
+
+Ce guide de configuration fournit les étapes de configuration de NetApp® StorageGRID® en tant que cible de stockage principale avec veritas Enterprise Vault. Elle décrit également comment configurer StorageGRID pour un basculement de site dans un scénario de reprise d'activité.
+
+
+
+== Architecture de référence
+
+StorageGRID fournit une cible de sauvegarde dans le cloud sur site compatible avec S3 pour veritas Enterprise Vault. La figure suivante illustre l'architecture de veritas Enterprise Vault et StorageGRID.
+
+image:veritas/veritas-enterprise-vault-and-storagegrid-architecture.png["architecture-coffre-fort-et-StorageGRID-veritas-veritas-entreprise"]
+
+
+
+== Où trouver des informations complémentaires
+
+Pour en savoir plus sur les informations données dans ce livre blanc, consultez ces documents et/ou sites web :
+
+* Centre de documentation NetApp StorageGRID https://docs.netapp.com/us-en/storagegrid-118/[]
+* Accompagnement NetApp StorageGRID https://docs.netapp.com/us-en/storagegrid-enable/[]
+* Documentation des produits NetApp https://www.netapp.com/support-and-training/documentation/[]
+

@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: technical-reports/bare-metal-upgrading-bare-metal-nodes-storagegrid.html 
+keywords: bare-metal, upgrade, storagegrid 
+summary: En savoir plus sur le processus de mise à niveau des nœuds bare-Metal dans StorageGRID. 
+---
+= Mettez à niveau les nœuds bare-Metal dans StorageGRID
+:allow-uri-read: 
+
+
+[role="lead"]
+En savoir plus sur le processus de mise à niveau des nœuds bare-Metal dans StorageGRID.
+
+Le processus de mise à niveau des nœuds bare-Metal est différent de celui des appliances et des nœuds VMware. Avant d'effectuer une mise à niveau d'un nœud bare-Metal, vous devez d'abord mettre à niveau les fichiers RPM sur tous les hôtes avant d'exécuter la mise à niveau via l'interface graphique.
+
+[listing]
+----
+[root@host1 rpms]# rpm -Uvh StorageGRID-Webscale-Images-*.rpm
+[root@host1 rpms]# rpm -Uvh StorageGRID-Webscale-Service-*.rpm
+----
+Vous pouvez maintenant procéder à la mise à niveau du logiciel via l'interface graphique.
