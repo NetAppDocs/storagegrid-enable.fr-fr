@@ -1,0 +1,121 @@
+---
+permalink: tools-apps-guides/elasticsearch-snapshot-configuration.html 
+sidebar: sidebar 
+keywords: Elastic, Elasticsearch, snapshot, repository, StorageGRID, object storage 
+summary: 'Instructions pour créer un référentiel de snapshots Elasticsearch pour utiliser le stockage d"objets StorageGRID .' 
+---
+= Configuration du référentiel d'instantanés Elasticsearch
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+_Par Angela Cheng_
+
+Elasticsearch prend en charge l'utilisation du stockage d'objets compatible AWS S3 pour les référentiels d'instantanés.  Cet article fournit des instructions étape par étape sur la façon de créer un référentiel de snapshots Elasticsearch S3 avec StorageGRID comme stockage d'objets back-end.
+
+
+
+== De formation
+
+* StorageGRID 11.8 ou supérieur
+* Elasticsearch 8.x ou supérieur
+
+
+
+
+== Hypothèse
+
+Les lecteurs connaissent la terminologie et les opérations de StorageGRID et d’Elasticsearch.
+
+
+
+== Instructions
+
+*Étapes*
+
+. Créez un bucket StorageGRID à utiliser pour le référentiel de snapshots Elasticsearch.  Le contrôle de version des buckets doit être activé.  Utilisez un bucket par référentiel.  Ne partagez pas un bucket entre plusieurs référentiels ou clusters Elasticsearch.
+. Ajoutez la clé d’accès du locataire StorageGRID et la clé secrète au magasin de clés Elasticsearch.  Connectez-vous au nœud maître Elasticsearch, accédez au `<elasticsearch>/bin/` répertoire et utilisation `elasticsearch-keystore` pour ajouter la clé d'accès et la clé secrète.
++
+Exemple de commande :
+
++
+[NOTE]
+====
+ In older Elasticsearch versions, the key names are `access.key` and `secret.key` instead of using underscores.
+====
++
+[listing]
+----
+/usr/share/elasticsearch/bin/elasticsearch-keystore add s3.client.sgdemo.access_key
+Enter value for s3.client.sgdemo.access_key: <paste the access key here, it will not be displayed>
+
+/usr/share/elasticsearch/bin/elasticsearch-keystore add s3.client.sgdemo.secret_key
+Enter value for s3.client.sgdemo.secret_key: <paste the secret key here, it will not be displayed>
+----
++
+Pour afficher les clés, utilisez la commande « elasticsearch-keystore show <key-name> ».
+
+. Pour les clusters Elasticsearch multi-nœuds, répétez l’étape 2 dans chaque nœud ou consultez la documentation Elasticsearch.
+. Depuis l'interface graphique Web de Kibana, accédez à la page de la console des outils de développement et utilisez `POST _nodes/reload_secure_settings` API pour appliquer les modifications à chaque nœud.
++
+image:es-snapshot/es-reload-api.png["capture d'écran de l'exemple de reload_secure_settings"]
+
+. Utilisez le `PUT _snapshot` API pour créer un nouveau référentiel de snapshots.
++
+Dans cet exemple, le nom du référentiel est `sg_snapshot_repository` , et la taille du tampon correspond à la taille de la partie de téléchargement multipartie S3.
+
++
+Le protocole par défaut est HTTPS.  Pour utiliser HTTP avec le point de terminaison StorageGRID S3, ajoutez `"protocol": "http"` aux paramètres.
+
++
+Utilisez le nom du bucket créé à l’étape 1 et le nom du client configuré à l’étape 2.
+
++
+[listing]
+----
+PUT _snapshot/sg_snapshot_repository
+{
+  "type": "s3",
+  "settings": {
+    "bucket": "elk-snapshot",
+    "client": "sgdemo",
+    "path_style_access": "true",
+    "endpoint": "sgdemo.netapp.com",
+    "buffer_size": "512mb"
+  }
+}
+----
++
+image:es-snapshot/es-create-repository-api.png["Capture d'écran de l'exemple d'API Elasticsearch"]
+
+. Depuis l’interface graphique Web de Kibana, accédez à la page Gestion de la pile > Instantané et restauration, sélectionnez l’onglet Référentiels.
++
+Cliquez sur le nom du référentiel pour afficher les détails ou modifier certains paramètres tels que le nombre maximal d'octets d'instantanés par seconde, qui est par défaut de 40 Mo/s par nœud Elasticsearch.
+
++
+Pour les paramètres non visibles sur cette page, utilisez le `PUT _snapshot` API dans la console des outils de développement pour apporter des modifications.
+
++
+image:es-snapshot/es-snapshot-repository.png["Capture d'écran d'un exemple de référentiel Snapshot"]
+
+. Configurez une stratégie de cycle de vie de bucket pour gérer les objets de version non actuelle dans le bucket de snapshot.  Par exemple, supprimez les versions non actuelles après 90 jours.
+. Elastic exige que les clients valident le stockage S3 non AWS avant de l'utiliser pour stocker des instantanés.
++
+Suivez les instructions Elastic pour valider la configuration :
+
++
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-repository-analyze[]
+
+. Après validation, suivez le guide Elasticsearch pour créer une politique de stockage des snapshots nocturnes.
+
+
+
+
+== Ressources supplémentaires
+
+* https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-snapshot["Référentiel Elasticsearch s3"]
+* https://docs.netapp.com/us-en/storagegrid/ilm/how-objects-are-deleted.html#delete-s3-versioned-objects["Comment les objets versionnés S3 sont supprimés"]
+

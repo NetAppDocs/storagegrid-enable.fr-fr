@@ -10,6 +10,8 @@ entries:
   url: "/tools-apps-guides/vertica-eon-mode-database-using-storagegrid.html"
 - title: Utilisez Elasticsearch, Logstash et Kibana pour l'analytique des journaux
   url: "/tools-apps-guides/elk-instructions.html"
+- title: Instructions pour créer un référentiel d'instantanés Elasticsearch
+  url: "/tools-apps-guides/elasticsearch-snapshot-configuration.html"
 - title: Grâce à Prometheus et Grafana, vous pouvez renforcer la conservation des
     metrics
   url: "/tools-apps-guides/federate-prometheus.html"

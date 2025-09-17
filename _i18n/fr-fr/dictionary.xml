@@ -3382,4 +3382,39 @@ StorageGRID fait évoluer les performances en utilisant soit des nœuds de perfo
   <block id="0be6d03a29c17471b0414e9b31482b15" category="list-text">IBM Storage Protect</block>
   <block id="0987bb97934aa3a8ea668bd0c91ce52d" category="sidebar">Fonctionnalités de sécurité dans StorageGRID - Sécurisation de vos données et métadonnées dans un magasin d'objets</block>
   <block id="243c98f4ed7a2d56d634e9cc955fda88" category="sidebar">Reprise après sinistre StorageGRID : configuration de StorageGRID pour le basculement de site à l'aide de Veritas Enterprise Vault</block>
+  <block id="b12c5a1ea2cfdcd9e96af62ad1fff2c7" category="summary">Instructions pour créer un référentiel de snapshots Elasticsearch pour utiliser le stockage d'objets StorageGRID .</block>
+  <block id="4f466fb92f96dcdf64e32b3a68249a6a" category="doc">Configuration du référentiel d'instantanés Elasticsearch</block>
+  <block id="19c69b64ad875941da2ed25675b966b5" category="paragraph">Elasticsearch prend en charge l'utilisation du stockage d'objets compatible AWS S3 pour les référentiels d'instantanés.  Cet article fournit des instructions étape par étape sur la façon de créer un référentiel de snapshots Elasticsearch S3 avec StorageGRID comme stockage d'objets back-end.</block>
+  <block id="593e0b72d2a3823ab9f1704dbeeea1c8" category="list-text">StorageGRID 11.8 ou supérieur</block>
+  <block id="51065ec24ee246c3860e0580defca4c6" category="list-text">Elasticsearch 8.x ou supérieur</block>
+  <block id="3212d51fa371e3cef1d789ecfe0afca6" category="paragraph">Les lecteurs connaissent la terminologie et les opérations de StorageGRID et d’Elasticsearch.</block>
+  <block id="85c3fd6ac4074bb1ab06b16868d0c009" category="list-text">Créez un bucket StorageGRID à utiliser pour le référentiel de snapshots Elasticsearch.  Le contrôle de version des buckets doit être activé.  Utilisez un bucket par référentiel.  Ne partagez pas un bucket entre plusieurs référentiels ou clusters Elasticsearch.</block>
+  <block id="8ed3f9dd5d7290bd016b83485c0170a1" category="list-text">Ajoutez la clé d’accès du locataire StorageGRID et la clé secrète au magasin de clés Elasticsearch.  Connectez-vous au nœud maître Elasticsearch, accédez au<block ref="1b2b598aea8f192d3794b0c30af92997" prefix=" " category="inline-code"></block> répertoire et utilisation<block ref="0bf694e981bb45a58aed7488327af4f3" prefix=" " category="inline-code"></block> pour ajouter la clé d'accès et la clé secrète.</block>
+  <block id="5fd300737b7909532dc522634d75def5" category="paragraph">Exemple de commande :</block>
+  <block id="08a6dcd3a697d0604f6f4b47807f6ca0" category="paragraph">Pour afficher les clés, utilisez la commande « elasticsearch-keystore show &lt;key-name&gt; ».</block>
+  <block id="6806cdb70b916f3b6bb474b9328b08ca" category="list-text">Pour les clusters Elasticsearch multi-nœuds, répétez l’étape 2 dans chaque nœud ou consultez la documentation Elasticsearch.</block>
+  <block id="621e717bf791d95428a170667a596197" category="list-text">Depuis l'interface graphique Web de Kibana, accédez à la page de la console des outils de développement et utilisez<block ref="f6703ca746887e8ad69c184ef80e8ded" prefix=" " category="inline-code"></block> API pour appliquer les modifications à chaque nœud.</block>
+  <block id="9b6e1b5bf3e12eb4e808e1b9701528f4" category="inline-image-macro">capture d'écran de l'exemple de reload_secure_settings</block>
+  <block id="c94eb203f327e8a870bff84bf0051606" category="paragraph"><block ref="c94eb203f327e8a870bff84bf0051606" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="59b63a4c7f8e78be87c3100ed37b264a" category="list-text">Utilisez le<block ref="14122a9963d2d5fd106baa062ba587b4" prefix=" " category="inline-code"></block> API pour créer un nouveau référentiel de snapshots.</block>
+  <block id="98679aa6d08189789aa0c65c691db370" category="paragraph">Dans cet exemple, le nom du référentiel est<block ref="be9022aec77b31961957096c13c23219" prefix=" " category="inline-code"></block> , et la taille du tampon correspond à la taille de la partie de téléchargement multipartie S3.</block>
+  <block id="3c823bd21419d345a9d7d4276488edfb" category="paragraph">Le protocole par défaut est HTTPS.  Pour utiliser HTTP avec le point de terminaison StorageGRID S3, ajoutez<block ref="356f3d9b207a577071350c04e64206cb" prefix=" " category="inline-code"></block> aux paramètres.</block>
+  <block id="e09538d2ae213ccd0a221584775b5ca5" category="paragraph">Utilisez le nom du bucket créé à l’étape 1 et le nom du client configuré à l’étape 2.</block>
+  <block id="4faca7afc4d2b0538a33d3192d453ad1" category="inline-image-macro">Capture d'écran de l'exemple d'API Elasticsearch</block>
+  <block id="175e963c73089d05b73e4053f63b0a3a" category="paragraph"><block ref="175e963c73089d05b73e4053f63b0a3a" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="09585352abb495a58301939509e2b605" category="list-text">Depuis l’interface graphique Web de Kibana, accédez à la page Gestion de la pile &gt; Instantané et restauration, sélectionnez l’onglet Référentiels.</block>
+  <block id="73f00594e61a1e09208a849e16bedd7d" category="paragraph">Cliquez sur le nom du référentiel pour afficher les détails ou modifier certains paramètres tels que le nombre maximal d'octets d'instantanés par seconde, qui est par défaut de 40 Mo/s par nœud Elasticsearch.</block>
+  <block id="fc2619b84c9b3173bc9c93dafbf91e8d" category="paragraph">Pour les paramètres non visibles sur cette page, utilisez le<block ref="14122a9963d2d5fd106baa062ba587b4" prefix=" " category="inline-code"></block> API dans la console des outils de développement pour apporter des modifications.</block>
+  <block id="565feae94d4b22672a12be27e4f99c63" category="inline-image-macro">Capture d'écran d'un exemple de référentiel Snapshot</block>
+  <block id="aac419a72b01b501d95dbe3debe250f2" category="paragraph"><block ref="aac419a72b01b501d95dbe3debe250f2" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="8d7340f8e7c758cdf4fd4e3455548757" category="list-text">Configurez une stratégie de cycle de vie de bucket pour gérer les objets de version non actuelle dans le bucket de snapshot.  Par exemple, supprimez les versions non actuelles après 90 jours.</block>
+  <block id="5fe1a3050ef9538f4f00d7bf6e4d66b1" category="list-text">Elastic exige que les clients valident le stockage S3 non AWS avant de l'utiliser pour stocker des instantanés.</block>
+  <block id="56f4d43e66895a25e9c1e43ca43d69cc" category="paragraph">Suivez les instructions Elastic pour valider la configuration :</block>
+  <block id="0734208a8b40c0aab9c1218baedefbf1" category="paragraph"><block ref="0734208a8b40c0aab9c1218baedefbf1" category="inline-link-rx"></block></block>
+  <block id="1743c3ed2b99313c86b17e91ff8ae63b" category="list-text">Après validation, suivez le guide Elasticsearch pour créer une politique de stockage des snapshots nocturnes.</block>
+  <block id="1d605538b3de6fc7352ff1756867d1b9" category="inline-link">Référentiel Elasticsearch s3</block>
+  <block id="755c869a02438bc9363beeea0e91da57" category="list-text"><block ref="755c869a02438bc9363beeea0e91da57" category="inline-link-rx"></block></block>
+  <block id="e226403172953bd7e5c34989260a72a8" category="inline-link">Comment les objets versionnés S3 sont supprimés</block>
+  <block id="e35c2c56a508398c870b7b6e9e717abf" category="list-text"><block ref="e35c2c56a508398c870b7b6e9e717abf" category="inline-link-rx"></block></block>
+  <block id="29b6d470059c168ae42b0d8923792ea7" category="sidebar">Instructions pour créer un référentiel d'instantanés Elasticsearch</block>
 </blocks>
